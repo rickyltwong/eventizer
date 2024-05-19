@@ -1,0 +1,32 @@
+{
+  "name": "Next.js Dev Container with Node 22",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "VARIANT": "1.1-22-bullseye"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "vscode-icons-team.vscode-icons",
+        "willstakayama.vscode-nextjs-snippets",
+        "eamodio.gitlens",
+        "christian-kohler.path-intellisense"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+  ],
+  "remoteUser": "node",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": "os-provided"
+  },
+  "remoteEnv": {
+    "DISPLAY": ":0"
+  }
+}
