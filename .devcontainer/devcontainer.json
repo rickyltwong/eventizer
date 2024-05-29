@@ -19,9 +19,6 @@
       ]
     }
   },
-  "mounts": [
-    "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
-  ],
   "remoteUser": "node",
   "features": {
     "ghcr.io/devcontainers/features/git:1": "os-provided"
