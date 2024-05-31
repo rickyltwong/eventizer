@@ -8,6 +8,11 @@ import "./globals.css";
 
 import { createTheme } from "@mantine/core";
 
+export const metadata: Metadata = {
+  title: "Eventizer",
+  description: "Events and Tickets Management System",
+};
+
 const myColor: MantineColorsTuple = [
   "#e1f9ff",
   "#ccedff",
@@ -26,11 +31,6 @@ const theme = createTheme({
     myColor,
   },
 });
-
-export const metadata: Metadata = {
-  title: "Eventizer",
-  description: "Events and Tickets Management System",
-};
 
 export default function RootLayout({
   children,
