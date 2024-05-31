@@ -1,22 +1,12 @@
-import {
-  MantineProvider,
-  createTheme,
-  MantineColorsTuple,
-  ColorSchemeScript,
-} from "@mantine/core";
 import "@mantine/core/styles.css";
+import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import "./globals.css";
 
-// import "./globals.css";
+// const inter = Inter({ subsets: ["latin"] });
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Eventizer",
-  description: "Events and Tickets Management System",
-};
+import { createTheme } from "@mantine/core";
 
 const myColor: MantineColorsTuple = [
   "#e1f9ff",
@@ -37,6 +27,11 @@ const theme = createTheme({
   },
 });
 
+export const metadata: Metadata = {
+  title: "Eventizer",
+  description: "Events and Tickets Management System",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -46,9 +41,13 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <ColorSchemeScript />
+        {/* <link rel="shortcut icon" href="/favicon.svg" /> */}
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        />
       </head>
-
-      <body className={inter.className}>
+      <body>
         <MantineProvider theme={theme}>{children}</MantineProvider>
       </body>
     </html>
