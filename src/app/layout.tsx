@@ -5,6 +5,21 @@ import {
   MantineColorsTuple,
 } from "@mantine/core";
 
+import { Libre_Franklin } from 'next/font/google'
+import { Chivo } from 'next/font/google'
+
+const libre_franklin = Libre_Franklin({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-libre_franklin',
+})
+const chivo = Chivo({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-chivo',
+})
+
+
 import type { Metadata } from "next";
 import "./globals.css";
 
