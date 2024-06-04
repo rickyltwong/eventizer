@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
-import { Checkbox, Button, Select } from '@mantine/core';
-import AttendeeStatus from './AttendeeStatus';
-import { Attendee } from './page';
+import { Button, Select } from '@mantine/core';
+import UserStatus from './UserStatus';
+import { User } from './page';
 
-interface AttendeesTableProps {
-  attendees: Attendee[];
-  onCheckboxChange: (id: number) => void;
+interface UsersTableProps {
+  users: User[];
   onStatusChange: (id: number, status: string) => void;
+  onRoleChange: (id: number, role: string) => void;
 }
 
-export default function AttendeesTable({ attendees, onCheckboxChange, onStatusChange }: AttendeesTableProps) {
-  const [editingStatusId, setEditingStatusId] = useState<number | null>(null);
+export default function UsersTable({ users, onStatusChange, onRoleChange }: UsersTableProps) {
+  const [editingUserId, setEditingUserId] = useState<number | null>(null);
+  const [editedRole, setEditedRole] = useState<string>('');
+  const [editedStatus, setEditedStatus] = useState<string>('');
+
+  const handleRoleChange = (id: number, newRole: string) => {
+    setEditedRole(newRole);
+  };
 
   const handleStatusChange = (id: number, newStatus: string) => {
-    onStatusChange(id, newStatus);
-    setEditingStatusId(null); // Exit edit mode after changing the status
+    setEditedStatus(newStatus);
+  };
+
+  const handleSave = (id: number) => {
+    onRoleChange(id, editedRole);
+    onStatusChange(id, editedStatus);
+    setEditingUserId(null);
   };
 
   return (
@@ -28,19 +39,16 @@ export default function AttendeesTable({ attendees, onCheckboxChange, onStatusCh
                   Name
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Email
+                  Role
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Status
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Registration Date
+                  Date Created
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Ticket Type
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Participating
+                  Created By
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
@@ -48,53 +56,60 @@ export default function AttendeesTable({ attendees, onCheckboxChange, onStatusCh
               </tr>
             </thead>
             <tbody className="bg-white">
-              {attendees.map((attendee) => (
+              {users.map((user) => (
                 <tr
-                  key={attendee.id}
+                  key={user.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
-                      <p>{attendee.name}</p>
+                      <p>{user.name}</p>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {attendee.email}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {editingStatusId === attendee.id ? (
+                    {editingUserId === user.id ? (
                       <Select
-                        value={attendee.status}
-                        onChange={(value) => handleStatusChange(attendee.id, value ?? attendee.status)}
+                        value={editedRole}
+                        onChange={(value) => setEditedRole(value ?? '')}
                         data={[
-                          { value: 'Registered', label: 'Registered' },
-                          { value: 'Pending', label: 'Pending' },
-                          { value: 'Cancelled', label: 'Cancelled' }
+                          { value: 'Admin', label: 'Admin' },
+                          { value: 'User', label: 'User' },
+                          { value: 'Organizer', label: 'Organizer' }
                         ]}
                       />
                     ) : (
-                      <div onClick={() => setEditingStatusId(attendee.id)}>
-                        <AttendeeStatus status={attendee.status} />
+                      user.role
+                    )}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {editingUserId === user.id ? (
+                      <Select
+                        value={editedStatus}
+                        onChange={(value) => setEditedStatus(value ?? '')}
+                        data={[
+                          { value: 'Active', label: 'Active' },
+                          { value: 'Disabled', label: 'Disabled' }
+                        ]}
+                      />
+                    ) : (
+                      <div onClick={() => setEditingUserId(user.id)}>
+                        <UserStatus status={user.status} />
                       </div>
                     )}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {attendee.registrationDate}
+                    {user.createdAt}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {attendee.ticketType}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    <Checkbox
-                      checked={attendee.participating}
-                      onChange={() => onCheckboxChange(attendee.id)}
-                    />
+                    {user.createdBy}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <Button onClick={() => setEditingStatusId(attendee.id)}>
-                        Edit
-                      </Button>
+                      {editingUserId === user.id ? (
+                        <Button onClick={() => handleSave(user.id)}>Save</Button>
+                      ) : (
+                        <Button onClick={() => setEditingUserId(user.id)}>Edit</Button>
+                      )}
                     </div>
                   </td>
                 </tr>

@@ -3,7 +3,7 @@ import { IconTrash } from '@tabler/icons-react';
 
 export function DeleteAttendee({ id }: { id: string }) {
   const handleDelete = () => {
-    // Implement delete logic here
+    // Implement delete logic
   };
 
   return (

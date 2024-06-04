@@ -16,7 +16,7 @@ export function UpdateAttendee({ id }: { id: string }) {
 // DeleteAttendee Component
 export function DeleteAttendee({ id }: { id: string }) {
   const handleDelete = () => {
-    // Implement delete logic here
+    // Implement delete logic
   };
 
   return (
