@@ -1,19 +1,18 @@
-"use client";
+'use client';
 
-import { Container, Group, Anchor } from "@mantine/core";
-import { MantineLogo } from "@mantinex/mantine-logo";
-import classes from "./FooterSimple.module.css";
+import { Container, Group, Anchor } from '@mantine/core';
+import classes from './FooterSimple.module.css';
+import Image from 'next/image';
 
 const links = [
-  { link: "#", label: "Contact" },
-  { link: "#", label: "Privacy" },
-  { link: "#", label: "Blog" },
-  { link: "#", label: "Careers" },
+  { link: '/about-us', label: 'About Us' },
+  { link: '#', label: 'Privacy' },
+  { link: '#', label: 'Careers' },
 ];
 
 export function FooterSimple() {
   const items = links.map((link) => (
-    <Anchor<"a">
+    <Anchor<'a'>
       c="dimmed"
       key={link.label}
       href={link.link}
@@ -26,7 +25,12 @@ export function FooterSimple() {
   return (
     <div className={classes.footer}>
       <Container className={classes.inner}>
-        <MantineLogo size={28} />
+        <Image
+          src="/logo.png"
+          alt="Balance Studio logo"
+          height={100}
+          width={200}
+        />
         <Group className={classes.links}>{items}</Group>
       </Container>
     </div>

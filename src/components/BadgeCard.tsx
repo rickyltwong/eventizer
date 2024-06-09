@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { IconHeart } from "@tabler/icons-react";
+import { IconHeart } from '@tabler/icons-react';
 import {
   Card,
   Image,
@@ -9,56 +9,109 @@ import {
   Badge,
   Button,
   ActionIcon,
-} from "@mantine/core";
-import classes from "./BadgeCard.module.css";
+  Container,
+  MantineColor,
+} from '@mantine/core';
+import classes from './BadgeCard.module.css';
+import { Event } from '@/types';
 
-const mockdata = {
-  image:
-    "https://images.unsplash.com/photo-1437719417032-8595fd9e9dc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
-  title: "Verudela Beach",
-  country: "Croatia",
-  description:
-    "Completely renovated for the season 2020, Arena Verudela Bech Apartments are fully equipped and modernly furnished 4-star self-service apartments located on the Adriatic coastline by one of the most beautiful beaches in Pula.",
-  badges: [
-    { emoji: "☀️", label: "Sunny weather" },
-    { emoji: "🦓", label: "Onsite zoo" },
-    { emoji: "🌊", label: "Sea" },
-    { emoji: "🌲", label: "Nature" },
-    { emoji: "🤽", label: "Water sports" },
-  ],
+type Status = 'Upcoming' | 'Cancelled' | 'Expired' | string;
+
+const StatusBadge = ({ status }: { status: Status }) => {
+  let color: MantineColor = '';
+
+  switch (status) {
+    case 'Upcoming':
+      color = 'green';
+      break;
+    case 'Cancelled':
+      color = 'red';
+      break;
+    case 'Expired':
+      color = 'dark';
+      break;
+    default:
+      color = 'gray';
+  }
+
+  return (
+    <Badge
+      color={color}
+      variant="filled"
+      radius="sm"
+      className={classes.statusBadge}>
+      {status}
+    </Badge>
+  );
 };
 
-export function BadgeCard() {
-  const { image, title, description, country, badges } = mockdata;
-  const features = badges.map((badge) => (
-    <Badge variant="light" key={badge.label} leftSection={badge.emoji}>
-      {badge.label}
+export function BadgeCard(event: Event) {
+  const {
+    eventName,
+    eventStartDateTime,
+    eventType,
+    ticketsClasses,
+    instructorName,
+    difficulty,
+  } = event;
+
+  const image =
+    eventType === 'Yoga'
+      ? 'https://plus.unsplash.com/premium_photo-1713908274754-4610e1ca3a89?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      : eventType === 'Meditation'
+        ? 'https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+        : 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
+  const eventDate = new Date(eventStartDateTime).toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const isExpired = new Date(eventStartDateTime) < new Date();
+  const status =
+    instructorName === 'Ricky Wong'
+      ? 'Cancelled'
+      : isExpired
+        ? 'Expired'
+        : 'Upcoming';
+
+  const features = ticketsClasses.map((ticketsClass) => (
+    <Badge variant="light" key={ticketsClass.ticketType}>
+      {ticketsClass.ticketType}
     </Badge>
   ));
 
   return (
-    <Card withBorder radius="md" p="md" className={classes.card}>
-      <Card.Section>
-        <Image src={image} alt={title} height={180} />
+    <Card shadow="sm" withBorder radius="md" p="md" className={classes.card}>
+      <Card.Section className={classes.imageSection}>
+        <StatusBadge status={status} />
+        <Image
+          src={image}
+          alt={eventName}
+          height={180}
+          className={status === 'Expired' ? classes.dimmedImage : ''}
+        />
       </Card.Section>
 
       <Card.Section className={classes.section} mt="md">
         <Group justify="apart">
-          <Text fz="lg" fw={500}>
-            {title}
+          <Text fz="h4" fw={700} truncate component="p">
+            {eventName}
           </Text>
-          <Badge size="sm" variant="light">
-            {country}
-          </Badge>
         </Group>
-        <Text fz="sm" mt="xs">
-          {description}
+        <Badge size="sm" variant="light">
+          {difficulty}
+        </Badge>
+        <Text fz="sm" mt="xs" c="gray">
+          {eventDate}
         </Text>
       </Card.Section>
 
       <Card.Section className={classes.section}>
         <Text mt="md" className={classes.label} c="dimmed">
-          Perfect for you, if you enjoy
+          Available Ticket Classes
         </Text>
         <Group gap={7} mt={5}>
           {features}
@@ -66,12 +119,15 @@ export function BadgeCard() {
       </Card.Section>
 
       <Group mt="xs">
-        <Button radius="md" style={{ flex: 1 }}>
+        <Button radius="md" variant="light" style={{ flex: 1 }}>
           Show details
         </Button>
-        <ActionIcon variant="default" radius="md" size={36}>
+        <Button radius="md" style={{ flex: 1 }}>
+          Book now
+        </Button>
+        {/* <ActionIcon variant="default" radius="md" size={36}>
           <IconHeart className={classes.like} stroke={1.5} />
-        </ActionIcon>
+        </ActionIcon> */}
       </Group>
     </Card>
   );
