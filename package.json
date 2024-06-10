@@ -35,6 +35,7 @@
     "next": "14.2.3",
     "next-connect": "^1.0.0",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-leaflet": "^4.2.1",
     "recharts": "^2.12.7",

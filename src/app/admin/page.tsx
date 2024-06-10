@@ -1,7 +1,9 @@
-export default function page(props: any) {
-  return (
-    <>
-      <h1>Admin Home Page</h1>
-    </>
-  );
-}
+import { Children } from "react";
+import { Navbar } from "./navbar";
+const page = (props: any) => {
+  return <>
+    <Navbar />
+  </>;
+};
+
+export default page;
