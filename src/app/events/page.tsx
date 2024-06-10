@@ -21,11 +21,16 @@ import { IconFilter } from '@tabler/icons-react';
 import { BadgeCard } from '@/components/BadgeCard';
 import HeroClasses from '@/components/HeroTitle.module.css';
 import ResponsiveContainer from '@/components/ResponsiveContainer';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Event } from '@/types';
-import MapView from '@/components/MapView';
-import { latLng } from 'leaflet';
+
+import EventCalendar from '@/components/EventCalendar';
+
+import dynamic from 'next/dynamic';
+
+// import MapView from '@/components/MapView';
+const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
 
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -268,21 +273,22 @@ export default function Page(): React.JSX.Element {
             )}
           </Tabs.Panel>
           <Tabs.Panel value="map">
-            <p>Map View</p>
-            {/* {userLocation ? (
-              <div>
-                Location: {userLocation.latitude}, {userLocation.longitude}
-                <MapView
-                  events={events}
-                  center={latLng(userLocation.latitude, userLocation.longitude)}
-                  zoom={12}
-                />
-              </div>
-            ) : (
-              <div>Click this tab to find events near you.</div>
-            )} */}
+            {!isLoading && (
+              <MapView
+                events={events}
+                center={
+                  userLocation
+                    ? [userLocation.latitude, userLocation.longitude]
+                    : [43.6532, -79.3832] // Toronto
+                }
+                zoom={15}
+                isUserLocation={userLocation !== null}
+              />
+            )}
           </Tabs.Panel>
-          <Tabs.Panel value="calendar">Event Calendar</Tabs.Panel>
+          <Tabs.Panel value="calendar">
+            <EventCalendar events={events} />
+          </Tabs.Panel>
         </Tabs>
       </ResponsiveContainer>
       <FooterSimple />
