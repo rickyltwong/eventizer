@@ -1,6 +1,7 @@
-import {NextRequest, NextResponse} from 'next/server';
-import {MongoClient, ObjectId} from 'mongodb';
+import {ObjectId} from "mongodb";
 import clientPromise from '@/app/lib/mongodb';
+import {NextApiRequest, NextApiResponse} from "next";
+import {NextResponse} from "next/server";
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
@@ -11,25 +12,9 @@ if (!MONGODB_URI) {
     );
 }
 
-export async function GET() {
-    try {
-        const client = await clientPromise;
-        const database = client.db('Eventizer');
-        const collection = database.collection('events');
-        const allData = await collection.find({}).toArray();
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
+    const id = req.url?.slice(req.url?.lastIndexOf('/')).replace("/","")
 
-        return NextResponse.json(allData, {status: 200});
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json(
-            {message: 'Something went wrong!'},
-            {status: 500}
-        );
-    }
-}
-
-
-export async function GETEventById(id: string) {
     try {
         const client = await clientPromise;
         const database = client.db('Eventizer');
