@@ -1,0 +1,32 @@
+.root {
+  width: 100%; /* Full width by default */
+  max-width: calc(100% - 40px);
+}
+
+@media (min-width: 576px) {
+  /* Adjust for small devices */
+  .root {
+    max-width: calc(100% - 40px);
+  }
+}
+
+@media (min-width: 768px) {
+  /* Tablets */
+  .root {
+    max-width: calc(75% - 40px);
+  }
+}
+
+@media (min-width: 992px) {
+  /* Desktops */
+  .root {
+    max-width: calc(75% - 40px);
+  }
+}
+
+@media (min-width: 1200px) {
+  /* Large desktops */
+  .root {
+    max-width: calc(80% - 40px);
+  }
+}

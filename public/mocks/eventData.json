@@ -1,0 +1,350 @@
+[
+  {
+    "eventName": "Sunrise Yoga at Trinity Bellwoods",
+    "eventDescription": "Enjoy a rejuvenating morning yoga session surrounded by nature.",
+    "eventAddress": {
+      "venueName": "Trinity Bellwoods Park",
+      "addressLine1": "790 Queen St W",
+      "addressLine2": "",
+      "city": "Toronto",
+      "state": "ON",
+      "country": "Canada",
+      "postalCode": "M6J 1G3"
+    },
+    "eventStartDateTime": "2024-07-10T06:00:00Z",
+    "eventEndDateTime": "2024-07-10T08:00:00Z",
+    "instructorName": "Ricky Wong",
+    "eventType": "Yoga",
+    "capacity": 30,
+    "remainingSeats": 30,
+    "markedPrice": 20,
+    "currency": "CAD",
+    "difficulty": "Beginner",
+    "minimumAge": 16,
+    "ticketsClasses": [
+      {
+        "ticketType": "Standard",
+        "price": 20,
+        "benefits": ["Participation in session", "Free water bottle"],
+        "availability": 20
+      },
+      {
+        "ticketType": "VIP",
+        "price": 35,
+        "benefits": [
+          "Participation in session",
+          "Free water bottle",
+          "Preferred seating",
+          "Meet and greet with instructor"
+        ],
+        "availability": 10
+      }
+    ],
+    "discounts": [
+      {
+        "discountCode": "EARLYBIRD",
+        "discountAmount": 5,
+        "discountType": "Fixed",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      },
+      {
+        "discountCode": "GROUP10",
+        "discountAmount": 10,
+        "discountType": "Percentage",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      }
+    ]
+  },
+  {
+    "eventName": "Evening Yoga at Riverdale Park",
+    "eventDescription": "Unwind your day with a relaxing evening yoga session under the open sky.",
+    "eventAddress": {
+      "venueName": "Riverdale Park",
+      "addressLine1": "201 Winchester St",
+      "addressLine2": "",
+      "city": "Toronto",
+      "state": "ON",
+      "country": "Canada",
+      "postalCode": "M4X 1B8"
+    },
+    "eventStartDateTime": "2024-07-12T19:00:00Z",
+    "eventEndDateTime": "2024-07-12T21:00:00Z",
+    "instructorName": "Maya Singh",
+    "eventType": "Yoga",
+    "capacity": 25,
+    "remainingSeats": 25,
+    "markedPrice": 25,
+    "currency": "CAD",
+    "difficulty": "Intermediate",
+    "minimumAge": 18,
+    "ticketsClasses": [
+      {
+        "ticketType": "Standard",
+        "price": 25,
+        "benefits": ["Participation in session", "Free yoga mat"],
+        "availability": 15
+      },
+      {
+        "ticketType": "VIP",
+        "price": 40,
+        "benefits": [
+          "Participation in session",
+          "Free yoga mat",
+          "Preferred seating",
+          "Personalized coaching session"
+        ],
+        "availability": 10
+      }
+    ],
+    "discounts": [
+      {
+        "discountCode": "EARLYBIRD",
+        "discountAmount": 5,
+        "discountType": "Fixed",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      },
+      {
+        "discountCode": "FRIENDS5",
+        "discountAmount": 5,
+        "discountType": "Percentage",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      }
+    ]
+  },
+  {
+    "eventName": "Sunset Meditation at High Park",
+    "eventDescription": "Join us for a calming meditation session as the sun sets over High Park.",
+    "eventAddress": {
+      "venueName": "High Park",
+      "addressLine1": "1873 Bloor St W",
+      "addressLine2": "",
+      "city": "Toronto",
+      "state": "ON",
+      "country": "Canada",
+      "postalCode": "M6R 2Z3"
+    },
+    "eventStartDateTime": "2024-07-15T20:00:00Z",
+    "eventEndDateTime": "2024-07-15T22:00:00Z",
+    "instructorName": "Alex Chen",
+    "eventType": "Meditation",
+    "capacity": 40,
+    "remainingSeats": 40,
+    "markedPrice": 15,
+    "currency": "CAD",
+    "difficulty": "Beginner",
+    "minimumAge": 16,
+    "ticketsClasses": [
+      {
+        "ticketType": "Standard",
+        "price": 15,
+        "benefits": ["Participation in session", "Free meditation guide"],
+        "availability": 30
+      },
+      {
+        "ticketType": "VIP",
+        "price": 25,
+        "benefits": [
+          "Participation in session",
+          "Free meditation guide",
+          "Preferred seating",
+          "Exclusive meditation accessory"
+        ],
+        "availability": 10
+      }
+    ],
+    "discounts": [
+      {
+        "discountCode": "SUNSET10",
+        "discountAmount": 10,
+        "discountType": "Percentage",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      },
+      {
+        "discountCode": "GROUP20",
+        "discountAmount": 20,
+        "discountType": "Percentage",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      }
+    ]
+  },
+  {
+    "eventName": "Morning Mindfulness at Queen's Park",
+    "eventDescription": "Start your day with a peaceful mindfulness meditation in the heart of the city.",
+    "eventAddress": {
+      "venueName": "Queen's Park",
+      "addressLine1": "111 Wellesley St W",
+      "addressLine2": "",
+      "city": "Toronto",
+      "state": "ON",
+      "country": "Canada",
+      "postalCode": "M7A 1A2"
+    },
+    "eventStartDateTime": "2024-07-20T07:00:00Z",
+    "eventEndDateTime": "2024-07-20T09:00:00Z",
+    "instructorName": "Sophia Martinez",
+    "eventType": "Meditation",
+    "capacity": 50,
+    "remainingSeats": 50,
+    "markedPrice": 18,
+    "currency": "CAD",
+    "difficulty": "Beginner",
+    "minimumAge": 16,
+    "ticketsClasses": [
+      {
+        "ticketType": "Standard",
+        "price": 18,
+        "benefits": ["Participation in session", "Free mindfulness journal"],
+        "availability": 35
+      },
+      {
+        "ticketType": "VIP",
+        "price": 30,
+        "benefits": [
+          "Participation in session",
+          "Free mindfulness journal",
+          "Preferred seating",
+          "One-on-one session with instructor"
+        ],
+        "availability": 15
+      }
+    ],
+    "discounts": [
+      {
+        "discountCode": "MINDFUL5",
+        "discountAmount": 5,
+        "discountType": "Fixed",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      },
+      {
+        "discountCode": "DUO10",
+        "discountAmount": 10,
+        "discountType": "Percentage",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      }
+    ]
+  },
+  {
+    "eventName": "Lunchtime Yoga at Allan Gardens",
+    "eventDescription": "Recharge your midday with a revitalizing yoga session in the serene environment of Allan Gardens.",
+    "eventAddress": {
+      "venueName": "Allan Gardens",
+      "addressLine1": "160 Gerrard St E",
+      "addressLine2": "",
+      "city": "Toronto",
+      "state": "ON",
+      "country": "Canada",
+      "postalCode": "M5A 2E5"
+    },
+    "eventStartDateTime": "2024-07-18T12:00:00Z",
+    "eventEndDateTime": "2024-07-18T14:00:00Z",
+    "instructorName": "Jasmine Lee",
+    "eventType": "Yoga",
+    "capacity": 35,
+    "remainingSeats": 35,
+    "markedPrice": 22,
+    "currency": "CAD",
+    "difficulty": "Beginner",
+    "minimumAge": 16,
+    "ticketsClasses": [
+      {
+        "ticketType": "Standard",
+        "price": 22,
+        "benefits": ["Participation in session", "Free yoga strap"],
+        "availability": 25
+      },
+      {
+        "ticketType": "VIP",
+        "price": 37,
+        "benefits": [
+          "Participation in session",
+          "Free yoga strap",
+          "Preferred seating",
+          "Post-session refreshments"
+        ],
+        "availability": 10
+      }
+    ],
+    "discounts": [
+      {
+        "discountCode": "LUNCHBREAK",
+        "discountAmount": 5,
+        "discountType": "Fixed",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      },
+      {
+        "discountCode": "BUNDLE15",
+        "discountAmount": 15,
+        "discountType": "Percentage",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      }
+    ]
+  },
+  {
+    "eventName": "Indoor Yoga at Humber College",
+    "eventDescription": "Experience a rejuvenating indoor yoga session at Humber College International Graduate School.",
+    "eventAddress": {
+      "venueName": "Humber College International Graduate School",
+      "addressLine1": "59 Hayden Street",
+      "addressLine2": "",
+      "city": "Toronto",
+      "state": "ON",
+      "country": "Canada",
+      "postalCode": "M4Y 2P2"
+    },
+    "eventStartDateTime": "2024-07-22T10:00:00Z",
+    "eventEndDateTime": "2024-07-22T12:00:00Z",
+    "instructorName": "Emily Thompson",
+    "eventType": "Yoga",
+    "capacity": 40,
+    "remainingSeats": 40,
+    "markedPrice": 28,
+    "currency": "CAD",
+    "difficulty": "All Levels",
+    "minimumAge": 16,
+    "ticketsClasses": [
+      {
+        "ticketType": "Standard",
+        "price": 28,
+        "benefits": ["Participation in session", "Free yoga block"],
+        "availability": 30
+      },
+      {
+        "ticketType": "VIP",
+        "price": 45,
+        "benefits": [
+          "Participation in session",
+          "Free yoga block",
+          "Preferred seating",
+          "Post-session smoothie"
+        ],
+        "availability": 10
+      }
+    ],
+    "discounts": [
+      {
+        "discountCode": "INDOOR5",
+        "discountAmount": 5,
+        "discountType": "Fixed",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      },
+      {
+        "discountCode": "STUDENT10",
+        "discountAmount": 10,
+        "discountType": "Percentage",
+        "discountApplicable": "Standard",
+        "discountExpiry": "2024-06-30T23:59:59Z"
+      }
+    ]
+  }
+]
