@@ -6,11 +6,11 @@ import User from '@/models/User';
 // src/app/api/admin/route.js
    let r=dbConnect();
    console.log('db connected! '+JSON.stringify(r));
-   
+
 export async function GET(req: NextRequest, res: NextResponse) {
   const users = await User.find({});
    console.log(users);
-  return new Response(JSON.stringify(users), {
+   return new Response(JSON.stringify(users), {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
