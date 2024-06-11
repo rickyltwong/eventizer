@@ -53,7 +53,7 @@ export default function AttendeeManagementPage() {
   return (
     <Container size="lg" my="md">
       <Box mb="xl">
-        <Title order={2} mb="lg">
+        <Title order={2} mb="lg" style={{ color: '#64c1ff', fontWeight: 'bold', padding:20}}>
           Attendee Management
         </Title>
         <Group align="center">

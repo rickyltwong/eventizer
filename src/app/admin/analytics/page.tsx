@@ -49,7 +49,7 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Title order={2} my="lg">
+      <Title order={2} my="lg" style={{ color: '#64c1ff', fontWeight: 'bold', padding:20}}>
         Dashboard
       </Title>
       <SimpleGrid cols={3} spacing="lg">
