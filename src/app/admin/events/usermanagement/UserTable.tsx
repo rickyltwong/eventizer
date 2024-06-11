@@ -2,32 +2,35 @@ import React, { useState } from 'react';
 import { Button, Select } from '@mantine/core';
 import UserStatus from './UserStatus';
 import { User } from './page';
+import { IconTrash } from '@tabler/icons-react'
 
 interface UsersTableProps {
   users: User[];
   onStatusChange: (id: number, status: string) => void;
   onRoleChange: (id: number, role: string) => void;
+  onDeleteUser: (id: number) => void;
 }
 
-export default function UsersTable({ users, onStatusChange, onRoleChange }: UsersTableProps) {
-  const [editingUserId, setEditingUserId] = useState<number | null>(null);
-  const [editedRole, setEditedRole] = useState<string>('');
-  const [editedStatus, setEditedStatus] = useState<string>('');
+export default function UsersTable({ users, onStatusChange, onRoleChange, onDeleteUser }: UsersTableProps){
+  const [editingUserRole, setEditingUserRole] = useState<number | null>(null);
+  const [editingUserStatus, setEditingUserStatus] = useState<number | null>(null);
+  const [deleteUser, setDeleteUser] = useState<number | null>(null);
 
   const handleRoleChange = (id: number, newRole: string) => {
-    setEditedRole(newRole);
+    onRoleChange(id, newRole);
+    setEditingUserRole(null);
   };
 
   const handleStatusChange = (id: number, newStatus: string) => {
-    setEditedStatus(newStatus);
+    onStatusChange(id, newStatus);
+    setEditingUserStatus(null);
   };
 
-  const handleSave = (id: number) => {
-    onRoleChange(id, editedRole);
-    onStatusChange(id, editedStatus);
-    setEditingUserId(null);
-  };
-
+  const handleDeleteUser = (id : number) =>{
+    onDeleteUser(id);
+    setDeleteUser(null);
+  }
+  
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -48,7 +51,7 @@ export default function UsersTable({ users, onStatusChange, onRoleChange }: User
                   Date Created
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Created By
+                  Phone
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
@@ -58,19 +61,19 @@ export default function UsersTable({ users, onStatusChange, onRoleChange }: User
             <tbody className="bg-white">
               {users.map((user) => (
                 <tr
-                  key={user.id}
+                  key={user._id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
-                      <p>{user.name}</p>
+                      <p>{user.username}</p>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {editingUserId === user.id ? (
+                    {editingUserRole === user._id ? (
                       <Select
-                        value={editedRole}
-                        onChange={(value) => setEditedRole(value ?? '')}
+                        value={user.role}
+                        onChange={(value) => handleRoleChange(user._id, value ?? user.role)}
                         data={[
                           { value: 'Admin', label: 'Admin' },
                           { value: 'User', label: 'User' },
@@ -78,38 +81,51 @@ export default function UsersTable({ users, onStatusChange, onRoleChange }: User
                         ]}
                       />
                     ) : (
-                      user.role
+                      <div onClick={() => setEditingUserRole(user._id)}>
+                        {user.role}
+                      </div>
                     )}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {editingUserId === user.id ? (
+                    {editingUserStatus === user._id ? (
                       <Select
-                        value={editedStatus}
-                        onChange={(value) => setEditedStatus(value ?? '')}
+                        value={user.status}
+                        onChange={(value) => handleStatusChange(user._id, value ?? user.status)}
                         data={[
                           { value: 'Active', label: 'Active' },
-                          { value: 'Disabled', label: 'Disabled' }
+                          { value: 'Disabled', label: 'Disabled' },
+                          { value: 'Pending', label: 'Pending' }
                         ]}
                       />
                     ) : (
-                      <div onClick={() => setEditingUserId(user.id)}>
+                      <div onClick={() => setEditingUserStatus(user._id)}>
                         <UserStatus status={user.status} />
                       </div>
                     )}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {user.createdAt}
+                  {new Date(user.createdAt).toLocaleString('en-US', {
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          second: 'numeric'
+                        })}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {user.createdBy}
+                    {user.profile.phone}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    <button onClick={() => handleDeleteUser(user._id)}>
+                      <IconTrash className="h-5 w-5 text-red-500" /> {/* Adjust size and color as needed */}
+                    </button>
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      {editingUserId === user.id ? (
-                        <Button onClick={() => handleSave(user.id)}>Save</Button>
-                      ) : (
-                        <Button onClick={() => setEditingUserId(user.id)}>Edit</Button>
-                      )}
+                      {/* <Button onClick={() => setEditingUserRole(user.id)}>Edit Role</Button>
+                      <Button onClick={() => setEditingUserStatus(user.id)}>Edit Status</Button> */}
                     </div>
                   </td>
                 </tr>
@@ -120,4 +136,4 @@ export default function UsersTable({ users, onStatusChange, onRoleChange }: User
       </div>
     </div>
   );
-}
+};

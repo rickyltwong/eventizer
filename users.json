@@ -1,0 +1,25 @@
+{
+    "_id": "66647ce8b33f1fa60cf4aaf3",
+    "username": "admin",
+    "role": "Admin",
+    "profile": {
+      "firstName": "Admin",
+      "lastName": "User",
+      "dateOfBirth": "1990-01-01T00:00:00Z",
+      "phone": "1234567890",
+      "avatarUrl": "https://example.com/avatar.jpg",
+      "bio": "This is the admin user."
+    },
+    "preferences": {
+      "language": "en",
+      "notificationSettings": {
+        "emailNotifications": true
+      }
+    },
+    "eventsAttending": [],
+    "eventsHosting": [],
+    "createdAt": "2024-06-08T15:46:48.460Z",
+    "updatedAt": "2024-06-08T15:46:48.460Z",
+    "status": "Active"
+  }
+  
