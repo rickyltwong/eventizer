@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
+import Error from 'next/error';
+//require('dotenv').config();
 
-const connectDB = async () => {
+export const connectDB = async () => {
   try {
-    mongoose.connect(process.env.DATABASE_CONN!);
+    mongoose.connect(process.env.DATABASE_URL!);
     const connection = mongoose.connection;
 
     connection.on('connected', () => {
@@ -20,5 +22,3 @@ const connectDB = async () => {
     console.log(error);
   }
 };
-
-export default connectDB;
