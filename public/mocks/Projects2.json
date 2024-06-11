@@ -1,0 +1,222 @@
+[
+  {
+    "id": "event-1",
+    "title": "Culinary Arts Showcase",
+    "description": "Join us for a spectacular evening of culinary delights as top chefs showcase their skills.",
+    "status": "ongoing",
+    "venue": "Grand Ballroom",
+    "capacity": 300,
+    "remainingSeats": 50,
+    "startDateTime": "2024-06-08 14:00:00",
+    "endDateTime": "2024-06-08 17:00:00"
+  },
+  {
+    "id": "event-2",
+    "title": "Music Festival",
+    "description": "Experience an eclectic mix of music genres with artists from around the globe at our annual festival.",
+    "status": "upcoming",
+    "venue": "City Park",
+    "capacity": 5000,
+    "remainingSeats": 5000,
+    "startDateTime": "2024-08-20 14:00:00",
+    "endDateTime": "2024-08-20 23:00:00"
+  },
+  {
+    "id": "event-3",
+    "title": "Tech Expo 2024",
+    "description": "Discover the latest in technology and innovation at our premier tech expo.",
+    "status": "upcoming",
+    "venue": "Convention Center",
+    "capacity": 1200,
+    "remainingSeats": 1200,
+    "startDateTime": "2024-09-05 14:00:00",
+    "endDateTime": "2024-09-05 20:00:00"
+  },
+  {
+    "id": "event-4",
+    "title": "Art Gallery Opening",
+    "description": "Explore contemporary art from emerging artists at our new gallery opening.",
+    "status": "upcoming",
+    "venue": "Downtown Gallery",
+    "capacity": 200,
+    "remainingSeats": 198,
+    "startDateTime": "2024-07-12 14:00:00",
+    "endDateTime": "2024-07-12 19:00:00"
+  },
+  {
+    "id": "event-5",
+    "title": "Marathon",
+    "description": "Participate in our annual marathon and run for a cause. Register now to secure your spot!",
+    "status": "upcoming",
+    "venue": "City Streets",
+    "capacity": 4000,
+    "remainingSeats": 4000,
+    "startDateTime": "2024-10-18 06:00:00",
+    "endDateTime": "2024-10-18 12:00:00"
+  },
+  {
+    "id": "event-6",
+    "title": "Film Festival",
+    "description": "Join us for a week of spectacular films from talented filmmakers from all corners of the world.",
+    "status": "upcoming",
+    "venue": "Historic Theater",
+    "capacity": 300,
+    "remainingSeats": 100,
+    "startDateTime": "2024-11-10 14:00:00",
+    "endDateTime": "2024-11-17 22:00:00"
+  },
+  {
+    "id": "event-7",
+    "title": "Literary Workshop",
+    "description": "Enhance your writing skills at our literary workshop featuring well-known authors and critics.",
+    "status": "upcoming",
+    "venue": "City Library",
+    "capacity": 150,
+    "remainingSeats": 150,
+    "startDateTime": "2024-09-15 09:00:00",
+    "endDateTime": "2024-09-15 17:00:00"
+  },
+  {
+    "id": "event-8",
+    "title": "Business Conference",
+    "description": "Network with top business leaders and entrepreneurs at our annual business conference.",
+    "status": "upcoming",
+    "venue": "International Hotel",
+    "capacity": 500,
+    "remainingSeats": 200,
+    "startDateTime": "2024-08-05 09:00:00",
+    "endDateTime": "2024-08-07 17:00:00"
+  },
+  {
+    "id": "event-9",
+    "title": "Health and Wellness Fair",
+    "description": "Explore health and wellness booths, attend talks by health professionals, and participate in fitness demos.",
+    "status": "upcoming",
+    "venue": "Community Center",
+    "capacity": 200,
+    "remainingSeats": 200,
+    "startDateTime": "2024-08-15 09:00:00",
+    "endDateTime": "2024-08-15 16:00:00"
+  },
+  {
+    "id": "event-10",
+    "title": "Fashion Week",
+    "description": "Witness the latest trends in fashion at our annual fashion week. A must-attend event for all fashion enthusiasts.",
+    "status": "upcoming",
+    "venue": "Fashion Arena",
+    "capacity": 800,
+    "remainingSeats": 300,
+    "startDateTime": "2024-07-20 17:00:00",
+    "endDateTime": "2024-07-24 22:00:00"
+  },
+  {
+    "id": "event-11",
+    "title": "Culinary Arts Showcase",
+    "description": "Join us for a spectacular evening of culinary delights as top chefs showcase their skills.",
+    "status": "ongoing",
+    "venue": "Grand Ballroom",
+    "capacity": 300,
+    "remainingSeats": 50,
+    "startDateTime": "2024-06-08 14:00:00",
+    "endDateTime": "2024-06-08 17:00:00"
+  },
+  {
+    "id": "event-12",
+    "title": "Music Festival",
+    "description": "Experience an eclectic mix of music genres with artists from around the globe at our annual festival.",
+    "status": "upcoming",
+    "venue": "City Park",
+    "capacity": 5000,
+    "remainingSeats": 5000,
+    "startDateTime": "2024-08-20 14:00:00",
+    "endDateTime": "2024-08-20 23:00:00"
+  },
+  {
+    "id": "event-13",
+    "title": "Tech Expo 2024",
+    "description": "Discover the latest in technology and innovation at our premier tech expo.",
+    "status": "upcoming",
+    "venue": "Convention Center",
+    "capacity": 1200,
+    "remainingSeats": 1200,
+    "startDateTime": "2024-09-05 14:00:00",
+    "endDateTime": "2024-09-05 20:00:00"
+  },
+  {
+    "id": "event-14",
+    "title": "Art Gallery Opening",
+    "description": "Explore contemporary art from emerging artists at our new gallery opening.",
+    "status": "upcoming",
+    "venue": "Downtown Gallery",
+    "capacity": 200,
+    "remainingSeats": 198,
+    "startDateTime": "2024-07-12 14:00:00",
+    "endDateTime": "2024-07-12 19:00:00"
+  },
+  {
+    "id": "event-15",
+    "title": "Marathon",
+    "description": "Participate in our annual marathon and run for a cause. Register now to secure your spot!",
+    "status": "upcoming",
+    "venue": "City Streets",
+    "capacity": 4000,
+    "remainingSeats": 4000,
+    "startDateTime": "2024-10-18 06:00:00",
+    "endDateTime": "2024-10-18 12:00:00"
+  },
+  {
+    "id": "event-16",
+    "title": "Film Festival",
+    "description": "Join us for a week of spectacular films from talented filmmakers from all corners of the world.",
+    "status": "upcoming",
+    "venue": "Historic Theater",
+    "capacity": 300,
+    "remainingSeats": 100,
+    "startDateTime": "2024-11-10 14:00:00",
+    "endDateTime": "2024-11-17 22:00:00"
+  },
+  {
+    "id": "event-17",
+    "title": "Literary Workshop",
+    "description": "Enhance your writing skills at our literary workshop featuring well-known authors and critics.",
+    "status": "upcoming",
+    "venue": "City Library",
+    "capacity": 150,
+    "remainingSeats": 150,
+    "startDateTime": "2024-09-15 09:00:00",
+    "endDateTime": "2024-09-15 17:00:00"
+  },
+  {
+    "id": "event-18",
+    "title": "Business Conference",
+    "description": "Network with top business leaders and entrepreneurs at our annual business conference.",
+    "status": "upcoming",
+    "venue": "International Hotel",
+    "capacity": 500,
+    "remainingSeats": 200,
+    "startDateTime": "2024-08-05 09:00:00",
+    "endDateTime": "2024-08-07 17:00:00"
+  },
+  {
+    "id": "event-19",
+    "title": "Health and Wellness Fair",
+    "description": "Explore health and wellness booths, attend talks by health professionals, and participate in fitness demos.",
+    "status": "upcoming",
+    "venue": "Community Center",
+    "capacity": 200,
+    "remainingSeats": 200,
+    "startDateTime": "2024-08-15 09:00:00",
+    "endDateTime": "2024-08-15 16:00:00"
+  },
+  {
+    "id": "event-20",
+    "title": "Fashion Week",
+    "description": "Witness the latest trends in fashion at our annual fashion week. A must-attend event for all fashion enthusiasts.",
+    "status": "upcoming",
+    "venue": "Fashion Arena",
+    "capacity": 800,
+    "remainingSeats": 300,
+    "startDateTime": "2024-07-20 17:00:00",
+    "endDateTime": "2024-07-24 22:00:00"
+  }
+]
