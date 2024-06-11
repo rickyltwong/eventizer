@@ -1,4 +1,4 @@
-import { ColorSchemeToggle } from "@/components/ColorSchemeToggle";
+import { ColorSchemeToggle } from '@/components/ColorSchemeToggle';
 
 export default function Home() {
   return (

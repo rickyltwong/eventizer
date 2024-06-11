@@ -1,14 +1,17 @@
 'use client';
-import { IconHome, IconCalendarEvent, IconTicket, IconUser, IconChecklist } from '@tabler/icons-react';
+import {
+  IconHome,
+  IconCalendarEvent,
+  IconTicket,
+  IconUser,
+  IconChecklist,
+} from '@tabler/icons-react';
 import React from 'react';
 import { useState } from 'react';
 import { Group, Code } from '@mantine/core';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import {
-  IconSwitchHorizontal,
-  IconLogout,
-} from '@tabler/icons-react';
+import { IconSwitchHorizontal, IconLogout } from '@tabler/icons-react';
 import classes from './Navbar.module.css';
 import Link from 'next/link';
 
@@ -32,8 +35,7 @@ export function Navbar() {
       className={clsx(
         classes.link,
         pathname === item.link ? classes.active : null
-      )}
-    >
+      )}>
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
     </Link>
@@ -49,12 +51,18 @@ export function Navbar() {
       </div>
 
       <div className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a
+          href="#"
+          className={classes.link}
+          onClick={(event) => event.preventDefault()}>
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
           <span>Change account</span>
         </a>
 
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a
+          href="#"
+          className={classes.link}
+          onClick={(event) => event.preventDefault()}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
         </a>
