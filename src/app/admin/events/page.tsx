@@ -39,7 +39,7 @@ function Events() {
     data: events,
     loading: projectsLoading,
     error: projectsError,
-  } = useFetchData('/api/events');
+  } = useFetchData('/admin/api/events');
   const projectItems = events.map((p: any) => (
     <ProjectsCard key={p.id} {...p} {...CARD_PROPS} />
   ));
