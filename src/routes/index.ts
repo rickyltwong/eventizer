@@ -21,8 +21,8 @@ export const PATH_DASHBOARD = {
   default: path(ROOTS_DASHBOARD, '/'),
   events: path(ROOTS_DASHBOARD, '/events'),
   tickets: path(ROOTS_DASHBOARD, '/tickets'),
-  users: path(ROOTS_DASHBOARD, '/users'),
-  attendees: path(ROOTS_DASHBOARD, '/attendees'),
+  users: path(ROOTS_DASHBOARD, '/events/usermanagement'),
+  attendees: path(ROOTS_DASHBOARD, '/events/attendee'),
 };
 
 export const PATH_APPS = {

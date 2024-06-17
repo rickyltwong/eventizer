@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Select } from '@mantine/core';
 import UserStatus from './UserStatus';
 import { User } from './page';
+import AddUser from './AddUser';
 import { IconTrash } from '@tabler/icons-react'
 
 interface UsersTableProps {
@@ -9,12 +10,16 @@ interface UsersTableProps {
   onStatusChange: (id: number, status: string) => void;
   onRoleChange: (id: number, role: string) => void;
   onDeleteUser: (id: number) => void;
+  onSaveUser: (newUser: User) => void;
+  onCancelUser: () => void;
+  showAddUSer: boolean;
 }
 
-export default function UsersTable({ users, onStatusChange, onRoleChange, onDeleteUser }: UsersTableProps){
+export default function UsersTable({ users, onStatusChange, onRoleChange, onDeleteUser, onSaveUser, onCancelUser,showAddUser }: UsersTableProps){
   const [editingUserRole, setEditingUserRole] = useState<number | null>(null);
   const [editingUserStatus, setEditingUserStatus] = useState<number | null>(null);
   const [deleteUser, setDeleteUser] = useState<number | null>(null);
+  const [addUser, setAddUser] = useState<number | null>(null);
 
   const handleRoleChange = (id: number, newRole: string) => {
     onRoleChange(id, newRole);
@@ -30,6 +35,11 @@ export default function UsersTable({ users, onStatusChange, onRoleChange, onDele
     onDeleteUser(id);
     setDeleteUser(null);
   }
+
+  const handleSaveUser = (newUser : User) => {
+    onSaveUser(newUser);
+  };
+
   
   return (
     <div className="mt-6 flow-root">
@@ -133,6 +143,9 @@ export default function UsersTable({ users, onStatusChange, onRoleChange, onDele
             </tbody>
           </table>
         </div>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+         {showAddUser && <AddUser onSubmit={handleSaveUser} onCancel={onCancelUser} /> }
       </div>
     </div>
   );
