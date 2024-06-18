@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Select } from '@mantine/core';
 import UserStatus from './UserStatus';
-import { User } from './page';
+import { User } from '@/app/admin/usermanagement/page';
 import AddUser from './AddUser';
 import { IconTrash } from '@tabler/icons-react'
 

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Button, Select, Input, Container, Title, Group, Box } from '@mantine/core';
-import UserTable from './UserTable';
+import UserTable from '@/components/UserManagement/UserTable';
 
 export interface User {
   id: number;

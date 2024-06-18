@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User } from './page';
+import { User } from '@/app/admin/usermanagement/page';
 import { Button } from '@mantine/core';
 
 interface AddUserProps {

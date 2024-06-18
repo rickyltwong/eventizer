@@ -1,6 +1,6 @@
-import { analytics } from "@/app/admin/analytics/analytics";
-import { AnalyticsDashboard } from "@/app/admin/analytics/AnalyticsDashboard";
-import { getDate } from "@/app/admin/analytics";
+import { analytics } from "@/components/Analytics/analytics";
+import { AnalyticsDashboard } from "@/components/Analytics/AnalyticsDashboard";
+import { getDate } from "@/components/Analytics/analytics";
 
 const page = async () => {
     const pageviews = await analytics.retreiveDays("pageview", 7)
