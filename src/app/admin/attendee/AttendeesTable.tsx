@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import { Checkbox, Button, Select } from '@mantine/core';
 import AttendeeStatus from './AttendeeStatus';

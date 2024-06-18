@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { Input, Select, Button, Container, Title, Group, Box } from '@mantine/core';
 import AttendeesTable from './AttendeesTable';
+import { PATH_DASHBOARD } from '@/routes';
+
 
 export interface Attendee {
   id: number;

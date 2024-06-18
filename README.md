@@ -15,5 +15,5 @@ This is a event management system for a fictional company called "Balance Studio
 - `/admin` - Admin dashboard
 - `/admin/events` - Events management page
 - `/admin/events/usermanagement` - User management page
-- `/admin/analytics` - Analytics page
+- `/admin/analytics` - Admin dashboard
 - `/admin/tickets` - Tickets management page

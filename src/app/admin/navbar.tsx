@@ -19,8 +19,8 @@ const data = [
   { link: '/admin/analytics', label: 'Home', icon: IconHome },
   { link: '/admin/events', label: 'Events', icon: IconCalendarEvent },
   { link: '/admin/tickets', label: 'Tickets', icon: IconTicket },
-  { link: '/admin/events/users', label: 'Users', icon: IconUser },
-  { link: '/admin/events/attendees', label: 'Attendees', icon: IconChecklist },
+  { link: '/admin/users', label: 'Users', icon: IconUser },
+  { link: '/admin/attendees', label: 'Attendees', icon: IconChecklist },
 ];
 
 export function Navbar() {
