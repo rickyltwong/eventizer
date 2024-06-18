@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-import Error from 'next/error';
-//require('dotenv').config();
+
 
 
 export const connectDB = async() => {

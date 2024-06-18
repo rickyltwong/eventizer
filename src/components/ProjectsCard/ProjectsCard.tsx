@@ -19,7 +19,7 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 import { Surface, EventForm } from '@/components';
-import { IconNotebook, IconShare, IconEdit, IconBuilding } from '@tabler/icons-react';
+import { IconNotebook, IconShare, IconEdit, IconBuilding,  IconTrash} from '@tabler/icons-react';
 import classes from './ProjectsCard.module.css';
 import { useDisclosure } from '@mantine/hooks';
 import { format } from 'date-fns';
@@ -153,22 +153,7 @@ const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
           <Text fz="sm" lineClamp={1}>{venueName}</Text>
         </Group>
 
-        {/* <Avatar.Group spacing="sm">
-          <Tooltip label="Anne Doe">
-            <Avatar src={avatars[0]} size="md" radius="xl" />
-          </Tooltip>
-          <Tooltip label="Alex Doe">
-            <Avatar src={avatars[1]} size="md" radius="xl" />
-          </Tooltip>
-          <Tooltip label="Abby Doe">
-            <Avatar src={avatars[2]} size="md" radius="xl" />
-          </Tooltip>
-          <Tooltip label="and 5 others">
-            <Avatar size="md" radius="xl">
-              +5
-            </Avatar>
-          </Tooltip>
-        </Avatar.Group> */}
+
 
         <Divider />
 
@@ -186,6 +171,7 @@ const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
           >
             Edit
           </Button>
+          <IconTrash style={{ width: (20), height: (20) }} color="var(--mantine-color-red-filled)"></IconTrash>
         </Group>
       </Stack>
     </Surface>
