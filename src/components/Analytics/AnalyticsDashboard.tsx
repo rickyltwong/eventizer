@@ -1,6 +1,6 @@
 "use client";
 
-import { analytics } from '@/app/admin/analytics/analytics';
+import { analytics } from './analytics';
 import { BarChart, DonutChart, Card } from '@tremor/react';
 
 interface AnalyticsDashboardProps {

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Button, Select, Input, Container, Title, Group, Box } from '@mantine/core';
-import UserTable from './UserTable';
+import UserTable from '@/components/UserManagement/UserTable';
 
 export interface User {
   id: number;
@@ -18,6 +18,9 @@ export default function UserManagementPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [users, setUsers] = useState<User[]>([]);
+  const [showAddUser, setShowAddUser] = useState(false);
+  const [newUser, setNewUser] = useState<User | null>(null);
+  const [addingUser, setAddingUser] = useState<User | null>(null); 
   
 
   useEffect(() => {
@@ -108,6 +111,48 @@ export default function UserManagementPage() {
     }
   };
 
+  const handleAddUser = async () => {
+    setNewUser({
+      id: Math.random(),
+      username: '',
+      role: '',
+      status: '',
+      createdAt: '',
+      profile: {
+        phone: ''
+      }
+    });
+    
+    setShowAddUser(!showAddUser);
+  }
+
+  const handleSaveUser = async (newUser1 : User) => { 
+    console.log(newUser1);
+    try {
+      const response = await fetch('/api/admin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser1),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to add user');
+      }
+      const addedUser = await response.json();
+      setUsers(prevUsers => [...prevUsers, addedUser]);
+      setShowAddUser(false); // Hide the AddUserForm after successful addition
+    } catch (error) {
+      console.error('Error adding user:', error);
+    }
+  };
+
+  const handleCancelAddUser = () => {
+    // Reset newUser and hide the Add User section
+    //setNewUser(null);
+    setShowAddUser(false);
+  };
+
   return (
     <Container size="lg" my="md">
       <Box mb="xl">
@@ -133,7 +178,7 @@ export default function UserManagementPage() {
             ]}
             style={{ marginLeft: '1rem' }}
           />
-          <Button variant="filled" ml="md">
+          <Button variant="filled" ml="md" onClick={handleAddUser}>
             Add User
           </Button>
         </Group>
@@ -142,6 +187,10 @@ export default function UserManagementPage() {
           onStatusChange={handleStatusChange}
           onRoleChange={handleRoleChange}
           onDeleteUser={handleDeleteUser}
+          showAddUser={showAddUser}
+        newUser={newUser}
+        onSaveUser={handleSaveUser}
+        onCancelUser={handleCancelAddUser}
         />
       </Box>
     </Container>

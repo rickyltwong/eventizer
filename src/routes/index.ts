@@ -18,11 +18,11 @@ const ROOTS_ABOUT = '/pages/about';
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
-  default: path(ROOTS_DASHBOARD, '/'),
+  default: path(ROOTS_DASHBOARD, '/analytics'),
   events: path(ROOTS_DASHBOARD, '/events'),
   tickets: path(ROOTS_DASHBOARD, '/tickets'),
-  users: path(ROOTS_DASHBOARD, '/users'),
-  attendees: path(ROOTS_DASHBOARD, '/attendees'),
+  users: path(ROOTS_DASHBOARD, '/usermanagement'),
+  attendees: path(ROOTS_DASHBOARD, '/attendee'),
 };
 
 export const PATH_APPS = {

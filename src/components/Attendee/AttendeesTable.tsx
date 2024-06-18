@@ -1,7 +1,8 @@
+'use client'
 import React, { useState } from 'react';
 import { Checkbox, Button, Select } from '@mantine/core';
 import AttendeeStatus from './AttendeeStatus';
-import { Attendee } from './page';
+import { Attendee } from '@/app/admin/attendee/page';
 
 interface AttendeesTableProps {
   attendees: Attendee[];
