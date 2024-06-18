@@ -16,6 +16,8 @@ import { ErrorAlert, PageHeader, ProjectsCard, EventForm } from '@/components';
 import { useFetchData } from '../../../hooks';
 import { useDisclosure } from '@mantine/hooks';
 
+import { Event } from '@/types/event';
+
 const items = [
   { title: 'Dashboard', href: PATH_DASHBOARD.default },
   { title: 'Events', href: '#' },
@@ -38,7 +40,7 @@ function Events() {
     data: events,
     loading: projectsLoading,
     error: projectsError,
-  } = useFetchData('/api/events/v2');
+  } = useFetchData('/api/events');
   const projectItems = events.map((p: any) => (
     <ProjectsCard key={p.id} {...p} {...CARD_PROPS} />
   ));

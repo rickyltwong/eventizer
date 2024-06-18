@@ -1,32 +1,9 @@
-import { Document, Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
+import { IEvent, IEventAddress } from '@/types/event';
 
-export interface IEventAddress extends Document {
-  venueName: string;
-  addressLine1?: string;
-  addressLine2?: string;
-  city: string;
-  state: string;
-  country?: string;
-  postalCode?: string;
-  latitude?: number;
-  longitude?: number;
-}
+// https://mongoosejs.com/docs/typescript.html
 
-export interface IEvent extends Document {
-  eventName: string;
-  eventDescription: string;
-  eventAddress: IEventAddress;
-  eventStartDateTime: Date;
-  eventEndDateTime: Date;
-  instructorName: string;
-  eventType: string;
-  capacity: number;
-  remainingSeats: number;
-  difficulty: string;
-  minimumAge: number;
-}
-
-export const EventAddressSchema = new Schema<IEventAddress>({
+const EventAddressSchema = new Schema<IEventAddress>({
   venueName: { type: String, required: true },
   addressLine1: { type: String },
   addressLine2: { type: String },
@@ -38,7 +15,7 @@ export const EventAddressSchema = new Schema<IEventAddress>({
   longitude: { type: Number },
 });
 
-export const EventSchema = new Schema<IEvent>(
+const EventSchema = new Schema<IEvent>(
   {
     eventName: { type: String, required: true },
     eventDescription: { type: String, required: true },
@@ -55,8 +32,6 @@ export const EventSchema = new Schema<IEvent>(
   { timestamps: true }
 );
 
-const Event = models.events || model('events', EventSchema);
-
-export default Event;
+export default models.events || model('events', EventSchema);
 
 // Ref: https://github.com/vercel/next.js/blob/canary/examples/with-mongodb-mongoose/models/Pet.ts

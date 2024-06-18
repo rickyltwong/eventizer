@@ -23,8 +23,7 @@ import HeroClasses from '@/components/HeroTitle.module.css';
 import ResponsiveContainer from '@/components/ResponsiveContainer';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Event } from '@/types';
-
+import { IEvent } from '@/types/event';
 import EventCalendar from '@/components/EventCalendar';
 
 import dynamic from 'next/dynamic';
@@ -46,7 +45,7 @@ export default function Page(): React.JSX.Element {
   const [activeTab, setActiveTab] = useState<string | null>('gallery');
 
   // Gallery tab
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<IEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = matches ? 6 : 3;
   const [pageCount, setPageCount] = useState(1);
@@ -54,7 +53,7 @@ export default function Page(): React.JSX.Element {
   const [inclCategory, setInclCategory] = useState<string[]>([]);
 
   const filteredEvents = events
-    .filter((event: Event) => {
+    .filter((event: IEvent) => {
       if (inclCategory.length === 0) {
         return true;
       }

@@ -1,24 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, ObjectId } from 'mongodb';
-import clientPromise from '@/app/lib/mongodb';
-
-const MONGODB_URI = process.env.MONGODB_URI as string;
-
-// Ensure the environment variable is defined
-if (!MONGODB_URI) {
-  throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
-  );
-}
+import dbConnect from '@/config/connectDB';
+import Events from '@/models/Event';
+import { IEvent } from '@/types/event';
 
 export async function GET() {
-  try {
-    const client = await clientPromise;
-    const database = client.db('Eventizer');
-    const collection = database.collection('events');
-    const allData = await collection.find({}).toArray();
+  await dbConnect();
 
-    return NextResponse.json(allData, { status: 200 });
+  try {
+    const events = (await Events.find({})) as IEvent[];
+
+    return NextResponse.json(events, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
@@ -28,14 +19,60 @@ export async function GET() {
   }
 }
 
-export async function GETEventById(id: string) {
-  try {
-    const client = await clientPromise;
-    const database = client.db('Eventizer');
-    const collection = database.collection('events');
-    const eventData = await collection.findOne({ _id: new ObjectId(id) });
+export async function POST(req: NextRequest) {
+  await dbConnect();
 
-    return NextResponse.json(eventData, { status: 200 });
+  try {
+    const body = await req.json();
+    const event = new Events(body);
+    await event.save();
+
+    return NextResponse.json(event, { status: 201 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { message: 'Something went wrong!' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  await dbConnect();
+
+  try {
+    const body = await req.json();
+    const event = await Events.findByIdAndUpdate(body.id, body, { new: true });
+
+    if (!event) {
+      return NextResponse.json({ message: 'Event not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(event, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { message: 'Something went wrong!' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  await dbConnect();
+
+  try {
+    const body = await req.json();
+    const event = await Events.findByIdAndDelete(body.id);
+
+    if (!event) {
+      return NextResponse.json({ message: 'Event not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      { message: 'Event deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json(

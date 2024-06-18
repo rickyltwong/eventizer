@@ -1,4 +1,4 @@
-export interface EventAddress {
+interface IEventAddress {
   venueName: string;
   addressLine1?: string;
   addressLine2?: string;
@@ -10,14 +10,14 @@ export interface EventAddress {
   longitude?: number;
 }
 
-export interface TicketClass {
+interface TicketClass {
   ticketType: string;
   price: number;
   benefits: string[];
   availability: number;
 }
 
-export interface Discount {
+interface Discount {
   discountCode: string;
   discountAmount: number;
   discountType: 'Fixed' | 'Percentage' | string;
@@ -25,7 +25,7 @@ export interface Discount {
   discountExpiry: string;
 }
 
-export interface Event {
+interface IEvent {
   eventName: string;
   eventDescription: string;
   eventAddress: EventAddress;
@@ -42,3 +42,5 @@ export interface Event {
   ticketsClasses: TicketClass[];
   discounts: Discount[];
 }
+
+export { IEvent, IEventAddress, TicketClass, Discount };
