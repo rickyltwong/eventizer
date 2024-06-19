@@ -29,7 +29,10 @@ import EventCalendar from '@/components/EventCalendar';
 import dynamic from 'next/dynamic';
 
 // import MapView from '@/components/MapView';
-const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
+const MapView = dynamic(
+  () => import('@/components/MapView')
+  // , { ssr: false }
+);
 
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -39,6 +42,15 @@ type UserLocation = {
 } | null;
 
 const categories: string[] = ['Yoga', 'Meditation', 'Fitness'];
+
+enum LocationState {
+  SUCCESS = 'success',
+  PERMISSION_DENIED = 'permission_denied',
+  POSITION_UNAVAILABLE = 'position_unavailable',
+  TIMEOUT = 'timeout',
+  UNKNOWN_ERROR = 'unknown_error',
+  LOADING = 'loading',
+}
 
 export default function Page(): React.JSX.Element {
   const matches = useMediaQuery('(min-width: 48em)');
@@ -81,7 +93,10 @@ export default function Page(): React.JSX.Element {
   };
 
   // Events Near Me Tab
-  const [userLocation, setUserLocation] = useState<UserLocation>(null);
+  const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
+  const [locationState, setLocationState] = useState<LocationState>(
+    LocationState.LOADING
+  );
 
   // Fetch events
   useEffect(() => {
@@ -117,9 +132,24 @@ export default function Page(): React.JSX.Element {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           });
+          setLocationState(LocationState.SUCCESS);
         },
         (error) => {
           console.error('Error obtaining location', error);
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              setLocationState(LocationState.PERMISSION_DENIED);
+              break;
+            case error.POSITION_UNAVAILABLE:
+              setLocationState(LocationState.POSITION_UNAVAILABLE);
+              break;
+            case error.TIMEOUT:
+              setLocationState(LocationState.TIMEOUT);
+              break;
+            default:
+              setLocationState(LocationState.UNKNOWN_ERROR);
+              break;
+          }
         }
       );
     }
@@ -272,16 +302,28 @@ export default function Page(): React.JSX.Element {
             )}
           </Tabs.Panel>
           <Tabs.Panel value="map">
-            {!isLoading && (
+            {/* {!isLoading && (
               <MapView
                 events={events}
                 center={
                   userLocation
                     ? [userLocation.latitude, userLocation.longitude]
-                    : [43.6532, -79.3832] // Toronto
+                    : [43.6532, -79.3832] // Default to Toronto
                 }
-                zoom={15}
+                zoom={13}
                 isUserLocation={userLocation !== null}
+              />
+            )} */}
+            {locationState !== LocationState.LOADING && (
+              <MapView
+                events={events}
+                center={
+                  locationState === LocationState.SUCCESS
+                    ? [userLocation.latitude, userLocation.longitude]
+                    : [43.6532, -79.3832] // Default to Toronto
+                }
+                zoom={13}
+                isUserLocation={locationState === LocationState.SUCCESS}
               />
             )}
           </Tabs.Panel>
