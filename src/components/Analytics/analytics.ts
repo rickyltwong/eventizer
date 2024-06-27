@@ -1,64 +1,69 @@
-import { redis } from "./redis"
-import { getDate } from "./Analytics"
-//import { parse } from "date-fns"
+import mongoose, { Schema, Document } from 'mongoose';
+import connectDB from '@/config/connectDB';
 
-type AnalyticsArgs ={
-    retention?: number
+interface VisitorDocument extends Document {
+  date: Date;
+  count: number;
 }
-type TrackOptions ={
-    persist?: boolean
-}
+
+const VisitorSchema = new Schema({
+  date: { type: Date, required: true },
+  count: { type: Number, default: 0 },
+});
+
+const VisitorModel = mongoose.model<VisitorDocument>('Visitor', VisitorSchema);
+
 export class Analytics {
-    private retention : number = 60 * 60 * 24 * 7
+  constructor() {
+    connectDB();
+  }
 
-    constructor(opts?: AnalyticsArgs){
-        if (opts?.retention) this.retention=opts.retention
-    }
+  async trackVisitor() {
+    const today = new Date();
+    const formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
-    async track(namespace: string, event: object = {}, opts?: TrackOptions){
-
-        let key=`analytics::${namespace}`
-
-        if(!opts?.persist){
-            key+= `::${getDate()}`
-        }
-
-        //db call to persist this event
-        await redis.hincrby(key,JSON.stringify(event), 1)
-        if(opts?.persist) await redis.expire(key, this.retention)
-    }
-    async retreive(namespace: string, date: string){
-        const res=await redis.hgetall<Record<string, string>>(`analytics::${namespace}::${date}`)
-
-        return{
-            date,
-            events: Object.entries(res ?? []).map(([key, value]) =>({
-                [key]: Number(value)
-            })) 
-        }
-    }
-
-    async retreiveDays(namespace: string, nDays: number){
-        type AnalyticsPromise = ReturnType<typeof analytics.retreive>
-        const promises: AnalyticsPromise[] = []
-        for(let i=0;i<nDays;i++)
-            {
-                const formatteddate = getDate(i)
-                const promise = analytics.retreive(namespace, formatteddate)
-                promises.push(promise)
-            }
-        const fetched = await Promise.all(promises)
-        //const data = fetched.sort((a,b) =>{
-            //if (parse(a.date, 'yyyy/MM/dd', new Date()) > parse(b.date, 'yyyy/MM/dd', new Date()))
-             //   return 1
-            //else return 0
-            
-        //})
-        //return data
+    try {
+      await VisitorModel.findOneAndUpdate(
+        { date: formattedDate },
+        { $inc: { count: 1 } },
+        { upsert: true }
+      );
+    } catch (error) {
+      console.error('Error tracking visitor:', error);
     }
   }
 
-  export const analytics=new Analytics();
+  async getVisitorCount(date: string) {
+    try {
+      const res = await VisitorModel.findOne({ date });
+      return res?.count ?? 0;
+    } catch (error) {
+      console.error('Error retrieving visitor count:', error);
+      return 0;
+    }
+  }
 
-  
-  
+  async getVisitorsLast7Days() {
+    const promises: Promise<any>[] = [];
+    const today = new Date();
+
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+      const promise = this.getVisitorCount(formattedDate);
+      promises.push(promise);
+    }
+
+    try {
+      const visitorCounts = await Promise.all(promises);
+      return visitorCounts.reverse(); // Reverse to show most recent day first
+    } catch (error) {
+      console.error('Error retrieving visitor counts for last 7 days:', error);
+      return [];
+    }
+  }
+}
+
+const analytics = new Analytics();
+export default analytics;

@@ -20,7 +20,7 @@ const data = [
   { link: '/admin/events', label: 'Events', icon: IconCalendarEvent },
   { link: '/admin/tickets', label: 'Tickets', icon: IconTicket },
   { link: '/admin/users', label: 'Users', icon: IconUser },
-  { link: '/admin/attendees', label: 'Attendees', icon: IconChecklist },
+  { link: '/admin/attendee', label: 'Attendees', icon: IconChecklist },
 ];
 
 export function Navbar() {

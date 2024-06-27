@@ -4,10 +4,13 @@ import dbConnect from '@/config/connectDB';
 import User from '@/models/User';
 
 // src/app/api/admin/route.js
-   let r=dbConnect();
-   console.log('db connected! '+JSON.stringify(r));
+   //let r=dbConnect();
+   //console.log('db connected! '+JSON.stringify(r));
+
+   
 
 export async function GET(req: NextRequest, res: NextResponse) {
+  await dbConnect();
   const users = await User.find({});
    console.log(users);
    return new Response(JSON.stringify(users), {
@@ -19,6 +22,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 export async function PUT(req: NextRequest, res: NextResponse) {
+  await dbConnect();
   const reqBody = await req.json();
   const { id, status, role } = reqBody;
   try{
@@ -47,6 +51,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
+  await dbConnect();
   const reqBody = await req.json();
   const user = await User.create(reqBody);
    console.log(user);
@@ -59,6 +64,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 
 export async function DELETE(req: NextRequest, res: NextResponse) {
+  await dbConnect();
   const reqBody = await req.json();
   const { id} = reqBody;
   let r=await User.findByIdAndDelete(id);         
