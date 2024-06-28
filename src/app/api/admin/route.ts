@@ -4,10 +4,8 @@ import dbConnect from "@/config/connectDB";
 import User from "@/models/User";
 
 // src/app/api/admin/route.js
-   //let r=dbConnect();
-   //console.log('db connected! '+JSON.stringify(r));
-
-   
+//let r=dbConnect();
+//console.log('db connected! '+JSON.stringify(r));
 
 export async function GET(req: NextRequest, res: NextResponse) {
   await dbConnect();
