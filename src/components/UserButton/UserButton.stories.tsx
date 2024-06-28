@@ -1,19 +1,19 @@
-import type { StoryObj } from '@storybook/react';
-import MOCKS from '../../../public/mocks/UserProfile.json';
+import type { StoryObj } from "@storybook/react";
+import MOCKS from "../../../public/mocks/UserProfile.json";
 
-import UserButton from './UserButton';
-import { IconArrowCurveRight } from '@tabler/icons-react';
+import UserButton from "./UserButton";
+import { IconArrowCurveRight } from "@tabler/icons-react";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
-  title: 'User/Buttons',
+  title: "User/Buttons",
   component: UserButton,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
-    layout: 'centered',
+    layout: "centered",
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;

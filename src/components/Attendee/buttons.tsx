@@ -1,6 +1,6 @@
-import { ActionIcon } from '@mantine/core';
-import { IconPencil, IconTrash } from '@tabler/icons-react';
-import Link from 'next/link';
+import { ActionIcon } from "@mantine/core";
+import { IconPencil, IconTrash } from "@tabler/icons-react";
+import Link from "next/link";
 
 // UpdateAttendee Component
 export function UpdateAttendee({ id }: { id: string }) {

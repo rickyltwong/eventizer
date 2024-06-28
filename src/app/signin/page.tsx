@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Paper,
@@ -18,11 +18,11 @@ import { useContext, useState } from "react";
 import axios from "axios";
 
 const Page = (props: any) => {
- const theme = useMantineTheme();
-  
+  const theme = useMantineTheme();
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [user, setUser] =useState({
+  const [user, setUser] = useState({
     username: "",
     password: "",
   });
@@ -41,7 +41,6 @@ const Page = (props: any) => {
         const data = await response.data;
         console.error("Error:", data);
       }
-
     } catch (error: any) {
       console.log("Login failed", error.message);
     } finally {
@@ -51,7 +50,7 @@ const Page = (props: any) => {
         username: "",
         password: "",
       });
-    };
+    }
   };
 
   return (
@@ -68,7 +67,9 @@ const Page = (props: any) => {
           placeholder=""
           size="md"
           value={user.username}
-          onChange={(e) => setUser({...user, username: e.currentTarget.value})}
+          onChange={(e) =>
+            setUser({ ...user, username: e.currentTarget.value })
+          }
         />
         <PasswordInput
           label="Password"
@@ -76,7 +77,9 @@ const Page = (props: any) => {
           mt="md"
           size="md"
           value={user.password}
-          onChange={(e) => setUser({...user, password: e.currentTarget.value})}
+          onChange={(e) =>
+            setUser({ ...user, password: e.currentTarget.value })
+          }
         />{" "}
         <Anchor
           href="/auth/forgot-password"
@@ -120,8 +123,6 @@ const Page = (props: any) => {
       </Paper>
     </div>
   );
-
-
 };
 
 export default Page;

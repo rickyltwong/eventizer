@@ -1,6 +1,6 @@
-import { Button, ButtonProps } from '@mantine/core';
+import { Button, ButtonProps } from "@mantine/core";
 
-type ButtonsProps = { orientation?: 'horizontal' | 'vertical' } & ButtonProps;
+type ButtonsProps = { orientation?: "horizontal" | "vertical" } & ButtonProps;
 
 /**
  * For more docs see - https://mantine.dev/core/button/#buttongroup

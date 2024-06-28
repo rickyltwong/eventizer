@@ -43,7 +43,7 @@ const Page = (props: any) => {
         value.length < 10 ? "invalid phone number" : null,
       password: (value) =>
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-          value
+          value,
         )
           ? null
           : "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
@@ -164,8 +164,8 @@ const Page = (props: any) => {
             {...form.getInputProps("role")}
           />
           <Text c="red" ta="center" size="xs" mt={8}>
-            By clicking ‘Create account’, I fully acknowledge Eventizer Terms
-            of Service and Privacy Policy
+            By clicking ‘Create account’, I fully acknowledge Eventizer Terms of
+            Service and Privacy Policy
           </Text>
           <Button
             size="xs"

@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { Autocomplete, Group, Burger, rem } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
-import { MantineLogo } from '@mantinex/mantine-logo';
-import classes from './HeaderSearch.module.css';
-import { ColorSchemeToggle } from './ColorSchemeToggle';
-import Image from 'next/image';
-import Link from 'next/link';
+import { Autocomplete, Group, Burger, rem } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { IconSearch } from "@tabler/icons-react";
+import { MantineLogo } from "@mantinex/mantine-logo";
+import classes from "./HeaderSearch.module.css";
+import { ColorSchemeToggle } from "./ColorSchemeToggle";
+import Image from "next/image";
+import Link from "next/link";
 
 const links = [
-  { link: '/about-us', label: 'About Us' },
-  { link: '/signin', label: 'Log In' },
-  { link: '/signup', label: 'Sign Up' },
+  { link: "/about-us", label: "About Us" },
+  { link: "/signin", label: "Log In" },
+  { link: "/signup", label: "Sign Up" },
 ];
 
 export function HeaderSearch() {

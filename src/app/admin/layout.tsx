@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import { ModalsProvider } from '@mantine/modals';
-import { Notifications } from '@mantine/notifications';
-import { Open_Sans } from 'next/font/google';
-import { myTheme } from '@/theme';
-import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css';
-import '@mantine/tiptap/styles.css';
-import '@mantine/carousel/styles.css';
-import '@mantine/notifications/styles.css';
-import 'mantine-datatable/styles.layer.css';
-import './globals.css';
-import Head from 'next/head';
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
+import { Notifications } from "@mantine/notifications";
+import { Open_Sans } from "next/font/google";
+import { myTheme } from "@/theme";
+import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
+import "@mantine/tiptap/styles.css";
+import "@mantine/carousel/styles.css";
+import "@mantine/notifications/styles.css";
+import "mantine-datatable/styles.layer.css";
+import "./globals.css";
+import Head from "next/head";
 // If loading a variable font, you don't need to specify the font weight
 const openSans = Open_Sans({
-  subsets: ['latin'],
-  display: 'swap',
+  subsets: ["latin"],
+  display: "swap",
 });
 export default function RootLayout({
   children,
@@ -56,7 +56,8 @@ export default function RootLayout({
 
         <script
           src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
-          defer></script>
+          defer
+        ></script>
         <ColorSchemeScript defaultColorScheme="auto" />
       </Head>
 

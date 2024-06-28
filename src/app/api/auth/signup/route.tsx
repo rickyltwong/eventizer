@@ -5,9 +5,8 @@ import bcryptjs from "bcryptjs";
 
 // Call the connect function to establish a connection to the database.
 
-
 export async function POST(request: NextRequest) {
-await dbConnect();
+  await dbConnect();
   try {
     const reqBody = await request.json();
     const {
@@ -21,14 +20,14 @@ await dbConnect();
     } = reqBody;
     // Parses the request body to extract username, email, and password.
 
-     console.log("in here");
+    console.log("in here");
 
     const user = await (User.findOne({ username }) || User.findOne({ email }));
     if (user) {
-        console.log("existing user");
+      console.log("existing user");
       return NextResponse.json(
         { error: "User already exists" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 

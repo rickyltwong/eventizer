@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   ActionIcon,
@@ -16,7 +16,7 @@ import {
   Tooltip,
   useMantineColorScheme,
   useMantineTheme,
-} from '@mantine/core';
+} from "@mantine/core";
 import {
   IconCircleHalf2,
   IconLayoutSidebarLeftCollapse,
@@ -25,12 +25,10 @@ import {
   IconPower,
   IconSearch,
   IconSunHigh,
-} from '@tabler/icons-react';
-import { useMediaQuery } from '@mantine/hooks';
-
+} from "@tabler/icons-react";
+import { useMediaQuery } from "@mantine/hooks";
 
 const ICON_SIZE = 20;
-
 
 type HeaderNavProps = {
   mobileOpened?: boolean;
@@ -43,11 +41,11 @@ const HeaderNav = (props: HeaderNavProps) => {
   const { desktopOpened, toggleDesktop, toggleMobile, mobileOpened } = props;
   const theme = useMantineTheme();
   const { setColorScheme, colorScheme } = useMantineColorScheme();
-  const laptop_match = useMediaQuery('(max-width: 992px)');
-  const tablet_match = useMediaQuery('(max-width: 768px)');
-  const mobile_match = useMediaQuery('(max-width: 425px)');
+  const laptop_match = useMediaQuery("(max-width: 992px)");
+  const tablet_match = useMediaQuery("(max-width: 768px)");
+  const mobile_match = useMediaQuery("(max-width: 425px)");
 
-  const handleColorSwitch = (mode: 'light' | 'dark' | 'auto') => {
+  const handleColorSwitch = (mode: "light" | "dark" | "auto") => {
     setColorScheme(mode);
   };
 
@@ -75,7 +73,7 @@ const HeaderNav = (props: HeaderNavProps) => {
             placeholder="search"
             rightSection={<IconSearch size={ICON_SIZE} />}
             ml="md"
-            style={{ width: tablet_match ? 'auto' : rem(400) }}
+            style={{ width: tablet_match ? "auto" : rem(400) }}
           />
         )}
       </Group>
@@ -85,7 +83,7 @@ const HeaderNav = (props: HeaderNavProps) => {
             <IconSearch size={ICON_SIZE} />
           </ActionIcon>
         )}
-        
+
         <Tooltip label="Logout">
           <ActionIcon>
             <IconPower size={ICON_SIZE} />
@@ -95,9 +93,9 @@ const HeaderNav = (props: HeaderNavProps) => {
           <Menu.Target>
             <Tooltip label="Switch color modes">
               <ActionIcon variant="light">
-                {colorScheme === 'auto' ? (
+                {colorScheme === "auto" ? (
                   <IconCircleHalf2 size={ICON_SIZE} />
-                ) : colorScheme === 'dark' ? (
+                ) : colorScheme === "dark" ? (
                   <IconMoonStars size={ICON_SIZE} />
                 ) : (
                   <IconSunHigh size={ICON_SIZE} />
@@ -111,13 +109,13 @@ const HeaderNav = (props: HeaderNavProps) => {
             </Menu.Label>
             <Menu.Item
               leftSection={<IconSunHigh size={16} />}
-              onClick={() => setColorScheme('light')}
+              onClick={() => setColorScheme("light")}
             >
               Light
             </Menu.Item>
             <Menu.Item
               leftSection={<IconMoonStars size={16} />}
-              onClick={() => setColorScheme('dark')}
+              onClick={() => setColorScheme("dark")}
             >
               Dark
             </Menu.Item>

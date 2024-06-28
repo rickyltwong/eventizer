@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const DATABASE_CONN = process.env.DATABASE_CONN!;
 
 if (!DATABASE_CONN) {
   console.log(
-    'MONGODB_URL is not defined in environment variables, exiting...'
+    "MONGODB_URL is not defined in environment variables, exiting...",
   );
   process.exit(1);
 }
@@ -12,25 +12,25 @@ if (!DATABASE_CONN) {
 const connectDB = async () => {
   try {
     if (mongoose.connection.readyState === 1) {
-      console.log('Already connected to MongoDB');
+      console.log("Already connected to MongoDB");
       return;
     }
 
     await mongoose.connect(DATABASE_CONN);
     const connection = mongoose.connection;
 
-    connection.on('connected', () => {
-      console.log('MongoDB connected successfully');
+    connection.on("connected", () => {
+      console.log("MongoDB connected successfully");
     });
 
-    connection.on('error', (err) => {
+    connection.on("error", (err) => {
       console.log(
-        'MongoDB connection error. Please make sure MongoDB is running. ' + err
+        "MongoDB connection error. Please make sure MongoDB is running. " + err,
       );
       process.exit();
     });
   } catch (error) {
-    console.log('Something went wrong!');
+    console.log("Something went wrong!");
     console.log(error);
   }
 };

@@ -1,5 +1,5 @@
-import { ActionIcon } from '@mantine/core';
-import { IconTrash } from '@tabler/icons-react';
+import { ActionIcon } from "@mantine/core";
+import { IconTrash } from "@tabler/icons-react";
 
 export function DeleteAttendee({ id }: { id: string }) {
   const handleDelete = () => {

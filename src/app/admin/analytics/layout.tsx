@@ -1,12 +1,11 @@
-'use client';
+"use client";
 
-import { AppShell, Container, rem, useMantineTheme } from '@mantine/core';
-import { ReactNode } from 'react';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import AppMain from '@/components/AppMain';
-import Navigation from '@/components/Navigation';
-import HeaderNav from '@/components/HeaderNav';
-
+import { AppShell, Container, rem, useMantineTheme } from "@mantine/core";
+import { ReactNode } from "react";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import AppMain from "@/components/AppMain";
+import Navigation from "@/components/Navigation";
+import HeaderNav from "@/components/HeaderNav";
 
 type Props = {
   children: ReactNode;
@@ -14,7 +13,7 @@ type Props = {
 
 function AppsLayout({ children }: Props) {
   const theme = useMantineTheme();
-  const tablet_match = useMediaQuery('(max-width: 768px)');
+  const tablet_match = useMediaQuery("(max-width: 768px)");
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
@@ -25,7 +24,7 @@ function AppsLayout({ children }: Props) {
       footer={{ height: 60 }}
       navbar={{
         width: 300,
-        breakpoint: 'md',
+        breakpoint: "md",
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
       padding={0}
@@ -33,7 +32,7 @@ function AppsLayout({ children }: Props) {
       <AppShell.Header
         style={{
           height: rem(60),
-          border: 'none',
+          border: "none",
           boxShadow: tablet_match ? theme.shadows.md : theme.shadows.sm,
         }}
       >

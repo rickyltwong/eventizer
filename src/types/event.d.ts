@@ -20,7 +20,7 @@ interface TicketClass {
 interface Discount {
   discountCode: string;
   discountAmount: number;
-  discountType: 'Fixed' | 'Percentage' | string;
+  discountType: "Fixed" | "Percentage" | string;
   discountApplicable: string;
   discountExpiry: string;
 }
@@ -32,11 +32,11 @@ interface IEvent {
   eventStartDateTime: Date;
   eventEndDateTime: Date;
   instructorName: string;
-  eventType: 'Yoga' | 'Meditation' | 'Fitness' | string;
+  eventType: "Yoga" | "Meditation" | "Fitness" | string;
   capacity: number;
   remainingSeats?: number;
   markedPrice: number;
-  currency: 'CAD' | string;
+  currency: "CAD" | string;
   difficulty: string;
   minimumAge?: number;
   ticketsClasses: TicketClass[];
