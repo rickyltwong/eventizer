@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import dbConnect from "@/config/connectDB";
+import dbConnect from "@/lib/connectDB";
 import Events from "@/models/Event";
 import { IEvent } from "@/types/event";
 
