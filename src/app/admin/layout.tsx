@@ -56,16 +56,14 @@ export default function RootLayout({
 
         <script
           src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
-          defer
-        ></script>
+          defer></script>
         <ColorSchemeScript defaultColorScheme="auto" />
       </Head>
-      
-        <MantineProvider theme={myTheme} defaultColorScheme="light">
-          <Notifications position="bottom-right" zIndex={1000} />
-          <ModalsProvider>{children}</ModalsProvider>
-        </MantineProvider>
-      
+
+      <MantineProvider theme={myTheme} defaultColorScheme="light">
+        <Notifications position="bottom-right" zIndex={1000} />
+        <ModalsProvider>{children}</ModalsProvider>
+      </MantineProvider>
     </>
   );
 }

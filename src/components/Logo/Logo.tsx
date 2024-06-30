@@ -18,11 +18,10 @@ const Logo = ({ href, ...others }: LogoProps) => {
       className={classes.logo}
       component={Link}
       href={href || '/'}
-      {...others}
-    >
+      {...others}>
       <Group gap="xs">
         <Image
-          src="/logo-no-background.png"
+          src="/logo-wbg.png"
           height={24}
           width={24}
           alt="design sparx logo"

@@ -1,7 +1,3 @@
-export default function Home() {
-  return (
-    <>
-      <h1>Eventizer Home Page</h1>
-    </>
-  );
+export default function Home(): React.JSX.Element {
+  return <></>;
 }

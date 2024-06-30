@@ -19,34 +19,13 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 import { Surface, EventForm } from '@/components';
-import { IconNotebook, IconShare, IconEdit, IconBuilding,  IconTrash} from '@tabler/icons-react';
+import { IconNotebook, IconShare, IconEdit, IconBuilding, IconTrash } from '@tabler/icons-react';
 import classes from './ProjectsCard.module.css';
 import { useDisclosure } from '@mantine/hooks';
 import { format } from 'date-fns';
+import { EventFormValues } from '@/types/event';
 
-type Address = {
-  venueName: string;
-  addressLine1: string;
-  addressLine2?: string;
-  city: string;
-  state: string;
-  country: string;
-  postalCode: string;
-  latitude: number;
-  longitude: number;
-};
-type ProjectsCardProps = {
-  id: string;
-  eventName: string;
-  eventDescription: string;
-  eventAddress: Address;
-  capacity: number;
-  remainingSeats: number;
-  eventStartDateTime: string;
-  eventEndDateTime: string
-} & Omit<PaperProps, 'children'>;
-
-const determineEventStatus = (eventStartDateTime: string, eventEndDateTime: string): Status => {
+const determineEventStatus = (eventStartDateTime: Date, eventEndDateTime: Date): Status => {
   const now = new Date();
   const start = new Date(eventStartDateTime);
   const end = new Date(eventEndDateTime);
@@ -60,17 +39,15 @@ const determineEventStatus = (eventStartDateTime: string, eventEndDateTime: stri
   }
 };
 
-type Status =
-  | 'upcoming'
-  | 'cancelled'
-  | 'expired'
-  | string;
+type Status = 'upcoming' | 'cancelled' | 'expired' | 'ongoing';
 
-type StatusProps = {
-  status: Status;
-};
+type ProjectsCardProps = {
+  id: string;
+  remainingSeats: number;
+  onDelete: (id: string) => void;
+} & EventFormValues & Omit<PaperProps, 'children'>;
 
-const StatusBadge = ({ status }: { status: string}) => {
+const StatusBadge = ({ status }: { status: string }) => {
   let color: MantineColor;
 
   switch (status) {
@@ -83,9 +60,9 @@ const StatusBadge = ({ status }: { status: string}) => {
     case 'upcoming':
       color = 'yellow.8';
       break;
-      case 'ongoing':
-        color = 'teal';
-        break;
+    case 'ongoing':
+      color = 'teal';
+      break;
     default:
       color = 'gray';
   }
@@ -97,28 +74,43 @@ const StatusBadge = ({ status }: { status: string}) => {
   );
 };
 
-
-
 const ProjectsCard = (props: ProjectsCardProps) => {
   const { colorScheme } = useMantineColorScheme();
-  const { id, capacity,remainingSeats,eventAddress, eventStartDateTime,eventEndDateTime, eventDescription, eventName, venue, ...others } =
-    props;
-const [opened, { open, close }] = useDisclosure(false);
-const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
-  const formattedEnd = format(new Date(eventEndDateTime), 'PPpp');
+  const {
+    id,
+    capacity,
+    remainingSeats,
+    eventAddress,
+    eventStartDateTime,
+    eventEndDateTime,
+    eventDescription,
+    eventName,
+    onDelete,
+    ...others
+  } = props;
+
+  const [opened, { open, close }] = useDisclosure(false);
+  const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
+
+  const formattedStart = eventStartDateTime ? format(new Date(eventStartDateTime), 'PPpp') : 'Invalid date';
+  const formattedEnd = eventEndDateTime ? format(new Date(eventEndDateTime), 'PPpp') : 'Invalid date';
   const status = determineEventStatus(eventStartDateTime, eventEndDateTime);
-  const venueName = eventAddress.venueName;
+  const venueName = eventAddress?.venueName || 'Unknown venue';
+
+  const handleDelete = () => {
+    onDelete(id);
+    closeDeleteModal();
+  };
+
   return (
     <Surface component={Paper} {...others}>
       <Stack gap="sm">
         <Flex justify="space-between" align="center">
           <Flex align="center" gap="xs">
-            {/* {image && <Image src={image} width={20} height={20} radius="50%" />} */}
             <Text fz="md" fw={600} lineClamp={1}>
               {eventName}
             </Text>
           </Flex>
-          {/* <StatusBadge status={status} /> */}
         </Flex>
         <Text fz="sm" lineClamp={1}>
           From: {formattedStart}
@@ -135,17 +127,17 @@ const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
         </Text>
 
         <Progress
-          value={((capacity - remainingSeats) * 100 / capacity)}
+          value={((capacity - remainingSeats) * 100) / capacity}
           mt={5}
           size="sm"
           color={
-            ((capacity - remainingSeats) * 100 / capacity)  < 21
+            ((capacity - remainingSeats) * 100) / capacity < 21
               ? 'red'
-              : ((capacity - remainingSeats) * 100 / capacity) < 51
-                ? 'yellow'
-                : ((capacity - remainingSeats) * 100 / capacity) < 86
-                  ? 'blue'
-                  : 'green'
+              : ((capacity - remainingSeats) * 100) / capacity < 51
+              ? 'yellow'
+              : ((capacity - remainingSeats) * 100) / capacity < 86
+              ? 'blue'
+              : 'green'
           }
         />
         <Group align="center" gap="xs" wrap="nowrap">
@@ -153,12 +145,10 @@ const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
           <Text fz="sm" lineClamp={1}>{venueName}</Text>
         </Group>
 
-
-
         <Divider />
 
         <Group gap="sm">
-        <StatusBadge status={status} />
+          <StatusBadge status={status} />
           <Modal opened={opened} onClose={close} title="Event Detail" centered size="lg">
             <EventForm />
           </Modal>
@@ -166,12 +156,28 @@ const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
             size="compact-md"
             variant="subtle"
             onClick={open}
-            leftSection={<IconEdit size={14}
-             />}
+            leftSection={<IconEdit size={14} />}
           >
             Edit
           </Button>
-          <IconTrash style={{ width: (20), height: (20) }} color="var(--mantine-color-red-filled)"></IconTrash>
+          <IconTrash style={{ width: 20, height: 20 }} color="var(--mantine-color-red-filled)" onClick={openDeleteModal} />
+          <Modal
+            opened={deleteModalOpened}
+            onClose={closeDeleteModal}
+            title="Confirm Deletion"
+            centered
+            size="sm"
+          >
+            <Text>Are you sure you want to delete this event?</Text>
+            <Group align="center" mt="md">
+              <Button color="red" onClick={handleDelete}>
+                Confirm
+              </Button>
+              <Button variant="outline" onClick={closeDeleteModal}>
+                Cancel
+              </Button>
+            </Group>
+          </Modal>
         </Group>
       </Stack>
     </Surface>
@@ -179,3 +185,4 @@ const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
 };
 
 export default ProjectsCard;
+
