@@ -30,7 +30,7 @@ type Ticket = {
     eventId: string;
     userId: string;
     ticketType: string;
-    noOfTickets:number;
+    noOfTickets: number;
     price: number;
     purchaseDate: Date;
 }
@@ -82,7 +82,7 @@ const EventRegistrationModal = function ({event, isOpen, onCloseModal}: EventReg
         const ticketRegistration: Ticket = {
             eventId: eventid.toString(),
             userId: "666933bf8757909f1d0dbb47",
-            noOfTickets:register.noOfTicket,
+            noOfTickets: register.noOfTicket,
             ticketType: register.ticketType,
             price: price,
             purchaseDate: new Date()
@@ -101,7 +101,8 @@ const EventRegistrationModal = function ({event, isOpen, onCloseModal}: EventReg
                 handleClose();
             })
             .catch((error) => {
-                toast.error("Unable to register the event");
+                console.log(error)
+                toast.error(error?.response?.data?.error || "Unable to register the event");
                 console.error(error);
             });
     }

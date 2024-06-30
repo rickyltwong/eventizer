@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
             price,
         } = reqBody;
 
-        const ticketInDb = await EventTicket.findOne({user: userId, event: eventId}).populate('user').populate('event');
+        const ticketInDb = await EventTicket.findOne({user: userId, event: eventId});
         if (ticketInDb) {
             console.log("You have already registered for the event");
             return NextResponse.json(
