@@ -11,7 +11,7 @@ const links = [
   { link: '#', label: 'Careers' },
 ];
 
-export function FooterSimple() {
+export default function FooterSimple() {
   const items = links.map((link) => (
     <Anchor<'a'>
       c="dimmed"

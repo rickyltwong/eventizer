@@ -28,6 +28,7 @@ export interface Discount {
 }
 
 export interface IEvent {
+  _id: string;
   eventName: string;
   eventDescription: string;
   eventAddress: IEventAddress;

@@ -84,11 +84,13 @@ export default function BadgeCard(event: IEvent) {
         ? 'Expired'
         : 'Upcoming';
 
-  const features = ticketsClasses.map((ticketsClass) => (
-    <Badge variant="light" key={ticketsClass.ticketType}>
-      {ticketsClass.ticketType}
-    </Badge>
-  ));
+  const features = ticketsClasses
+    ? ticketsClasses.map((ticketsClass) => (
+        <Badge variant="light" key={ticketsClass.ticketType}>
+          {ticketsClass.ticketType}
+        </Badge>
+      ))
+    : [];
 
   return (
     <Card shadow="sm" withBorder radius="md" p="md" className={classes.card}>

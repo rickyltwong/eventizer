@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import dbConnect from '@/lib/connectDB';
 import User from '@/models/User';
+// import { UserDocument } from '@/models/User';
 
 // Calls the connect function to establish a connection to the database.
 

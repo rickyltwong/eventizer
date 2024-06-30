@@ -53,8 +53,9 @@ export default function MapView({
   center,
   zoom,
   isUserLocation,
-}: MapViewProps): JSX.Element {
-  const [leafletLatLng, setLeafletLatLng] = useState<LatLng | null>(null);
+}: MapViewProps) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [leafletLatLng, setLeafletLatLng] = useState<any>(null);
 
   useEffect(() => {
     const loadLeaflet = async () => {

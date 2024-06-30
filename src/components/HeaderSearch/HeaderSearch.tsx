@@ -1,28 +1,24 @@
-'use client';
-
-import { Burger, Group } from '@mantine/core';
+import { Burger, Button, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+
+import { AuthUserButton, SignInButton } from '@/components';
 
 import classes from './HeaderSearch.module.css';
 
-const links = [
-  { link: '/about-us', label: 'About Us' },
-  { link: '/signin', label: 'Log In' },
-  { link: '/signup', label: 'Sign Up' },
-];
+const links = [{ link: '/about-us', label: 'About Us' }];
 
 export default function HeaderSearch(): JSX.Element {
   const [opened, { toggle }] = useDisclosure(false);
+  const { data: session } = useSession();
+
+  const router = useRouter();
 
   const items = links.map((link) => (
-    <Link
-      key={link.label}
-      href={link.link}
-      className={classes.link}
-      // onClick={(event) => event.preventDefault()}
-    >
+    <Link key={link.label} href={link.link} className={classes.link}>
       {link.label}
     </Link>
   ));
@@ -39,6 +35,16 @@ export default function HeaderSearch(): JSX.Element {
         <Group>
           <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
             {items}
+            {session ? (
+              <AuthUserButton />
+            ) : (
+              <Group>
+                <SignInButton />
+                <Button onClick={() => router.push('/auth/signup')}>
+                  Sign up
+                </Button>
+              </Group>
+            )}
           </Group>
 
           {/* <Autocomplete

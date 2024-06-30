@@ -22,6 +22,12 @@ import {
 import { createTheme } from '@mantine/core';
 import type { Metadata } from 'next';
 
+import { auth } from '@/auth';
+import { AuthProvider } from '@/context/AuthProvider';
+// import type { Session } from 'next-auth';
+
+// import { auth } from '@/auth';
+
 const myColor: MantineColorsTuple = [
   '#e1f9ff',
   '#ccedff',
@@ -49,11 +55,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>): JSX.Element {
+}>) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <head>
@@ -65,7 +73,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <AuthProvider session={session}>{children}</AuthProvider>
+        </MantineProvider>
       </body>
     </html>
   );

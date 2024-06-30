@@ -1,34 +1,28 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IUser extends Document {
-  username: string;
+  name: string;
   email?: string;
   password?: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
   role: string;
+  image: string;
   createdAt: Date;
   updatedAt: Date;
   status: string;
-  profile?: {
-    dateOfBirth?: Date;
-    avatarUrl?: string;
-    bio?: string;
+  eventHistory?: mongoose.Types.ObjectId[];
+  favourites?: mongoose.Types.ObjectId[];
+  authentication: {
+    provider: string;
+    providerId?: string;
+    googleId?: string;
   };
-  preferences?: {
-    language?: string;
-    notificationSettings?: {
-      emailNotifications?: boolean;
-    };
-  };
-  eventsAttending?: mongoose.Types.ObjectId[];
-  eventsHosting?: mongoose.Types.ObjectId[];
 }
 
 const userSchema: Schema<IUser> = new mongoose.Schema(
   {
-    username: { type: String, required: true, unique: true },
     email: { type: String, unique: true },
     password: { type: String },
     firstName: { type: String, required: true },
@@ -37,32 +31,28 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ['attendee', 'organizer', 'admin'],
+      enum: ['attendee', 'admin'],
       default: 'attendee',
     },
-    profile: {
-      dateOfBirth: { type: Date },
-      avatarUrl: { type: String },
-      bio: { type: String },
-    },
-    preferences: {
-      language: { type: String },
-      notificationSettings: {
-        emailNotifications: { type: Boolean },
-      },
-    },
-    eventsAttending: [
+    name: { type: String },
+    image: { type: String },
+    eventHistory: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'events',
       },
     ],
-    eventsHosting: [
+    favourites: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'events',
       },
     ],
+    authentication: {
+      provider: { type: String, required: true },
+      providerId: { type: String },
+      googleId: { type: String },
+    },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     status: { type: String, default: 'active' },
