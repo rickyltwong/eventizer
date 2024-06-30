@@ -1,16 +1,17 @@
-"use client";
-import { useState } from "react";
+'use client';
 import {
-  Input,
-  Select,
+  Box,
   Button,
   Container,
-  Title,
   Group,
-  Box,
-} from "@mantine/core";
-import AttendeesTable from "@/components/Attendee/AttendeesTable";
-import { PATH_DASHBOARD } from "@/routes";
+  Input,
+  Select,
+  Title,
+} from '@mantine/core';
+import { useState } from 'react';
+
+import AttendeesTable from '@/components/Attendee/AttendeesTable';
+// import { PATH_DASHBOARD } from '@/routes';
 
 export interface Attendee {
   id: number;
@@ -23,45 +24,45 @@ export interface Attendee {
 }
 
 export default function AttendeeManagementPage() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  // const [currentPage, setCurrentPage] = useState<number>(1);
   const [attendees, setAttendees] = useState<Attendee[]>([
     {
       id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      status: "Registered",
+      name: 'John Doe',
+      email: 'john@example.com',
+      status: 'Registered',
       participating: false,
-      registrationDate: "2024-06-10",
-      ticketType: "VIP",
+      registrationDate: '2024-06-10',
+      ticketType: 'VIP',
     },
     {
       id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      status: "Pending",
+      name: 'Jane Smith',
+      email: 'jane@example.com',
+      status: 'Pending',
       participating: true,
-      registrationDate: "2024-06-12",
-      ticketType: "Regular",
+      registrationDate: '2024-06-12',
+      ticketType: 'Regular',
     },
     {
       id: 3,
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      status: "Registered",
+      name: 'Bob Johnson',
+      email: 'bob@example.com',
+      status: 'Registered',
       participating: false,
-      registrationDate: "2024-06-15",
-      ticketType: "VIP",
+      registrationDate: '2024-06-15',
+      ticketType: 'VIP',
     },
     {
       id: 4,
-      name: "Alice Williams",
-      email: "alice@example.com",
-      status: "Cancelled",
+      name: 'Alice Williams',
+      email: 'alice@example.com',
+      status: 'Cancelled',
       participating: true,
-      registrationDate: "2024-06-18",
-      ticketType: "Regular",
+      registrationDate: '2024-06-18',
+      ticketType: 'Regular',
     },
   ]);
 
@@ -71,7 +72,7 @@ export default function AttendeeManagementPage() {
       attendee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       attendee.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
-      filterStatus === "all" ||
+      filterStatus === 'all' ||
       attendee.status.toLowerCase() === filterStatus.toLowerCase();
     return matchesSearchTerm && matchesStatus;
   });
@@ -102,7 +103,7 @@ export default function AttendeeManagementPage() {
         <Title
           order={2}
           mb="lg"
-          style={{ color: "#64c1ff", fontWeight: "bold", padding: 20 }}
+          style={{ color: '#64c1ff', fontWeight: 'bold', padding: 20 }}
         >
           Attendee Management
         </Title>
@@ -116,14 +117,14 @@ export default function AttendeeManagementPage() {
           />
           <Select
             value={filterStatus}
-            onChange={(value) => setFilterStatus(value ?? "all")}
+            onChange={(value) => setFilterStatus(value ?? 'all')}
             data={[
-              { value: "all", label: "All" },
-              { value: "registered", label: "Registered" },
-              { value: "pending", label: "Pending" },
-              { value: "cancelled", label: "Cancelled" },
+              { value: 'all', label: 'All' },
+              { value: 'registered', label: 'Registered' },
+              { value: 'pending', label: 'Pending' },
+              { value: 'cancelled', label: 'Cancelled' },
             ]}
-            style={{ marginLeft: "1rem" }}
+            style={{ marginLeft: '1rem' }}
           />
           <Button variant="filled" ml="md">
             Add Attendee

@@ -1,22 +1,20 @@
-"use client";
+'use client';
 
-import { Autocomplete, Group, Burger, rem } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconSearch } from "@tabler/icons-react";
-import { MantineLogo } from "@mantinex/mantine-logo";
-import classes from "./HeaderSearch.module.css";
-import { ColorSchemeToggle } from "./ColorSchemeToggle";
-import Image from "next/image";
-import Link from "next/link";
+import { Burger, Group } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import Image from 'next/image';
+import Link from 'next/link';
+
+import classes from './HeaderSearch.module.css';
 
 const links = [
-  { link: "/about-us", label: "About Us" },
-  { link: "/signin", label: "Log In" },
-  { link: "/signup", label: "Sign Up" },
+  { link: '/about-us', label: 'About Us' },
+  { link: '/signin', label: 'Log In' },
+  { link: '/signup', label: 'Sign Up' },
 ];
 
-export function HeaderSearch() {
-  const [opened, { open, close, toggle }] = useDisclosure(false);
+export default function HeaderSearch(): JSX.Element {
+  const [opened, { toggle }] = useDisclosure(false);
 
   const items = links.map((link) => (
     <Link
@@ -34,7 +32,7 @@ export function HeaderSearch() {
       <div className={classes.inner}>
         <Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-          <Image src="/logo.png" alt="Mantine logo" height={300} width={200} />
+          <Image src="/logo.png" alt="Studio logo" height={300} width={200} />
         </Group>
         {/* TODO: Create toggle mobile menu for the nav items */}
 

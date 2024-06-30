@@ -1,8 +1,10 @@
-"use client";
-import React, { useState } from "react";
-import { Checkbox, Button, Select } from "@mantine/core";
-import AttendeeStatus from "./AttendeeStatus";
-import { Attendee } from "@/app/admin/attendee/page";
+'use client';
+import { Button, Checkbox, Select } from '@mantine/core';
+import { useState } from 'react';
+
+import { Attendee } from '@/app/admin/attendee/page';
+
+import AttendeeStatus from './AttendeeStatus';
 
 interface AttendeesTableProps {
   attendees: Attendee[];
@@ -77,9 +79,9 @@ export default function AttendeesTable({
                           )
                         }
                         data={[
-                          { value: "Registered", label: "Registered" },
-                          { value: "Pending", label: "Pending" },
-                          { value: "Cancelled", label: "Cancelled" },
+                          { value: 'Registered', label: 'Registered' },
+                          { value: 'Pending', label: 'Pending' },
+                          { value: 'Cancelled', label: 'Cancelled' },
                         ]}
                       />
                     ) : (

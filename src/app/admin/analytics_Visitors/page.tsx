@@ -1,15 +1,16 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Card } from "@mantine/core";
-import { Bar, Pie } from "react-chartjs-2";
-import analytics, { Analytics } from "@/components/Analytics/analytics";
+'use client';
+import { Card } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { Bar, Pie } from 'react-chartjs-2';
+
+import analytics from '@/components/Analytics/analytics';
 
 // Define props interface if needed
 interface AnalyticsDashboardProps {}
 
 // Define component
 const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = () => {
-  const [avgVisitorsPerDay, setAvgVisitorsPerDay] = useState<string>("");
+  const [avgVisitorsPerDay, setAvgVisitorsPerDay] = useState<string>('');
   const [amtVisitorsToday, setAmtVisitorsToday] = useState<number>(0);
   const [visitorsLast7Days, setVisitorsLast7Days] = useState<number[]>([]);
 
@@ -29,11 +30,11 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = () => {
         const visitorsLast7 = await analytics.getVisitorsLast7Days();
 
         // Update state
-        setAvgVisitorsPerDay("TODO"); // Replace with actual data
+        setAvgVisitorsPerDay('TODO'); // Replace with actual data
         setAmtVisitorsToday(visitorsToday);
         setVisitorsLast7Days(visitorsLast7);
       } catch (error) {
-        console.error("Error fetching visitor data:", error);
+        console.error('Error fetching visitor data:', error);
       }
     };
 
@@ -42,40 +43,40 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = () => {
 
   // Define chart data
   const barChartData = {
-    labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
+    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
     datasets: [
       {
-        label: "Visitors",
+        label: 'Visitors',
         data: visitorsLast7Days,
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
       },
     ],
   };
 
   const pieChartData = {
-    labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
+    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
     datasets: [
       {
         data: visitorsLast7Days,
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(255, 99, 132, 0.2)",
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
         ],
         borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-          "rgba(255, 99, 132, 1)",
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
         ],
         borderWidth: 1,
       },

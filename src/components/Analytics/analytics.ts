@@ -1,5 +1,6 @@
-import mongoose, { Schema, Document } from "mongoose";
-import connectDB from "@/config/connectDB";
+import mongoose, { Document, Schema } from 'mongoose';
+
+import connectDB from '@/lib/connectDB';
 
 interface VisitorDocument extends Document {
   date: Date;
@@ -11,7 +12,7 @@ const VisitorSchema = new Schema({
   count: { type: Number, default: 0 },
 });
 
-const VisitorModel = mongoose.model<VisitorDocument>("Visitor", VisitorSchema);
+const VisitorModel = mongoose.model<VisitorDocument>('Visitor', VisitorSchema);
 
 export class Analytics {
   constructor() {
@@ -29,7 +30,7 @@ export class Analytics {
         { upsert: true },
       );
     } catch (error) {
-      console.error("Error tracking visitor:", error);
+      console.error('Error tracking visitor:', error);
     }
   }
 
@@ -38,13 +39,14 @@ export class Analytics {
       const res = await VisitorModel.findOne({ date });
       return res?.count ?? 0;
     } catch (error) {
-      console.error("Error retrieving visitor count:", error);
+      console.error('Error retrieving visitor count:', error);
       return 0;
     }
   }
 
   async getVisitorsLast7Days() {
-    const promises: Promise<any>[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const promises: Promise<any>[] = []; // FIXME: Unexpected any. Specify a different type
     const today = new Date();
 
     for (let i = 0; i < 7; i++) {
@@ -59,7 +61,7 @@ export class Analytics {
       const visitorCounts = await Promise.all(promises);
       return visitorCounts.reverse(); // Reverse to show most recent day first
     } catch (error) {
-      console.error("Error retrieving visitor counts for last 7 days:", error);
+      console.error('Error retrieving visitor counts for last 7 days:', error);
       return [];
     }
   }

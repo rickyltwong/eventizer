@@ -1,30 +1,32 @@
-"use client";
+'use client';
 
 import {
-  Paper,
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Button,
-  Title,
-  Text,
   Anchor,
+  Button,
+  Paper,
+  PasswordInput,
   Space,
-} from "@mantine/core";
-import classes from "./page.module.css";
-import { useMantineTheme } from "@mantine/core";
-import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
-import axios from "axios";
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
+import { useMantineTheme } from '@mantine/core';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-const Page = (props: any) => {
+import classes from './page.module.css';
+
+const Page = () => {
   const theme = useMantineTheme();
 
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [loading, setLoading] = useState(false); // FIXME: loading is not used
   const [user, setUser] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -34,21 +36,21 @@ const Page = (props: any) => {
 
     try {
       setLoading(true);
-      const response = await axios.post("/api/auth/signin", user);
+      const response = await axios.post('/api/auth/signin', user);
       if (response.data.status === 200) {
-        router.replace("/home");
+        router.replace('/home');
       } else {
         const data = await response.data;
-        console.error("Error:", data);
+        console.error('Error:', data);
       }
-    } catch (error: any) {
-      console.log("Login failed", error.message);
+    } catch (error) {
+      console.log('Login failed', error.message);
     } finally {
       setLoading(false);
       // Clear fields after attempt
       setUser({
-        username: "",
-        password: "",
+        username: '',
+        password: '',
       });
     }
   };
@@ -80,7 +82,7 @@ const Page = (props: any) => {
           onChange={(e) =>
             setUser({ ...user, password: e.currentTarget.value })
           }
-        />{" "}
+        />{' '}
         <Anchor
           href="/auth/forgot-password"
           size="xs"
@@ -109,7 +111,7 @@ const Page = (props: any) => {
           </Text>
         )}
         <Text ta="center" mt="md">
-          Don&apos;t have an account?{" "}
+          Don&apos;t have an account?{' '}
           <Anchor
             href="../signup"
             fw={700}

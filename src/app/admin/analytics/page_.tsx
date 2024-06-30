@@ -1,9 +1,9 @@
-import { analytics } from "@/components/Analytics/analytics";
-import { AnalyticsDashboard } from "@/components/Analytics/AnalyticsDashboard";
-import { getDate } from "@/components/Analytics/analytics";
+import { analytics } from '@/components/Analytics/analytics';
+import { getDate } from '@/components/Analytics/analytics';
+import { AnalyticsDashboard } from '@/components/Analytics/AnalyticsDashboard';
 
 const page = async () => {
-  const pageviews = await analytics.retreiveDays("pageview", 7);
+  const pageviews = await analytics.retreiveDays('pageview', 7);
   const totalPageViews = pageviews.reduce((acc, curr) => {
     return (
       acc +

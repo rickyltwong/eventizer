@@ -1,10 +1,12 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Calendar, momentLocalizer, View } from "react-big-calendar";
-import moment from "moment";
-import { Event as EventType } from "@/types";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { Calendar, momentLocalizer, View } from 'react-big-calendar';
+
+import { Event as EventType } from '@/types';
 
 const localizer = momentLocalizer(moment);
 
@@ -20,10 +22,10 @@ interface EventCalendarProps {
 
 export default function EventCalendar({
   events,
-}: EventCalendarProps): React.JSX.Element {
+}: EventCalendarProps): JSX.Element {
   const [calEvents, setCalEvents] = useState<CalendarEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [view, setView] = useState<View>("month");
+  const [view, setView] = useState<View>('month');
   const [date, setDate] = useState(new Date());
 
   const handleViewChange = (newView: View) => {
@@ -50,7 +52,7 @@ export default function EventCalendar({
   //   }, [date]);
 
   return (
-    <div style={{ padding: "10px" }}>
+    <div style={{ padding: '10px' }}>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -59,7 +61,7 @@ export default function EventCalendar({
           events={calEvents}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 700, width: "100%" }}
+          style={{ height: 700, width: '100%' }}
           view={view}
           onView={handleViewChange}
           date={date}

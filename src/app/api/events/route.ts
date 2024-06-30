@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import dbConnect from "@/lib/connectDB";
-import Events from "@/models/Event";
-import { IEvent } from "@/types/event";
+import { NextRequest, NextResponse } from 'next/server';
+
+import dbConnect from '@/lib/connectDB';
+import Events from '@/models/Event';
+import { IEvent } from '@/types';
 
 export async function GET() {
   await dbConnect();
@@ -13,7 +14,7 @@ export async function GET() {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Something went wrong!" },
+      { message: 'Something went wrong!' },
       { status: 500 },
     );
   }
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Something went wrong!" },
+      { message: 'Something went wrong!' },
       { status: 500 },
     );
   }
@@ -45,14 +46,14 @@ export async function PUT(req: NextRequest) {
     const event = await Events.findByIdAndUpdate(body.id, body, { new: true });
 
     if (!event) {
-      return NextResponse.json({ message: "Event not found" }, { status: 404 });
+      return NextResponse.json({ message: 'Event not found' }, { status: 404 });
     }
 
     return NextResponse.json(event, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Something went wrong!" },
+      { message: 'Something went wrong!' },
       { status: 500 },
     );
   }
@@ -66,17 +67,17 @@ export async function DELETE(req: NextRequest) {
     const event = await Events.findByIdAndDelete(body.id);
 
     if (!event) {
-      return NextResponse.json({ message: "Event not found" }, { status: 404 });
+      return NextResponse.json({ message: 'Event not found' }, { status: 404 });
     }
 
     return NextResponse.json(
-      { message: "Event deleted successfully" },
+      { message: 'Event deleted successfully' },
       { status: 200 },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Something went wrong!" },
+      { message: 'Something went wrong!' },
       { status: 500 },
     );
   }

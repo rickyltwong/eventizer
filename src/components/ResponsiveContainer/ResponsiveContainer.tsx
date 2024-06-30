@@ -1,6 +1,7 @@
-import React from "react";
-import { Container } from "@mantine/core";
-import styles from "./ResponsiveContainer.module.css";
+import { Container } from '@mantine/core';
+import React from 'react';
+
+import styles from './ResponsiveContainer.module.css';
 
 interface ResponsiveContainerProps {
   children: React.ReactNode;

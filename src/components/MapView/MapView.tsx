@@ -1,13 +1,14 @@
-"use client";
+'use client';
 
-import { MapContainer, TileLayer, Popup } from "react-leaflet";
-import { useMap } from "react-leaflet/hooks";
-import { Marker } from "react-leaflet/Marker";
+import 'leaflet/dist/leaflet.css';
 
-import { Icon } from "leaflet";
-import { IEvent } from "@/types/event";
-import { useEffect, useState } from "react";
-import "leaflet/dist/leaflet.css";
+import { Icon } from 'leaflet';
+import { useEffect, useState } from 'react';
+import { MapContainer, Popup, TileLayer } from 'react-leaflet';
+import { useMap } from 'react-leaflet/hooks';
+import { Marker } from 'react-leaflet/Marker';
+
+import { IEvent } from '@/types';
 
 interface MapViewProps {
   events: IEvent[];
@@ -18,9 +19,9 @@ interface MapViewProps {
 
 const redMarker = new Icon({
   iconUrl:
-    "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
+    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [0, -41],
@@ -29,9 +30,9 @@ const redMarker = new Icon({
 
 const blueMarker = new Icon({
   iconUrl:
-    "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
+    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
   shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [0, -41],
@@ -52,12 +53,12 @@ export default function MapView({
   center,
   zoom,
   isUserLocation,
-}: MapViewProps) {
-  const [leafletLatLng, setLeafletLatLng] = useState<any>(null);
+}: MapViewProps): JSX.Element {
+  const [leafletLatLng, setLeafletLatLng] = useState<LatLng | null>(null);
 
   useEffect(() => {
     const loadLeaflet = async () => {
-      const leaflet = await import("leaflet");
+      const leaflet = await import('leaflet');
       setLeafletLatLng(() => leaflet.latLng);
     };
     loadLeaflet();
@@ -71,13 +72,13 @@ export default function MapView({
     <MapContainer
       center={center}
       zoom={zoom}
-      style={{ height: "100vh", width: "100wh" }}
+      style={{ height: '100vh', width: '100wh' }}
     >
       <SetMap center={center} />
       <TileLayer
         // url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         url="http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}"
-        subdomains={["mt0", "mt1", "mt2", "mt3"]}
+        subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
         attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
       />
       {isUserLocation && (

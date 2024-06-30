@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { User } from "@/app/admin/usermanagement/page";
-import { Button } from "@mantine/core";
+import { Button } from '@mantine/core';
+import { useState } from 'react';
+
+import { User } from '@/app/admin/usermanagement/page';
 
 interface AddUserProps {
   onSubmit: (newUserData: User) => void;
@@ -8,10 +9,10 @@ interface AddUserProps {
 }
 
 export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState("");
-  const [status, setStatus] = useState("");
-  const [phone, setPhone] = useState("");
+  const [username, setUsername] = useState('');
+  const [role, setRole] = useState('');
+  const [status, setStatus] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,17 +21,17 @@ export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
       username: username,
       role: role,
       status: status,
-      createdAt: "2024-06-11T12:00:00Z", // new Date()
+      createdAt: '2024-06-11T12:00:00Z', // new Date()
       profile: {
         phone: phone,
       },
     };
     console.log(newUser);
     onSubmit(newUser);
-    setUsername("");
-    setRole("");
-    setStatus("");
-    setPhone("");
+    setUsername('');
+    setRole('');
+    setStatus('');
+    setPhone('');
   };
 
   return (

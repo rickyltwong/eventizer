@@ -1,33 +1,35 @@
-import { ActionIcon, Box, Flex, Group, ScrollArea, Text } from "@mantine/core";
+import { ActionIcon, Box, Flex, Group, ScrollArea, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import {
-  IconTicket,
-  IconChecklist,
-  IconUser,
-  IconChartBar,
   IconCalendarEvent,
+  IconChartBar,
+  IconChecklist,
+  IconTicket,
+  IconUser,
   IconX,
-} from "@tabler/icons-react";
-import { Logo, UserProfileButton } from "@/components";
-import { PATH_DASHBOARD } from "@/routes";
-import UserProfileData from "../../../public/mocks/UserProfile.json";
-import { useMediaQuery } from "@mantine/hooks";
-import classes from "./Navigation.module.css";
-import { LinksGroup } from "@/components/Navigation/Links/Links";
+} from '@tabler/icons-react';
+
+import { Logo, UserProfileButton } from '@/components';
+import { LinksGroup } from '@/components/Navigation/Links/Links';
+import { PATH_DASHBOARD } from '@/routes';
+
+import UserProfileData from '../../../public/mocks/UserProfile.json';
+import classes from './Navigation.module.css';
 
 const mockdata = [
   {
-    title: "Dashboard",
+    title: 'Dashboard',
     links: [
-      { label: "Home", icon: IconChartBar, link: PATH_DASHBOARD.default },
+      { label: 'Home', icon: IconChartBar, link: PATH_DASHBOARD.default },
       {
-        label: "Events",
+        label: 'Events',
         icon: IconCalendarEvent,
         link: PATH_DASHBOARD.events,
       },
-      { label: "Tickets", icon: IconTicket, link: PATH_DASHBOARD.tickets },
-      { label: "Users", icon: IconUser, link: PATH_DASHBOARD.users },
+      { label: 'Tickets', icon: IconTicket, link: PATH_DASHBOARD.tickets },
+      { label: 'Users', icon: IconUser, link: PATH_DASHBOARD.users },
       {
-        label: "Attendees",
+        label: 'Attendees',
         icon: IconChecklist,
         link: PATH_DASHBOARD.attendees,
       },
@@ -53,7 +55,7 @@ type NavigationProps = {
 };
 
 const Navigation = ({ onClose }: NavigationProps) => {
-  const tablet_match = useMediaQuery("(max-width: 768px)");
+  const tablet_match = useMediaQuery('(max-width: 768px)');
 
   const links = mockdata.map((m) => (
     <Box pl={0} mb="md" key={m.title}>
@@ -87,7 +89,7 @@ const Navigation = ({ onClose }: NavigationProps) => {
         <Flex justify="space-between" align="center" gap="sm">
           <Group
             justify="space-between"
-            style={{ flex: tablet_match ? "auto" : 1 }}
+            style={{ flex: tablet_match ? 'auto' : 1 }}
           >
             <Logo className={classes.logo} />
           </Group>

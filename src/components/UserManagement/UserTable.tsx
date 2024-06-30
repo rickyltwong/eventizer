@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { Button, Select } from "@mantine/core";
-import UserStatus from "./UserStatus";
-import { User } from "@/app/admin/usermanagement/page";
-import AddUser from "./AddUser";
-import { IconTrash } from "@tabler/icons-react";
+import { Select } from '@mantine/core';
+import { IconTrash } from '@tabler/icons-react';
+import { useState } from 'react';
+
+import { User } from '@/app/admin/usermanagement/page';
+
+import AddUser from './AddUser';
+import UserStatus from './UserStatus';
 
 interface UsersTableProps {
   users: User[];
@@ -12,7 +14,7 @@ interface UsersTableProps {
   onDeleteUser: (id: number) => void;
   onSaveUser: (newUser: User) => void;
   onCancelUser: () => void;
-  showAddUSer: boolean;
+  showAddUser: boolean;
 }
 
 export default function UsersTable({
@@ -28,8 +30,8 @@ export default function UsersTable({
   const [editingUserStatus, setEditingUserStatus] = useState<number | null>(
     null,
   );
-  const [deleteUser, setDeleteUser] = useState<number | null>(null);
-  const [addUser, setAddUser] = useState<number | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [deleteUser, setDeleteUser] = useState<number | null>(null); // FIXME: deleteUser is never used
 
   const handleRoleChange = (id: number, newRole: string) => {
     onRoleChange(id, newRole);
@@ -96,9 +98,9 @@ export default function UsersTable({
                           handleRoleChange(user._id, value ?? user.role)
                         }
                         data={[
-                          { value: "Admin", label: "Admin" },
-                          { value: "User", label: "User" },
-                          { value: "Organizer", label: "Organizer" },
+                          { value: 'Admin', label: 'Admin' },
+                          { value: 'User', label: 'User' },
+                          { value: 'Organizer', label: 'Organizer' },
                         ]}
                       />
                     ) : (
@@ -115,9 +117,9 @@ export default function UsersTable({
                           handleStatusChange(user._id, value ?? user.status)
                         }
                         data={[
-                          { value: "Active", label: "Active" },
-                          { value: "Disabled", label: "Disabled" },
-                          { value: "Pending", label: "Pending" },
+                          { value: 'Active', label: 'Active' },
+                          { value: 'Disabled', label: 'Disabled' },
+                          { value: 'Pending', label: 'Pending' },
                         ]}
                       />
                     ) : (
@@ -127,14 +129,14 @@ export default function UsersTable({
                     )}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {new Date(user.createdAt).toLocaleString("en-US", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                      second: "numeric",
+                    {new Date(user.createdAt).toLocaleString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      second: 'numeric',
                     })}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
@@ -142,7 +144,7 @@ export default function UsersTable({
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     <button onClick={() => handleDeleteUser(user._id)}>
-                      <IconTrash className="h-5 w-5 text-red-500" />{" "}
+                      <IconTrash className="h-5 w-5 text-red-500" />{' '}
                       {/* Adjust size and color as needed */}
                     </button>
                   </td>
@@ -158,7 +160,7 @@ export default function UsersTable({
           </table>
         </div>
       </div>
-      <div style={{ marginBottom: "20px" }}>
+      <div style={{ marginBottom: '20px' }}>
         {showAddUser && (
           <AddUser onSubmit={handleSaveUser} onCancel={onCancelUser} />
         )}

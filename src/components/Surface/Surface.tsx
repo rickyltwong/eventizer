@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 // import {
 //   Box,
@@ -27,12 +27,12 @@ import {
   BoxProps,
   createPolymorphicComponent,
   PaperProps,
-} from "@mantine/core";
-import { forwardRef, ReactNode } from "react";
+} from '@mantine/core';
+import { forwardRef, ReactNode } from 'react';
 
 type SurfaceProps = { children: ReactNode } & BoxProps & PaperProps;
 
-const Surface = createPolymorphicComponent<"div", SurfaceProps>(
+const Surface = createPolymorphicComponent<'div', SurfaceProps>(
   forwardRef<HTMLDivElement, SurfaceProps>(function Surface(
     { children, ...others },
     ref,
@@ -45,6 +45,6 @@ const Surface = createPolymorphicComponent<"div", SurfaceProps>(
   }),
 );
 
-Surface.displayName = "Surface";
+Surface.displayName = 'Surface';
 
 export default Surface;

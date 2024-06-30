@@ -1,4 +1,4 @@
-import { Badge } from "@mantine/core";
+import { Badge } from '@mantine/core';
 
 interface AttendeeStatusProps {
   status: string;
@@ -7,10 +7,10 @@ interface AttendeeStatusProps {
 export default function AttendeeStatus({ status }: AttendeeStatusProps) {
   const statusColor =
     {
-      Registered: "green",
-      Pending: "yellow",
-      Cancelled: "red",
-    }[status] || "gray";
+      Registered: 'green',
+      Pending: 'yellow',
+      Cancelled: 'red',
+    }[status] || 'gray';
 
   return <Badge color={statusColor}>{status}</Badge>;
 }

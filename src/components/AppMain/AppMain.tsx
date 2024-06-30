@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
-import { Box } from "@mantine/core";
-import classes from "./App.module.css";
+import { Box } from '@mantine/core';
+import { ReactNode } from 'react';
+
+import classes from './App.module.css';
 
 type AppMainProps = {
   children: ReactNode;

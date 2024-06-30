@@ -1,7 +1,7 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL("/events", request.url));
+export function middleware(request: NextRequest): void | NextResponse<unknown> {
+  if (request.nextUrl.pathname === '/') {
+    return NextResponse.redirect(new URL('/events', request.url));
   }
 }

@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import { Box, Collapse, Group, Text, UnstyledButton } from "@mantine/core";
-import { IconChevronRight } from "@tabler/icons-react";
-import { usePathname, useRouter } from "next/navigation";
-import * as _ from "lodash";
-import classes from "./Links.module.css";
+import { Box, Collapse, Group, Text, UnstyledButton } from '@mantine/core';
+import { IconChevronRight } from '@tabler/icons-react';
+import * as _ from 'lodash';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import classes from './Links.module.css';
 
 interface LinksGroupProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon?: any;
   label: string;
   initiallyOpened?: boolean;
@@ -30,7 +32,10 @@ export function LinksGroup(props: LinksGroupProps) {
   const pathname = usePathname();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
-  const [currentPath, setCurrentPath] = useState<string | undefined>();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [currentPath, setCurrentPath] = useState<string | undefined>(); // FIXME: currentPath is not used
+
   const ChevronIcon = IconChevronRight;
 
   const items = (hasLinks ? links : []).map((link) => (
@@ -49,7 +54,7 @@ export function LinksGroup(props: LinksGroupProps) {
   ));
 
   useEffect(() => {
-    const paths = pathname.split("/");
+    const paths = pathname.split('/');
     setOpened(paths.includes(label.toLowerCase()));
     setCurrentPath(_.last(paths)?.toLowerCase() || undefined);
   }, [pathname, label]);
@@ -59,14 +64,14 @@ export function LinksGroup(props: LinksGroupProps) {
       <UnstyledButton
         onClick={() => {
           setOpened((o) => !o);
-          link && router.push(link || "#");
+          link && router.push(link || '#');
           closeSidebar();
         }}
         className={classes.control}
         data-active={opened || undefined}
       >
         <Group justify="space-between" gap={0}>
-          <Box style={{ display: "flex", alignItems: "center" }}>
+          <Box style={{ display: 'flex', alignItems: 'center' }}>
             <Icon size={18} />
             <Box ml="md">{label}</Box>
           </Box>
@@ -76,7 +81,7 @@ export function LinksGroup(props: LinksGroupProps) {
               size="1rem"
               stroke={1.5}
               style={{
-                transform: opened ? `rotate(90deg)` : "none",
+                transform: opened ? 'rotate(90deg)' : 'none',
               }}
             />
           )}

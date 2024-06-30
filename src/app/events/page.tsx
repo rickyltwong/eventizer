@@ -1,60 +1,58 @@
-"use client";
+'use client';
 
-import { FooterSimple } from "@/components/FooterSimple";
-import { HeaderSearch } from "@/components/HeaderSearch";
 import {
-  Grid,
-  Text,
   Button,
+  Checkbox,
+  Flex,
+  Grid,
+  GridCol,
+  Pagination,
+  Popover,
+  SimpleGrid,
   Space,
   Tabs,
-  GridCol,
-  Popover,
-  Checkbox,
-  SimpleGrid,
-  Pagination,
-  Flex,
-} from "@mantine/core";
+  Text,
+} from '@mantine/core';
+import { IconFilter } from '@tabler/icons-react';
+import axios from 'axios';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 
-import { IconFilter } from "@tabler/icons-react";
-
-import { BadgeCard } from "@/components/BadgeCard";
-import HeroClasses from "@/components/HeroTitle.module.css";
-import ResponsiveContainer from "@/components/ResponsiveContainer";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { IEvent } from "@/types/event";
-import EventCalendar from "@/components/EventCalendar";
-
-import dynamic from "next/dynamic";
+import { BadgeCard } from '@/components';
+import EventCalendar from '@/components';
+import { FooterSimple } from '@/components';
+import { HeaderSearch } from '@/components';
+import HeroClasses from '@/components/HeroTitle.module.css';
+import ResponsiveContainer from '@/components/ResponsiveContainer/ResponsiveContainer';
+import { IEvent } from '@/types';
 
 // import MapView from '@/components/MapView';
 const MapView = dynamic(
-  () => import("@/components/MapView"),
+  () => import('@/components/MapView'),
   // , { ssr: false }
 );
 
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery } from '@mantine/hooks';
 
 type UserLocation = {
   latitude: number;
   longitude: number;
 } | null;
 
-const categories: string[] = ["Yoga", "Meditation", "Fitness"];
+const categories: string[] = ['Yoga', 'Meditation', 'Fitness'];
 
 enum LocationState {
-  SUCCESS = "success",
-  PERMISSION_DENIED = "permission_denied",
-  POSITION_UNAVAILABLE = "position_unavailable",
-  TIMEOUT = "timeout",
-  UNKNOWN_ERROR = "unknown_error",
-  LOADING = "loading",
+  SUCCESS = 'success',
+  PERMISSION_DENIED = 'permission_denied',
+  POSITION_UNAVAILABLE = 'position_unavailable',
+  TIMEOUT = 'timeout',
+  UNKNOWN_ERROR = 'unknown_error',
+  LOADING = 'loading',
 }
 
-export default function Page(): React.JSX.Element {
-  const matches = useMediaQuery("(min-width: 48em)");
-  const [activeTab, setActiveTab] = useState<string | null>("gallery");
+export default function Page(): JSX.Element {
+  const matches = useMediaQuery('(min-width: 48em)');
+  const [activeTab, setActiveTab] = useState<string | null>('gallery');
 
   // Gallery tab
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -88,7 +86,7 @@ export default function Page(): React.JSX.Element {
 
     window.scrollTo({
       top: 100,
-      behavior: "auto",
+      behavior: 'auto',
     });
   };
 
@@ -101,7 +99,7 @@ export default function Page(): React.JSX.Element {
   // Fetch events
   useEffect(() => {
     axios
-      .get("/api/events")
+      .get('/api/events')
       .then((response) => {
         setEvents(response.data);
         setIsLoading(false);
@@ -125,7 +123,7 @@ export default function Page(): React.JSX.Element {
 
   // Get user location
   useEffect(() => {
-    if (activeTab === "map") {
+    if (activeTab === 'map') {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setUserLocation({
@@ -135,7 +133,7 @@ export default function Page(): React.JSX.Element {
           setLocationState(LocationState.SUCCESS);
         },
         (error) => {
-          console.error("Error obtaining location", error);
+          console.error('Error obtaining location', error);
           switch (error.code) {
             case error.PERMISSION_DENIED:
               setLocationState(LocationState.PERMISSION_DENIED);
@@ -163,7 +161,7 @@ export default function Page(): React.JSX.Element {
           <Text
             component="span"
             variant="gradient"
-            gradient={{ from: "blue", to: "cyan" }}
+            gradient={{ from: 'blue', to: 'cyan' }}
             inherit
           >
             Upcoming Events
@@ -255,7 +253,7 @@ export default function Page(): React.JSX.Element {
                   variant="default"
                   styles={{
                     root: {
-                      float: "right",
+                      float: 'right',
                     },
                   }}
                 >
@@ -265,7 +263,7 @@ export default function Page(): React.JSX.Element {
               <Popover.Dropdown>
                 <Text
                   style={{
-                    marginBottom: "1rem",
+                    marginBottom: '1rem',
                   }}
                   fw={700}
                 >

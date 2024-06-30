@@ -1,74 +1,71 @@
-"use client";
+'use client';
 import {
-  Paper,
-  TextInput,
-  PasswordInput,
-  Checkbox,
   Button,
   Group,
   NumberInput,
-  Textarea,
+  Paper,
+  PasswordInput,
   Select,
-  Title,
   Text,
-  Anchor,
-} from "@mantine/core";
-import classes from "./signup.module.css";
-import Link from "next/link";
-import { useForm } from "@mantine/form";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+  TextInput,
+  Title,
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-const Page = (props: any) => {
+import classes from './signup.module.css';
+
+const Page = () => {
   const router = useRouter();
   const form = useForm({
-    mode: "uncontrolled",
-    validateInputOnChange: ["password", "confirmPassword"],
-    validateInputOnBlur: ["email", "phoneNumber"],
+    mode: 'uncontrolled',
+    validateInputOnChange: ['password', 'confirmPassword'],
+    validateInputOnBlur: ['email', 'phoneNumber'],
     initialValues: {
-      username: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
-      role: "",
+      username: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
+      confirmPassword: '',
+      role: '',
     },
 
     validate: {
       email: (value) =>
-        /^\S+@\S+$/.test(value) ? null : "Invalid email address",
+        /^\S+@\S+$/.test(value) ? null : 'Invalid email address',
       phoneNumber: (value) =>
-        value.length < 10 ? "invalid phone number" : null,
+        value.length < 10 ? 'invalid phone number' : null,
       password: (value) =>
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
           value,
         )
           ? null
-          : "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+          : 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character',
       confirmPassword: (value, values) =>
-        value === values.password ? null : "Passwords do not match",
+        value === values.password ? null : 'Passwords do not match',
     },
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
     try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
       });
 
       if (response.status === 200) {
         // Redirect to the new page
-        await router.replace("/home");
+        await router.replace('/home');
       } else {
         const data = await response.json();
-        console.error("Error:", data.message);
+        console.error('Error:', data.message);
       }
     } catch (e) {
-      console.error("An error occurred while submitting the form:", e);
+      console.error('An error occurred while submitting the form:', e);
     }
   });
 
@@ -88,8 +85,8 @@ const Page = (props: any) => {
             size="xs"
             placeholder=""
             mt="md"
-            key={form.key("username")}
-            {...form.getInputProps("username")}
+            key={form.key('username')}
+            {...form.getInputProps('username')}
             required
           />
 
@@ -98,14 +95,14 @@ const Page = (props: any) => {
               size="xs"
               label="First name"
               required
-              key={form.key("firstName")}
-              {...form.getInputProps("firstName")}
+              key={form.key('firstName')}
+              {...form.getInputProps('firstName')}
             />
             <TextInput
               size="xs"
               label="Last name"
-              key={form.key("lastName")}
-              {...form.getInputProps("lastName")}
+              key={form.key('lastName')}
+              {...form.getInputProps('lastName')}
               required
             />
           </Group>
@@ -114,15 +111,15 @@ const Page = (props: any) => {
               size="xs"
               label="Email"
               placeholder=""
-              key={form.key("email")}
-              {...form.getInputProps("email")}
+              key={form.key('email')}
+              {...form.getInputProps('email')}
               required
             />
             <NumberInput
               size="xs"
               label="Phone number"
-              key={form.key("phoneNumber")}
-              {...form.getInputProps("phoneNumber")}
+              key={form.key('phoneNumber')}
+              {...form.getInputProps('phoneNumber')}
               required
             />
           </Group>
@@ -132,8 +129,8 @@ const Page = (props: any) => {
               label="Password"
               placeholder=""
               required
-              key={form.key("password")}
-              {...form.getInputProps("password")}
+              key={form.key('password')}
+              {...form.getInputProps('password')}
               mt="md"
             />
             <PasswordInput
@@ -141,8 +138,8 @@ const Page = (props: any) => {
               label="Confirm Password"
               placeholder="Your password"
               required
-              key={form.key("confirmPassword")}
-              {...form.getInputProps("confirmPassword")}
+              key={form.key('confirmPassword')}
+              {...form.getInputProps('confirmPassword')}
               mt="md"
             />
           </Group>
@@ -153,15 +150,15 @@ const Page = (props: any) => {
             comboboxProps={{ withinPortal: true }}
             data={[
               {
-                value: "attendee",
-                label: "I will be viewing and registering for events",
+                value: 'attendee',
+                label: 'I will be viewing and registering for events',
               },
-              { value: "organizer", label: "I will be hosting events" },
+              { value: 'organizer', label: 'I will be hosting events' },
             ]}
             placeholder="How would you like to use Eventizer?"
             label="Role"
-            key={form.key("role")}
-            {...form.getInputProps("role")}
+            key={form.key('role')}
+            {...form.getInputProps('role')}
           />
           <Text c="red" ta="center" size="xs" mt={8}>
             By clicking ‘Create account’, I fully acknowledge Eventizer Terms of
@@ -192,30 +189,3 @@ const Page = (props: any) => {
 };
 
 export default Page;
-
-const user = {
-  _id: "60d5f9f5a3c88a7a1b1c923c",
-  username: "john_doe",
-  email: "john@example.com",
-  password: "$2a$12$YH6YPh5gr.OQrmxF6r/cNu3VBR4X/kp.QTugQFwMZeyV23mx7P6F2",
-  role: "attendee",
-  profile: {
-    firstName: "John",
-    lastName: "Doe",
-    dateOfBirth: "1980-06-01T00:00:00Z",
-    phone: "+1234567890",
-    avatarUrl: "https://example.com/avatar/john_doe.png",
-    bio: "An enthusiastic participant in community events.",
-  },
-  preferences: {
-    language: "en",
-    notificationSettings: {
-      emailNotifications: true,
-    },
-  },
-  eventsAttending: ["60d5fa35a3c88a7a1b1c9240"],
-  eventsHosting: [],
-  createdAt: "2023-01-01T12:00:00Z",
-  updatedAt: "2023-06-07T15:00:00Z",
-  status: "active",
-};

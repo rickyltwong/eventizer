@@ -1,18 +1,19 @@
-"use client";
+'use client';
 
-import { Container, Group, Anchor } from "@mantine/core";
-import classes from "./FooterSimple.module.css";
-import Image from "next/image";
+import { Anchor, Container, Group } from '@mantine/core';
+import Image from 'next/image';
+
+import classes from './FooterSimple.module.css';
 
 const links = [
-  { link: "/about-us", label: "About Us" },
-  { link: "#", label: "Privacy" },
-  { link: "#", label: "Careers" },
+  { link: '/about-us', label: 'About Us' },
+  { link: '#', label: 'Privacy' },
+  { link: '#', label: 'Careers' },
 ];
 
 export function FooterSimple() {
   const items = links.map((link) => (
-    <Anchor<"a">
+    <Anchor<'a'>
       c="dimmed"
       key={link.label}
       href={link.link}

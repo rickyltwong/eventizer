@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import { analytics } from "./analytics";
-import { BarChart, DonutChart, Card } from "@tremor/react";
+import { BarChart, Card, DonutChart } from '@tremor/react';
+
+import { analytics } from './analytics';
 
 interface AnalyticsDashboardProps {
   avgVisitorsPerDay: string;
@@ -52,7 +53,7 @@ export const AnalyticsDashboard = ({
                   0,
                 ),
               }))}
-              categories={["Visitors"]}
+              categories={['Visitors']}
               index="name"
             />
           )}

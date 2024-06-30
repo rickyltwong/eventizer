@@ -1,6 +1,6 @@
-import { format, subDays } from "date-fns";
+import { format, subDays } from 'date-fns';
 export const getDate = (sub: number = 0) => {
   const dateXDaysAgo = subDays(new Date(), sub);
 
-  return format(dateXDaysAgo, "yyyy/MM/dd");
+  return format(dateXDaysAgo, 'yyyy/MM/dd');
 };

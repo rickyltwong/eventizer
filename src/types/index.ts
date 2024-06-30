@@ -1,3 +1,50 @@
+// Events
+
+export interface IEventAddress {
+  venueName: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  country?: string;
+  postalCode?: string;
+  latitude?: number;
+  longitude?: number;
+}
+
+export interface TicketClass {
+  ticketType: string;
+  price: number;
+  benefits: string[];
+  availability: number;
+}
+
+export interface Discount {
+  discountCode: string;
+  discountAmount: number;
+  discountType: 'Fixed' | 'Percentage' | string;
+  discountApplicable: string;
+  discountExpiry: string;
+}
+
+export interface IEvent {
+  eventName: string;
+  eventDescription: string;
+  eventAddress: IEventAddress;
+  eventStartDateTime: Date;
+  eventEndDateTime: Date;
+  instructorName: string;
+  eventType: 'Yoga' | 'Meditation' | 'Fitness' | string;
+  capacity: number;
+  remainingSeats?: number;
+  markedPrice: number;
+  currency: 'CAD' | string;
+  difficulty: string;
+  minimumAge?: number;
+  ticketsClasses: TicketClass[];
+  discounts: Discount[];
+}
+
 export type Id = string | number;
 
 export type KanbanColumn = {
@@ -10,12 +57,12 @@ export type KanbanTask = {
   columnId: Id;
   content: string;
   title?: string;
-  status?: "to do" | "in progress" | "done" | "unassigned" | string;
+  status?: 'to do' | 'in progress' | 'done' | 'unassigned' | string;
   comments?: number;
   users?: number;
 };
 
-export type OrderStatus = "shipped" | "processing" | "cancelled" | string;
+export type OrderStatus = 'shipped' | 'processing' | 'cancelled' | string;
 
 export type Orders = {
   id: string;
@@ -27,11 +74,11 @@ export type Orders = {
 };
 
 export type InvoiceStatus =
-  | "pending"
-  | "sent"
-  | "cancelled"
-  | "approved"
-  | "suspended"
+  | 'pending'
+  | 'sent'
+  | 'cancelled'
+  | 'approved'
+  | 'suspended'
   | string;
 
 export type Invoices = {

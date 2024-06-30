@@ -1,15 +1,16 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
 import {
-  Button,
-  Select,
-  Input,
-  Container,
-  Title,
-  Group,
   Box,
-} from "@mantine/core";
-import UserTable from "@/components/UserManagement/UserTable";
+  Button,
+  Container,
+  Group,
+  Input,
+  Select,
+  Title,
+} from '@mantine/core';
+import { useEffect, useState } from 'react';
+
+import UserTable from '@/components/UserManagement/UserTable';
 
 export interface User {
   id: number;
@@ -23,22 +24,22 @@ export interface User {
 }
 
 export default function UserManagementPage() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
   const [users, setUsers] = useState<User[]>([]);
   const [showAddUser, setShowAddUser] = useState(false);
   const [newUser, setNewUser] = useState<User | null>(null);
-  const [addingUser, setAddingUser] = useState<User | null>(null);
+  // const [addingUser, setAddingUser] = useState<User | null>(null);
 
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await fetch("/api/admin"); // Fetching the list of users from the API
+        const response = await fetch('/api/admin'); // Fetching the list of users from the API
         console.log(response);
         const data = await response.json(); // Parsing the response JSON data
         setUsers(data); // Setting the users state with the fetched data
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error('Error fetching users:', error);
       }
     }
     fetchUsers(); // Calling the fetchUsers function when the component mounts
@@ -50,7 +51,7 @@ export default function UserManagementPage() {
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesStatus =
-      filterStatus === "all" ||
+      filterStatus === 'all' ||
       user.status.toLowerCase() === filterStatus.toLowerCase();
     return matchesSearchTerm && matchesStatus;
   });
@@ -58,17 +59,17 @@ export default function UserManagementPage() {
   // Handle status change
   const handleStatusChange = async (id: number, status: string) => {
     try {
-      const response = await fetch("/api/admin", {
-        method: "PUT",
+      const response = await fetch('/api/admin', {
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ id: id, status: status }),
       });
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        throw new Error(errorResponse.error || "Failed to update user status");
+        throw new Error(errorResponse.error || 'Failed to update user status');
       }
 
       const updatedUser = await response.json();
@@ -79,17 +80,17 @@ export default function UserManagementPage() {
         ),
       );
     } catch (error) {
-      console.error("Error updating user status:", error);
+      console.error('Error updating user status:', error);
     }
   };
 
   // Handle role change
   const handleRoleChange = async (id: number, role: string) => {
     try {
-      await fetch("/api/admin", {
-        method: "PUT",
+      await fetch('/api/admin', {
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ id: id, role: role }),
       });
@@ -97,34 +98,34 @@ export default function UserManagementPage() {
         prevUsers.map((user) => (user.id === id ? { ...user, role } : user)),
       );
     } catch (error) {
-      console.error("Error updating user role:", error);
+      console.error('Error updating user role:', error);
     }
   };
 
   const handleDeleteUser = async (id: number) => {
     try {
-      await fetch("/api/admin", {
-        method: "DELETE",
+      await fetch('/api/admin', {
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ id: id }),
       });
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error('Error deleting user:', error);
     }
   };
 
   const handleAddUser = async () => {
     setNewUser({
       id: Math.random(),
-      username: "",
-      role: "",
-      status: "",
-      createdAt: "",
+      username: '',
+      role: '',
+      status: '',
+      createdAt: '',
       profile: {
-        phone: "",
+        phone: '',
       },
     });
 
@@ -134,21 +135,21 @@ export default function UserManagementPage() {
   const handleSaveUser = async (newUser1: User) => {
     console.log(newUser1);
     try {
-      const response = await fetch("/api/admin", {
-        method: "POST",
+      const response = await fetch('/api/admin', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(newUser1),
       });
       if (!response.ok) {
-        throw new Error("Failed to add user");
+        throw new Error('Failed to add user');
       }
       const addedUser = await response.json();
       setUsers((prevUsers) => [...prevUsers, addedUser]);
       setShowAddUser(false); // Hide the AddUserForm after successful addition
     } catch (error) {
-      console.error("Error adding user:", error);
+      console.error('Error adding user:', error);
     }
   };
 
@@ -164,7 +165,7 @@ export default function UserManagementPage() {
         <Title
           order={2}
           mb="lg"
-          style={{ color: "#64c1ff", fontWeight: "bold", padding: 20 }}
+          style={{ color: '#64c1ff', fontWeight: 'bold', padding: 20 }}
         >
           User Management
         </Title>
@@ -178,14 +179,14 @@ export default function UserManagementPage() {
           />
           <Select
             value={filterStatus}
-            onChange={(value) => setFilterStatus(value ?? "all")}
+            onChange={(value) => setFilterStatus(value ?? 'all')}
             data={[
-              { value: "all", label: "All" },
-              { value: "active", label: "Active" },
-              { value: "disabled", label: "Disabled" },
-              { value: "pending", label: "Pending" },
+              { value: 'all', label: 'All' },
+              { value: 'active', label: 'Active' },
+              { value: 'disabled', label: 'Disabled' },
+              { value: 'pending', label: 'Pending' },
             ]}
-            style={{ marginLeft: "1rem" }}
+            style={{ marginLeft: '1rem' }}
           />
           <Button variant="filled" ml="md" onClick={handleAddUser}>
             Add User

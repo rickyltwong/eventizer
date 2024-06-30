@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   ActionIcon,
@@ -14,15 +14,20 @@ import {
   Text,
   Title,
   useMantineTheme,
-} from "@mantine/core";
-import { IconPlus, IconRefresh } from "@tabler/icons-react";
-import { FilterDateMenu, Surface } from "@/components";
-import { useColorScheme } from "@mantine/hooks";
+} from '@mantine/core';
+import { useColorScheme } from '@mantine/hooks';
+import { IconPlus, IconRefresh } from '@tabler/icons-react';
+
+import {
+  // FilterDateMenu,
+  Surface,
+} from '@/components';
 
 type PageHeaderProps = {
   title: string;
   withActions?: boolean;
-  breadcrumbItems?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  breadcrumbItems?: any; // FIXME: Unexpected any. Specify a different type
   invoiceAction?: boolean;
 } & PaperProps;
 
@@ -32,21 +37,21 @@ const PageHeader = (props: PageHeaderProps) => {
   const theme = useMantineTheme();
   const colorScheme = useColorScheme();
 
-  const BREADCRUMBS_PROPS: Omit<BreadcrumbsProps, "children"> = {
+  const BREADCRUMBS_PROPS: Omit<BreadcrumbsProps, 'children'> = {
     style: {
       a: {
         padding: rem(8),
         borderRadius: theme.radius.sm,
         fontWeight: 500,
-        color: colorScheme === "dark" ? theme.white : theme.black,
+        color: colorScheme === 'dark' ? theme.white : theme.black,
 
-        "&:hover": {
-          transition: "all ease 150ms",
+        '&:hover': {
+          transition: 'all ease 150ms',
           backgroundColor:
-            colorScheme === "dark"
+            colorScheme === 'dark'
               ? theme.colors.dark[5]
               : theme.colors.gray[2],
-          textDecoration: "none",
+          textDecoration: 'none',
         },
       },
     },
@@ -56,14 +61,14 @@ const PageHeader = (props: PageHeaderProps) => {
     <>
       <Surface
         component={Paper}
-        style={{ backgroundColor: "transparent" }}
+        style={{ backgroundColor: 'transparent' }}
         {...others}
       >
         {withActions ? (
           <Flex
             justify="space-between"
-            direction={{ base: "column", sm: "row" }}
-            gap={{ base: "sm", sm: 4 }}
+            direction={{ base: 'column', sm: 'row' }}
+            gap={{ base: 'sm', sm: 4 }}
           >
             <Stack gap={4}>
               <Title order={3}>{title}</Title>
@@ -73,15 +78,15 @@ const PageHeader = (props: PageHeaderProps) => {
               <ActionIcon variant="subtle">
                 <IconRefresh size={16} />
               </ActionIcon>
-              <FilterDateMenu />
+              {/* <FilterDateMenu /> */}
             </Flex>
           </Flex>
         ) : invoiceAction ? (
           <Flex
             align="center"
             justify="space-between"
-            direction={{ base: "row", sm: "row" }}
-            gap={{ base: "sm", sm: 4 }}
+            direction={{ base: 'row', sm: 'row' }}
+            gap={{ base: 'sm', sm: 4 }}
           >
             <Stack>
               <Title order={3}>{title}</Title>

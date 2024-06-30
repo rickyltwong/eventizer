@@ -1,18 +1,16 @@
-"use client";
+'use client';
 import {
   Button,
-  TextInput,
-  Textarea,
+  Container,
+  Group,
   NumberInput,
   Select,
-  Group,
-  Container,
+  Textarea,
+  TextInput,
   Title,
-  Center,
-} from "@mantine/core";
-import { DateTimePicker } from "@mantine/dates";
-import { useForm } from "@mantine/form";
-import React from "react";
+} from '@mantine/core';
+import { DateTimePicker } from '@mantine/dates';
+import { useForm } from '@mantine/form';
 
 interface EventFormValues {
   title: string;
@@ -29,30 +27,30 @@ interface EventFormValues {
 }
 
 const difficulties = [
-  { value: "easy", label: "Easy" },
-  { value: "medium", label: "Medium" },
-  { value: "hard", label: "Hard" },
+  { value: 'easy', label: 'Easy' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'hard', label: 'Hard' },
 ];
 
 const types = [
-  { value: "workshop", label: "Workshop" },
-  { value: "seminar", label: "Seminar" },
-  { value: "course", label: "Course" },
+  { value: 'workshop', label: 'Workshop' },
+  { value: 'seminar', label: 'Seminar' },
+  { value: 'course', label: 'Course' },
 ];
 
 const EventForm = () => {
   const form = useForm<EventFormValues>({
     initialValues: {
-      title: "",
-      description: "",
-      venue: "",
-      address: "",
+      title: '',
+      description: '',
+      venue: '',
+      address: '',
       startDateTime: null,
       endDateTime: null,
-      instructor: "",
-      type: "",
+      instructor: '',
+      type: '',
       capacity: 1,
-      difficulty: "",
+      difficulty: '',
       minimumAge: 0,
     },
   });
@@ -66,70 +64,70 @@ const EventForm = () => {
         <TextInput
           label="Event Title"
           placeholder="Enter event title"
-          {...form.getInputProps("title")}
+          {...form.getInputProps('title')}
           mt="md"
           mb="sm"
         />
         <Textarea
           label="Description"
           placeholder="Enter event description"
-          {...form.getInputProps("description")}
+          {...form.getInputProps('description')}
           mb="sm"
         />
         <TextInput
           label="Venue"
           placeholder="Enter event venue"
-          {...form.getInputProps("venue")}
+          {...form.getInputProps('venue')}
           mb="sm"
         />
         <TextInput
           label="Address"
           placeholder="Enter venue address"
-          {...form.getInputProps("address")}
+          {...form.getInputProps('address')}
           mb="sm"
         />
         <DateTimePicker
           label="Start Date Time"
           placeholder="Pick start date and time"
-          {...form.getInputProps("startDateTime")}
+          {...form.getInputProps('startDateTime')}
           mb="sm"
         />
         <DateTimePicker
           label="End Date Time"
           placeholder="Pick end date and time"
-          {...form.getInputProps("endDateTime")}
+          {...form.getInputProps('endDateTime')}
           mb="sm"
         />
         <TextInput
           label="Instructor"
           placeholder="Enter instructor's name"
-          {...form.getInputProps("instructor")}
+          {...form.getInputProps('instructor')}
           mb="sm"
         />
         <Select
           label="Type"
           placeholder="Select event type"
           data={types}
-          {...form.getInputProps("type")}
+          {...form.getInputProps('type')}
           mb="sm"
         />
         <NumberInput
           label="Capacity"
           placeholder="Enter capacity"
-          {...form.getInputProps("capacity")}
+          {...form.getInputProps('capacity')}
           mb="sm"
         />
         <Select
           label="Difficulty"
           placeholder="Select difficulty level"
           data={difficulties}
-          {...form.getInputProps("difficulty")}
+          {...form.getInputProps('difficulty')}
           mb="sm"
         />
         <NumberInput
           label="Minimum Age"
           placeholder="Enter minimum age requirement"
-          {...form.getInputProps("minimumAge")}
+          {...form.getInputProps('minimumAge')}
           mb="sm"
         />
         <Group align="right" mt="md">

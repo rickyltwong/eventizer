@@ -1,14 +1,13 @@
-import { ActionIcon, ActionIconProps, rem } from "@mantine/core";
+import { ActionIcon, ActionIconProps, rem } from '@mantine/core';
 import {
   IconMessage,
   IconNotification,
   IconSettingsCog,
-  IconUser,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react';
 
 type ActionButtonProps = {
   iconSize?: number;
-  orientation?: "vertical" | "horizontal";
+  orientation?: 'vertical' | 'horizontal';
 } & ActionIconProps;
 
 /**
