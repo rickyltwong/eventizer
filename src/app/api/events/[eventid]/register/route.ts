@@ -14,14 +14,14 @@ export async function POST(request: NextRequest) {
             price,
         } = reqBody;
 
-        // const ticketInDb = await EventTicket.findOne({user: userId, event: eventId}).populate('user').populate('event');
-        // if (ticketInDb) {
-        //     console.log("You have already registered for the event");
-        //     return NextResponse.json(
-        //         {error: "User already registered for this event"},
-        //         {status: 400}
-        //     );
-        // }
+        const ticketInDb = await EventTicket.findOne({user: userId, event: eventId}).populate('user').populate('event');
+        if (ticketInDb) {
+            console.log("You have already registered for the event");
+            return NextResponse.json(
+                {error: "User already registered for this event"},
+                {status: 400}
+            );
+        }
 
         const ticket = new EventTicket({
             event: eventId,
