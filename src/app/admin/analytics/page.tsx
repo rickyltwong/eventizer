@@ -18,29 +18,13 @@ interface Event {
 }
 
 const Dashboard = () => {
+  const [totalSales, setTotalSales] = useState<number>(0);
   const [pieData, setPieData] = useState({
     labels: [],
     datasets: [
       {
         label: 'Events',
         data: [],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
       },
     ],
   });
@@ -51,16 +35,10 @@ const Dashboard = () => {
       {
         label: 'Remaining Seats',
         data: [],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
       },
       {
         label: 'Total Capacity',
         data: [],
-        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-        borderColor: 'rgba(153, 102, 255, 1)',
-        borderWidth: 1,
       },
     ],
   });
@@ -72,15 +50,12 @@ const Dashboard = () => {
         const data: Event[] = await response.json();
         console.log(data);
 
-        // Unique event types for labels
         const eventTypes = Array.from(new Set(data.map((event: Event) => event.eventType)));
 
-        // Count each event type for pie chart
         const eventCounts = eventTypes.map((type: string) => 
           data.filter((event: Event) => event.eventType === type).length
         );
 
-        // Calculate total remaining seats and capacity for each event type for bar chart
         const remainingSeats = eventTypes.map((type: string) => 
           data.filter((event: Event) => event.eventType === type)
               .reduce((acc, event) => acc + event.remainingSeats, 0)
@@ -90,6 +65,9 @@ const Dashboard = () => {
           data.filter((event: Event) => event.eventType === type)
               .reduce((acc, event) => acc + event.capacity, 0)
         );
+
+        const totalSales = data.reduce((acc, event) => acc + (event.capacity-event.remainingSeats), 0)
+        setTotalSales(totalSales);
 
         // Pie chart data
         setPieData({
@@ -101,6 +79,7 @@ const Dashboard = () => {
               backgroundColor: eventTypes.map((_, index) => {
                 const colors = [
                   'rgba(255, 99, 132, 0.2)',
+                  //'#8fbc8f',
                   'rgba(54, 162, 235, 0.2)',
                   'rgba(255, 206, 86, 0.2)',
                   'rgba(75, 192, 192, 0.2)',
@@ -155,25 +134,21 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Title order={2} my="lg" style={{ color: '#64c1ff', fontWeight: 'bold', padding: 20 }}>
+      {/* <Title order={2} my="lg" style={{ color: '#64c1ff', fontWeight: 'bold', padding: 2 }}>
         Dashboard
-      </Title>
+      </Title> */}
       <SimpleGrid cols={2} spacing="lg">
-        <Card shadow="sm" p="lg">
-          <Text size="lg">Total Sales</Text>
-          <Text size="sm">10,000</Text>
+        <Card shadow="sm" p="lg" style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}>
+          <Text size="lg" style={{ marginBottom: '8px', fontWeight:'bold' }}>Total Sales</Text>
+          <Text size="xl">{totalSales}</Text>
         </Card>
-        {/* <Card shadow="sm" p="lg">
-          <Text size="lg">New Users</Text>
-          <Text size="sm">50</Text>
-        </Card> */}
-        <Card shadow="sm" p="lg">
-          <Text size="lg">Active Subscriptions</Text>
-          <Text size="sm">300</Text>
+        <Card shadow="sm" p="lg" style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}>
+          <Text size="lg" style={{ marginBottom: '8px', fontWeight:'bold' }}>Active Subscriptions</Text>
+          <Text size="xl" >300</Text>
         </Card>
       </SimpleGrid>
       <SimpleGrid cols={2} spacing="lg" mt="xl">
-        <Card shadow="sm" p="lg" style={{ height: '380px' }}>
+        <Card shadow="sm" p="lg" style={{ height: '450px' }}>
           <Title order={3}>Sales Over Time</Title>
           <Bar 
             data={barData} 
@@ -219,7 +194,7 @@ const Dashboard = () => {
             }} 
           />
         </Card>
-        <Card shadow="sm" p="lg" style={{ height: '380px' }}>
+        <Card shadow="sm" p="lg" style={{ height: '450px' }}>
           <Title order={3}>Events Distribution</Title>
           <Pie 
             data={pieData} 
