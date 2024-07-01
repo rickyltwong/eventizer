@@ -1,13 +1,11 @@
 'use client';
 
 import {
-  Avatar,
   Badge,
   Button,
   Divider,
   Flex,
   Group,
-  Image,
   Modal,
   MantineColor,
   Paper,
@@ -15,15 +13,15 @@ import {
   Progress,
   Stack,
   Text,
-  Tooltip,
   useMantineColorScheme,
 } from '@mantine/core';
-import { Surface, EventForm } from '@/components';
-import { IconNotebook, IconShare, IconEdit, IconBuilding, IconTrash } from '@tabler/icons-react';
-import classes from './ProjectsCard.module.css';
+import { IconBuilding, IconEdit, IconTrash } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { format } from 'date-fns';
 import { EventFormValues } from '@/types/event';
+import { EventForm} from '@/components'
+import { useState } from 'react';
+import axios from 'axios';
 
 const determineEventStatus = (eventStartDateTime: Date, eventEndDateTime: Date): Status => {
   const now = new Date();
@@ -31,20 +29,21 @@ const determineEventStatus = (eventStartDateTime: Date, eventEndDateTime: Date):
   const end = new Date(eventEndDateTime);
 
   if (now < start) {
-    return 'upcoming'; // The current time is before the event start time
+    return 'upcoming';
   } else if (now >= start && now <= end) {
-    return 'ongoing'; // The current time is during the event
+    return 'ongoing';
   } else {
-    return 'expired'; // The current time is after the event end time
+    return 'expired';
   }
 };
 
 type Status = 'upcoming' | 'cancelled' | 'expired' | 'ongoing';
 
 type ProjectsCardProps = {
-  id: string;
+  _id: string;
   remainingSeats: number;
   onDelete: (id: string) => void;
+  onUpdate: (event: EventFormValues & { _id: string }) => void;
 } & EventFormValues & Omit<PaperProps, 'children'>;
 
 const StatusBadge = ({ status }: { status: string }) => {
@@ -77,7 +76,7 @@ const StatusBadge = ({ status }: { status: string }) => {
 const ProjectsCard = (props: ProjectsCardProps) => {
   const { colorScheme } = useMantineColorScheme();
   const {
-    id,
+    _id,
     capacity,
     remainingSeats,
     eventAddress,
@@ -86,24 +85,53 @@ const ProjectsCard = (props: ProjectsCardProps) => {
     eventDescription,
     eventName,
     onDelete,
+    onUpdate,
     ...others
   } = props;
 
   const [opened, { open, close }] = useDisclosure(false);
   const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
+  const [eventDetails, setEventDetails] = useState<EventFormValues | null>(null);
 
   const formattedStart = eventStartDateTime ? format(new Date(eventStartDateTime), 'PPpp') : 'Invalid date';
   const formattedEnd = eventEndDateTime ? format(new Date(eventEndDateTime), 'PPpp') : 'Invalid date';
   const status = determineEventStatus(eventStartDateTime, eventEndDateTime);
   const venueName = eventAddress?.venueName || 'Unknown venue';
 
+  const handleEdit = async () => {
+    try {
+      console.log("Fetching event details...");
+      const response = await axios.get(`/api/events/${_id}`);
+      setEventDetails({
+        _id,
+        eventName: response.data.eventName,
+        eventDescription: response.data.eventDescription,
+        eventAddress: {
+          venueName: response.data.eventAddress.venueName,
+          addressLine1: response.data.eventAddress.addressLine1,
+        },
+        eventStartDateTime: new Date(response.data.eventStartDateTime),
+        eventEndDateTime: new Date(response.data.eventEndDateTime),
+        instructorName: response.data.instructorName,
+        eventType: response.data.eventType,
+        capacity: response.data.capacity,
+        difficulty: response.data.difficulty,
+        minimumAge: response.data.minimumAge,
+      });
+      open();
+    } catch (error) {
+      console.error("Failed to fetch event details:", error);
+    }
+  }
+
   const handleDelete = () => {
-    onDelete(id);
+    onDelete(_id);
     closeDeleteModal();
   };
 
+
   return (
-    <Surface component={Paper} {...others}>
+    <Paper {...others}>
       <Stack gap="sm">
         <Flex justify="space-between" align="center">
           <Flex align="center" gap="xs">
@@ -121,7 +149,7 @@ const ProjectsCard = (props: ProjectsCardProps) => {
 
         <Text fz="sm">
           Enrollment:{' '}
-          <Text span fz="sm" fw={500} className={classes.tasksCompleted}>
+          <Text span fz="sm" fw={500}>
             {capacity - remainingSeats} / {capacity}
           </Text>
         </Text>
@@ -150,12 +178,14 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         <Group gap="sm">
           <StatusBadge status={status} />
           <Modal opened={opened} onClose={close} title="Event Detail" centered size="lg">
-            <EventForm />
+          {eventDetails && (
+              <EventForm onUpdateEvent={onUpdate} closeModal={close} initialValues={eventDetails} />
+            )}
           </Modal>
           <Button
             size="compact-md"
             variant="subtle"
-            onClick={open}
+            onClick={handleEdit}
             leftSection={<IconEdit size={14} />}
           >
             Edit
@@ -180,9 +210,8 @@ const ProjectsCard = (props: ProjectsCardProps) => {
           </Modal>
         </Group>
       </Stack>
-    </Surface>
+    </Paper>
   );
 };
 
 export default ProjectsCard;
-

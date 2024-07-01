@@ -1,8 +1,10 @@
-'use client'
-import React, { useState } from 'react';
-import { Checkbox, Button, Select } from '@mantine/core';
-import AttendeeStatus from './AttendeeStatus';
+'use client';
+import { Button, Checkbox, Select } from '@mantine/core';
+import { useState } from 'react';
+
 import { Attendee } from '@/app/admin/attendee/page';
+
+import AttendeeStatus from './AttendeeStatus';
 
 interface AttendeesTableProps {
   attendees: Attendee[];
@@ -10,7 +12,11 @@ interface AttendeesTableProps {
   onStatusChange: (id: number, status: string) => void;
 }
 
-export default function AttendeesTable({ attendees, onCheckboxChange, onStatusChange }: AttendeesTableProps) {
+export default function AttendeesTable({
+  attendees,
+  onCheckboxChange,
+  onStatusChange,
+}: AttendeesTableProps) {
   const [editingStatusId, setEditingStatusId] = useState<number | null>(null);
 
   const handleStatusChange = (id: number, newStatus: string) => {
@@ -66,11 +72,16 @@ export default function AttendeesTable({ attendees, onCheckboxChange, onStatusCh
                     {editingStatusId === attendee.id ? (
                       <Select
                         value={attendee.status}
-                        onChange={(value) => handleStatusChange(attendee.id, value ?? attendee.status)}
+                        onChange={(value) =>
+                          handleStatusChange(
+                            attendee.id,
+                            value ?? attendee.status,
+                          )
+                        }
                         data={[
                           { value: 'Registered', label: 'Registered' },
                           { value: 'Pending', label: 'Pending' },
-                          { value: 'Cancelled', label: 'Cancelled' }
+                          { value: 'Cancelled', label: 'Cancelled' },
                         ]}
                       />
                     ) : (

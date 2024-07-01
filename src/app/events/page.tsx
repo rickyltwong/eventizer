@@ -1,35 +1,36 @@
 'use client';
 
-import { FooterSimple } from '@/components/FooterSimple';
-import { HeaderSearch } from '@/components/HeaderSearch';
 import {
-  Grid,
-  Text,
   Button,
+  Checkbox,
+  Flex,
+  Grid,
+  GridCol,
+  Pagination,
+  Popover,
+  SimpleGrid,
   Space,
   Tabs,
-  GridCol,
-  Popover,
-  Checkbox,
-  SimpleGrid,
-  Pagination,
-  Flex,
+  Text,
 } from '@mantine/core';
-
 import { IconFilter } from '@tabler/icons-react';
-
-import { BadgeCard } from '@/components/BadgeCard';
-import HeroClasses from '@/components/HeroTitle.module.css';
-import ResponsiveContainer from '@/components/ResponsiveContainer';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { IEvent } from '@/types/event';
-import EventCalendar from '@/components/EventCalendar';
-
 import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+
+import { BadgeCard } from '@/components';
+import EventCalendar from '@/components';
+import { FooterSimple } from '@/components';
+import { HeaderSearch } from '@/components';
+import HeroClasses from '@/components/HeroTitle.module.css';
+import ResponsiveContainer from '@/components/ResponsiveContainer/ResponsiveContainer';
+import { IEvent } from '@/types';
 
 // import MapView from '@/components/MapView';
-const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
+const MapView = dynamic(
+  () => import('@/components/MapView'),
+  // , { ssr: false }
+);
 
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -40,7 +41,16 @@ type UserLocation = {
 
 const categories: string[] = ['Yoga', 'Meditation', 'Fitness'];
 
-export default function Page(): React.JSX.Element {
+enum LocationState {
+  SUCCESS = 'success',
+  PERMISSION_DENIED = 'permission_denied',
+  POSITION_UNAVAILABLE = 'position_unavailable',
+  TIMEOUT = 'timeout',
+  UNKNOWN_ERROR = 'unknown_error',
+  LOADING = 'loading',
+}
+
+export default function Page(): JSX.Element {
   const matches = useMediaQuery('(min-width: 48em)');
   const [activeTab, setActiveTab] = useState<string | null>('gallery');
 
@@ -68,7 +78,7 @@ export default function Page(): React.JSX.Element {
 
   const paginatedEvents = filteredEvents.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   const handlePageChange = (page: number) => {
@@ -81,7 +91,10 @@ export default function Page(): React.JSX.Element {
   };
 
   // Events Near Me Tab
-  const [userLocation, setUserLocation] = useState<UserLocation>(null);
+  const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
+  const [locationState, setLocationState] = useState<LocationState>(
+    LocationState.LOADING,
+  );
 
   // Fetch events
   useEffect(() => {
@@ -117,10 +130,25 @@ export default function Page(): React.JSX.Element {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           });
+          setLocationState(LocationState.SUCCESS);
         },
         (error) => {
           console.error('Error obtaining location', error);
-        }
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              setLocationState(LocationState.PERMISSION_DENIED);
+              break;
+            case error.POSITION_UNAVAILABLE:
+              setLocationState(LocationState.POSITION_UNAVAILABLE);
+              break;
+            case error.TIMEOUT:
+              setLocationState(LocationState.TIMEOUT);
+              break;
+            default:
+              setLocationState(LocationState.UNKNOWN_ERROR);
+              break;
+          }
+        },
       );
     }
   }, [activeTab]);
@@ -134,7 +162,8 @@ export default function Page(): React.JSX.Element {
             component="span"
             variant="gradient"
             gradient={{ from: 'blue', to: 'cyan' }}
-            inherit>
+            inherit
+          >
             Upcoming Events
           </Text>
         </h1>
@@ -160,14 +189,16 @@ export default function Page(): React.JSX.Element {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
                   />
                 </svg>
-              }>
+              }
+            >
               Event Gallery
             </Tabs.Tab>
             <Tabs.Tab
@@ -179,14 +210,16 @@ export default function Page(): React.JSX.Element {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"
                   />
                 </svg>
-              }>
+              }
+            >
               Events Near Me
             </Tabs.Tab>
             <Tabs.Tab
@@ -198,14 +231,16 @@ export default function Page(): React.JSX.Element {
                   viewBox="0 0 25 25"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
                   />
                 </svg>
-              }>
+              }
+            >
               Event Calendar
             </Tabs.Tab>
           </Tabs.List>
@@ -220,7 +255,8 @@ export default function Page(): React.JSX.Element {
                     root: {
                       float: 'right',
                     },
-                  }}>
+                  }}
+                >
                   Filter
                 </Button>
               </Popover.Target>
@@ -229,7 +265,8 @@ export default function Page(): React.JSX.Element {
                   style={{
                     marginBottom: '1rem',
                   }}
-                  fw={700}>
+                  fw={700}
+                >
                   Event Category
                 </Text>
                 <SimpleGrid cols={2}>
@@ -242,7 +279,7 @@ export default function Page(): React.JSX.Element {
                           setInclCategory([...inclCategory, category]);
                         } else {
                           setInclCategory(
-                            inclCategory.filter((c) => c !== category)
+                            inclCategory.filter((c) => c !== category),
                           );
                         }
                       }}
@@ -272,16 +309,28 @@ export default function Page(): React.JSX.Element {
             )}
           </Tabs.Panel>
           <Tabs.Panel value="map">
-            {!isLoading && (
+            {/* {!isLoading && (
               <MapView
                 events={events}
                 center={
                   userLocation
                     ? [userLocation.latitude, userLocation.longitude]
-                    : [43.6532, -79.3832] // Toronto
+                    : [43.6532, -79.3832] // Default to Toronto
                 }
-                zoom={15}
+                zoom={13}
                 isUserLocation={userLocation !== null}
+              />
+            )} */}
+            {locationState !== LocationState.LOADING && (
+              <MapView
+                events={events}
+                center={
+                  locationState === LocationState.SUCCESS
+                    ? [userLocation.latitude, userLocation.longitude]
+                    : [43.6532, -79.3832] // Default to Toronto
+                }
+                zoom={13}
+                isUserLocation={locationState === LocationState.SUCCESS}
               />
             )}
           </Tabs.Panel>

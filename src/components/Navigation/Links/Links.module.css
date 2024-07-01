@@ -14,7 +14,7 @@
   }
 
   @mixin hover {
-    transition: all ease .2s;
+    transition: all ease 0.2s;
 
     @mixin light {
       background-color: var(--mantine-color-white);
@@ -50,7 +50,8 @@
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   margin-left: var(--mantine-spacing-xl);
   font-size: var(--mantine-font-size-sm);
-  border-left: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border-left: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 
   @mixin light {
     color: var(--mantine-color-white);
@@ -61,7 +62,7 @@
   }
 
   @mixin hover {
-    transition: all ease .2s;
+    transition: all ease 0.2s;
 
     @mixin light {
       background-color: var(--mantine-color-white);

@@ -1,16 +1,20 @@
-"use client";
+'use client';
+
+import { BarChart, Card, DonutChart } from '@tremor/react';
 
 import { analytics } from './analytics';
-import { BarChart, DonutChart, Card } from '@tremor/react';
 
 interface AnalyticsDashboardProps {
-  avgVisitorsPerDay: string,
-  amtVisitorsToday: number,
-  timeseriesPageviews: Awaited<ReturnType<typeof analytics.retreiveDays>>
+  avgVisitorsPerDay: string;
+  amtVisitorsToday: number;
+  timeseriesPageviews: Awaited<ReturnType<typeof analytics.retreiveDays>>;
 }
 
-export const AnalyticsDashboard = ({ avgVisitorsPerDay, amtVisitorsToday, timeseriesPageviews }: AnalyticsDashboardProps) => {
-  
+export const AnalyticsDashboard = ({
+  avgVisitorsPerDay,
+  amtVisitorsToday,
+  timeseriesPageviews,
+}: AnalyticsDashboardProps) => {
   const pieChartData = timeseriesPageviews.map((day) => ({
     name: day.date,
     value: day.events.reduce((acc, curr) => acc + Object.values(curr)[0]!, 0),
@@ -22,17 +26,13 @@ export const AnalyticsDashboard = ({ avgVisitorsPerDay, amtVisitorsToday, timese
     <div className="flex flex-col gap-6">
       <div className="grid w-full mx-auto grid-cols-1 sm:grid-cols-2 gap-6">
         <Card className="w-full mx-auto max-w-xs bg-gray-800">
-          <p className="text-tremor-default text-gray-400">
-            Avg. visitors/day
-          </p>
+          <p className="text-tremor-default text-gray-400">Avg. visitors/day</p>
           <p className="text-3xl text-gray-200 font-semibold">
             {avgVisitorsPerDay}
           </p>
         </Card>
         <Card className="w-full mx-auto max-w-xs bg-gray-800">
-          <p className="text-tremor-default text-gray-400">
-            Visitors Today
-          </p>
+          <p className="text-tremor-default text-gray-400">Visitors Today</p>
           <p className="text-3xl text-gray-200 font-semibold">
             {amtVisitorsToday}
           </p>
@@ -48,7 +48,10 @@ export const AnalyticsDashboard = ({ avgVisitorsPerDay, amtVisitorsToday, timese
               showAnimation
               data={timeseriesPageviews.map((day) => ({
                 name: day.date,
-                Visitors: day.events.reduce((acc, curr) => acc + Object.values(curr)[0]!, 0),
+                Visitors: day.events.reduce(
+                  (acc, curr) => acc + Object.values(curr)[0]!,
+                  0,
+                ),
               }))}
               categories={['Visitors']}
               index="name"

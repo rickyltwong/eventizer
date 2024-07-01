@@ -5,11 +5,12 @@ interface AttendeeStatusProps {
 }
 
 export default function AttendeeStatus({ status }: AttendeeStatusProps) {
-  const statusColor = {
-    Registered: 'green',
-    Pending: 'yellow',
-    Cancelled: 'red',
-  }[status] || 'gray';
+  const statusColor =
+    {
+      Registered: 'green',
+      Pending: 'yellow',
+      Cancelled: 'red',
+    }[status] || 'gray';
 
   return <Badge color={statusColor}>{status}</Badge>;
 }

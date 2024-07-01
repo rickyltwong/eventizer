@@ -44,6 +44,7 @@ interface IEvent {
 }
 
 interface EventFormValues {
+  _id?: string;
   eventName: string;
   eventDescription: string;
   eventAddress: {

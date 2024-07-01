@@ -1,30 +1,26 @@
 import '@mantine/core/styles.css';
+// import { Libre_Franklin } from 'next/font/google';
+// import { Chivo } from 'next/font/google';
+// const libre_franklin = Libre_Franklin({
+//   subsets: ['latin'],
+//   display: 'swap',
+//   variable: '--font-libre_franklin',
+// });
+// const chivo = Chivo({
+//   subsets: ['latin'],
+//   display: 'swap',
+//   variable: '--font-chivo',
+// });
+import '@/app/globals.css';
+
 import {
-  MantineProvider,
   ColorSchemeScript,
   MantineColorsTuple,
+  MantineProvider,
 } from '@mantine/core';
-
-import { Libre_Franklin } from 'next/font/google';
-import { Chivo } from 'next/font/google';
-
-const libre_franklin = Libre_Franklin({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-libre_franklin',
-});
-const chivo = Chivo({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-chivo',
-});
-
-import type { Metadata } from 'next';
-import './globals.css';
-
 // const inter = Inter({ subsets: ["latin"] });
-
 import { createTheme } from '@mantine/core';
+import type { Metadata } from 'next';
 
 const myColor: MantineColorsTuple = [
   '#e1f9ff',
@@ -57,7 +53,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): JSX.Element {
   return (
     <html lang="en">
       <head>
@@ -74,4 +70,3 @@ export default function RootLayout({
     </html>
   );
 }
-

@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/config/connectDB';
-import Events from '@/models/Event';
 import mongoose from 'mongoose';
+import { NextRequest, NextResponse } from 'next/server';
+
+import dbConnect from '@/lib/connectDB';
+import Events from '@/models/Event';
 
 type Params = {
   eventid: string;
@@ -16,7 +17,7 @@ export async function GET(request: NextRequest, context: { params: Params }) {
     if (!mongoose.Types.ObjectId.isValid(eventid)) {
       return NextResponse.json(
         { message: 'Invalid event ID' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -31,7 +32,7 @@ export async function GET(request: NextRequest, context: { params: Params }) {
     console.error(error);
     return NextResponse.json(
       { message: 'Something went wrong!' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

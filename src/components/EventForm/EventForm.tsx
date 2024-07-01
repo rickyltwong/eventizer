@@ -1,3 +1,4 @@
+
 'use client'
 import { Button, TextInput, Textarea, NumberInput, Select, Group, Container, Title, Center, Notification } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
@@ -7,11 +8,11 @@ import React, { useState, useEffect } from 'react';
 import { EventFormValues } from '@/types/event';
 
 
-
-
 interface EventFormProps {
-  onAddEvent: () => void;
+  onAddEvent?: (event: EventFormValues) => void;
+  onUpdateEvent?: (event: EventFormValues & { _id: string }) => void;
   closeModal: () => void;
+  initialValues?: EventFormValues & { _id: string };
 }
 
 const difficulties = [
@@ -27,12 +28,12 @@ const types = [
 ];
 
 
-const EventForm = ({ onAddEvent, closeModal}: EventFormProps) => {
+const EventForm = ({ onAddEvent, closeModal, onUpdateEvent, initialValues}: EventFormProps) => {
   //const [isFormVisible, setFormVisible] = useState(true);
   const [notification, setNotification] = useState({ message: '', color: '' });
 
   const form = useForm<EventFormValues>({
-    initialValues: {
+    initialValues:  initialValues || {
       eventName: '',
       eventDescription: '',
       eventAddress: {
@@ -49,14 +50,25 @@ const EventForm = ({ onAddEvent, closeModal}: EventFormProps) => {
     },
   });
 
-
+  useEffect(() => {
+    if (initialValues) {
+      form.setValues(initialValues);
+    }
+  }, [initialValues]);
 
 const handleSubmit = async (values: EventFormValues) => {
   console.log("Submitting values: ", values);
   try {
-    const response = await axios.post('/admin/api/events', values);
-    console.log("Event created: ", response.data );
-    onAddEvent();
+    if (onAddEvent) {
+      const response = await axios.post('/admin/api/events', values);
+      console.log("Event created: ", response.data );
+      onAddEvent(response.data);
+    } else if (onUpdateEvent) {
+      const { _id, ...updateData } = values;
+        await axios.put('/admin/api/events', { id: _id, ...updateData });
+        onUpdateEvent({ ...values, _id: initialValues?._id });
+    }
+    
     closeModal();
   } catch(error) {
     console.error("Error: ", error)
@@ -66,6 +78,7 @@ const handleSubmit = async (values: EventFormValues) => {
 
   return (
     <Container size="xxl" px={50} py={30}>
+
       <Title order={2} ta="center">Event Details</Title>
       {notification.message && (
         <Notification color={notification.color} onClose={() => setNotification({ message: '', color: '' })}>
@@ -151,5 +164,6 @@ const handleSubmit = async (values: EventFormValues) => {
     </Container>
   );
 }
+
 
 export default EventForm;

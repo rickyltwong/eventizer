@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import {
   Avatar,
   Group,
@@ -7,6 +6,8 @@ import {
   UnstyledButtonProps,
 } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
+import { ReactNode } from 'react';
+
 import classes from './UserButton.module.css';
 
 type UserProfileButtonProps = {

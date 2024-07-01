@@ -1,3 +1,3 @@
-export default function page(props: any) {
+export default function Page(): JSX.Element {
   return <></>;
 }

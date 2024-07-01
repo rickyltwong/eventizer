@@ -1,4 +1,4 @@
-import connectDB from '@/config/connectDB';
+import connectDB from '@/lib/connectDB';
 import Event from '@/models/Event';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -61,3 +61,56 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export async function DELETE(req: NextRequest) {
+  await connectDB();
+  const reqBody = await req.json();
+  const { id } = reqBody;
+  const r = await Event.findByIdAndDelete(id);
+  console.log(r);
+  return new Response(JSON.stringify(r), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
+export async function PUT(req: NextRequest) {
+  await connectDB();
+  const reqBody = await req.json();
+  const { id, ...updateData } = reqBody;
+
+  if (!id) {
+    return new Response(JSON.stringify({ success: false, message: 'Event ID is required' }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  try {
+    const updatedEvent = await Event.findByIdAndUpdate(id, updateData, { new: true });
+    if (!updatedEvent) {
+      return new Response(JSON.stringify({ success: false, message: 'Event not found' }), {
+        status: 404,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
+    return new Response(JSON.stringify({ success: true, message: 'Event updated successfully', event: updatedEvent }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ success: false, message: 'Failed to update event' }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+}

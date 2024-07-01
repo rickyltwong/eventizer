@@ -15,14 +15,19 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core';
-import { IconPlus, IconRefresh } from '@tabler/icons-react';
-import { FilterDateMenu, Surface } from '@/components';
 import { useColorScheme } from '@mantine/hooks';
+import { IconPlus, IconRefresh } from '@tabler/icons-react';
+
+import {
+  // FilterDateMenu,
+  Surface,
+} from '@/components';
 
 type PageHeaderProps = {
   title: string;
   withActions?: boolean;
-  breadcrumbItems?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  breadcrumbItems?: any; // FIXME: Unexpected any. Specify a different type
   invoiceAction?: boolean;
 } & PaperProps;
 
@@ -73,7 +78,7 @@ const PageHeader = (props: PageHeaderProps) => {
               <ActionIcon variant="subtle">
                 <IconRefresh size={16} />
               </ActionIcon>
-              <FilterDateMenu />
+              {/* <FilterDateMenu /> */}
             </Flex>
           </Flex>
         ) : invoiceAction ? (

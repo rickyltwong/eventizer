@@ -1,15 +1,14 @@
 'use client';
-import { useParams } from 'next/navigation';
-import { HeaderSearch } from '@/components/HeaderSearch';
-import { FooterSimple } from '@/components/FooterSimple';
-import { useEffect, useState } from 'react';
+import { Badge, Button, Card, Divider, Group, Text } from '@mantine/core';
 import axios from 'axios';
-import { IEvent } from '@/types/event';
-import { Card, Text, Badge, Button, Group, Divider } from '@mantine/core';
-
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-const Page = (props: any) => {
+import { FooterSimple, HeaderSearch } from '@/components';
+import { IEvent } from '@/types';
+
+const Page = () => {
   const { eventid } = useParams();
   const [event, setEvent] = useState<IEvent>();
 
@@ -45,13 +44,15 @@ const Page = (props: any) => {
         <Card
           shadow="md"
           padding="lg"
-          className="w-full max-w-2xl justify-center">
+          className="w-full max-w-2xl justify-center"
+        >
           <Card.Section
             style={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
+            }}
+          >
             <Image
               src={
                 'https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
@@ -97,7 +98,8 @@ const Page = (props: any) => {
             variant="light"
             color="blue"
             fullWidth
-            style={{ marginTop: 14 }}>
+            style={{ marginTop: 14 }}
+          >
             Register Now
           </Button>
         </Card>

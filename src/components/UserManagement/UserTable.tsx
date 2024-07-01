@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Button, Select } from '@mantine/core';
-import UserStatus from './UserStatus';
+import { Select } from '@mantine/core';
+import { IconTrash } from '@tabler/icons-react';
+import { useState } from 'react';
+
 import { User } from '@/app/admin/usermanagement/page';
+
 import AddUser from './AddUser';
-import { IconTrash } from '@tabler/icons-react'
+import UserStatus from './UserStatus';
 
 interface UsersTableProps {
   users: User[];
@@ -12,14 +14,24 @@ interface UsersTableProps {
   onDeleteUser: (id: number) => void;
   onSaveUser: (newUser: User) => void;
   onCancelUser: () => void;
-  showAddUSer: boolean;
+  showAddUser: boolean;
 }
 
-export default function UsersTable({ users, onStatusChange, onRoleChange, onDeleteUser, onSaveUser, onCancelUser,showAddUser }: UsersTableProps){
+export default function UsersTable({
+  users,
+  onStatusChange,
+  onRoleChange,
+  onDeleteUser,
+  onSaveUser,
+  onCancelUser,
+  showAddUser,
+}: UsersTableProps) {
   const [editingUserRole, setEditingUserRole] = useState<number | null>(null);
-  const [editingUserStatus, setEditingUserStatus] = useState<number | null>(null);
-  const [deleteUser, setDeleteUser] = useState<number | null>(null);
-  const [addUser, setAddUser] = useState<number | null>(null);
+  const [editingUserStatus, setEditingUserStatus] = useState<number | null>(
+    null,
+  );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [deleteUser, setDeleteUser] = useState<number | null>(null); // FIXME: deleteUser is never used
 
   const handleRoleChange = (id: number, newRole: string) => {
     onRoleChange(id, newRole);
@@ -31,16 +43,15 @@ export default function UsersTable({ users, onStatusChange, onRoleChange, onDele
     setEditingUserStatus(null);
   };
 
-  const handleDeleteUser = (id : number) =>{
+  const handleDeleteUser = (id: number) => {
     onDeleteUser(id);
     setDeleteUser(null);
-  }
+  };
 
-  const handleSaveUser = (newUser : User) => {
+  const handleSaveUser = (newUser: User) => {
     onSaveUser(newUser);
   };
 
-  
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -83,11 +94,13 @@ export default function UsersTable({ users, onStatusChange, onRoleChange, onDele
                     {editingUserRole === user._id ? (
                       <Select
                         value={user.role}
-                        onChange={(value) => handleRoleChange(user._id, value ?? user.role)}
+                        onChange={(value) =>
+                          handleRoleChange(user._id, value ?? user.role)
+                        }
                         data={[
                           { value: 'Admin', label: 'Admin' },
                           { value: 'User', label: 'User' },
-                          { value: 'Organizer', label: 'Organizer' }
+                          { value: 'Organizer', label: 'Organizer' },
                         ]}
                       />
                     ) : (
@@ -100,11 +113,13 @@ export default function UsersTable({ users, onStatusChange, onRoleChange, onDele
                     {editingUserStatus === user._id ? (
                       <Select
                         value={user.status}
-                        onChange={(value) => handleStatusChange(user._id, value ?? user.status)}
+                        onChange={(value) =>
+                          handleStatusChange(user._id, value ?? user.status)
+                        }
                         data={[
                           { value: 'Active', label: 'Active' },
                           { value: 'Disabled', label: 'Disabled' },
-                          { value: 'Pending', label: 'Pending' }
+                          { value: 'Pending', label: 'Pending' },
                         ]}
                       />
                     ) : (
@@ -114,22 +129,23 @@ export default function UsersTable({ users, onStatusChange, onRoleChange, onDele
                     )}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                  {new Date(user.createdAt).toLocaleString('en-US', {
-                          weekday: 'long',
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                          hour: 'numeric',
-                          minute: 'numeric',
-                          second: 'numeric'
-                        })}
+                    {new Date(user.createdAt).toLocaleString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      second: 'numeric',
+                    })}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {user.profile.phone}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     <button onClick={() => handleDeleteUser(user._id)}>
-                      <IconTrash className="h-5 w-5 text-red-500" /> {/* Adjust size and color as needed */}
+                      <IconTrash className="h-5 w-5 text-red-500" />{' '}
+                      {/* Adjust size and color as needed */}
                     </button>
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
@@ -145,8 +161,10 @@ export default function UsersTable({ users, onStatusChange, onRoleChange, onDele
         </div>
       </div>
       <div style={{ marginBottom: '20px' }}>
-         {showAddUser && <AddUser onSubmit={handleSaveUser} onCancel={onCancelUser} /> }
+        {showAddUser && (
+          <AddUser onSubmit={handleSaveUser} onCancel={onCancelUser} />
+        )}
       </div>
     </div>
   );
-};
+}

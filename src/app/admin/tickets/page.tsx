@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  ActionIcon,
   Anchor,
   Container,
   Group,
@@ -10,9 +9,10 @@ import {
   Stack,
   Text,
 } from '@mantine/core';
-import { PATH_DASHBOARD } from '@/routes';
+
 import { OrdersTable, PageHeader } from '@/components';
-import { IconDotsVertical } from '@tabler/icons-react';
+import { PATH_DASHBOARD } from '@/routes';
+
 import { useFetchData } from '../../../hooks';
 
 const items = [
