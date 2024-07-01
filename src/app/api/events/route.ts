@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/config/connectDB';
+
+import dbConnect from '@/lib/connectDB';
 import Events from '@/models/Event';
-import { IEvent } from '@/types/event';
+import { IEvent } from '@/types';
 
 export async function GET() {
   await dbConnect();
@@ -14,7 +15,7 @@ export async function GET() {
     console.error(error);
     return NextResponse.json(
       { message: 'Something went wrong!' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
     console.error(error);
     return NextResponse.json(
       { message: 'Something went wrong!' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -53,7 +54,7 @@ export async function PUT(req: NextRequest) {
     console.error(error);
     return NextResponse.json(
       { message: 'Something went wrong!' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -71,13 +72,13 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json(
       { message: 'Event deleted successfully' },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       { message: 'Something went wrong!' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

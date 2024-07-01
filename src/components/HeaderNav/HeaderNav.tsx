@@ -2,21 +2,15 @@
 
 import {
   ActionIcon,
-  Avatar,
   Burger,
-  Flex,
   Group,
-  Indicator,
-  MantineTheme,
   Menu,
   rem,
-  Stack,
-  Text,
   TextInput,
   Tooltip,
   useMantineColorScheme,
-  useMantineTheme,
 } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import {
   IconCircleHalf2,
   IconLayoutSidebarLeftCollapse,
@@ -26,11 +20,8 @@ import {
   IconSearch,
   IconSunHigh,
 } from '@tabler/icons-react';
-import { useMediaQuery } from '@mantine/hooks';
-
 
 const ICON_SIZE = 20;
-
 
 type HeaderNavProps = {
   mobileOpened?: boolean;
@@ -41,15 +32,14 @@ type HeaderNavProps = {
 
 const HeaderNav = (props: HeaderNavProps) => {
   const { desktopOpened, toggleDesktop, toggleMobile, mobileOpened } = props;
-  const theme = useMantineTheme();
   const { setColorScheme, colorScheme } = useMantineColorScheme();
-  const laptop_match = useMediaQuery('(max-width: 992px)');
+  // const laptop_match = useMediaQuery('(max-width: 992px)');
   const tablet_match = useMediaQuery('(max-width: 768px)');
   const mobile_match = useMediaQuery('(max-width: 425px)');
 
-  const handleColorSwitch = (mode: 'light' | 'dark' | 'auto') => {
-    setColorScheme(mode);
-  };
+  // const handleColorSwitch = (mode: 'light' | 'dark' | 'auto') => {
+  //   setColorScheme(mode);
+  // };
 
   return (
     <Group justify="space-between">
@@ -85,7 +75,7 @@ const HeaderNav = (props: HeaderNavProps) => {
             <IconSearch size={ICON_SIZE} />
           </ActionIcon>
         )}
-        
+
         <Tooltip label="Logout">
           <ActionIcon>
             <IconPower size={ICON_SIZE} />

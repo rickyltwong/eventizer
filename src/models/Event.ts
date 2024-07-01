@@ -1,5 +1,6 @@
-import { Schema, model, models } from 'mongoose';
-import { IEvent, IEventAddress } from '@/types/event';
+import { model, models, Schema } from 'mongoose';
+
+import { IEvent, IEventAddress } from '@/types';
 
 // https://mongoosejs.com/docs/typescript.html
 
@@ -29,7 +30,7 @@ const EventSchema = new Schema<IEvent>(
     difficulty: { type: String, required: true },
     minimumAge: { type: Number },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default models.events || model('events', EventSchema);

@@ -1,0 +1,3 @@
+
+typescript:S6606R"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(Ã€£ô8–øæß†2
+’typescript:S6606S"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(²öÊûÿÿÿÿ8–øæß†2

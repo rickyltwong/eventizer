@@ -14,7 +14,10 @@ export function UpdateAttendee({ id }: { id: string }) {
 }
 
 // DeleteAttendee Component
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function DeleteAttendee({ id }: { id: string }) {
+  // FIXME: id is never used
   const handleDelete = () => {
     // Implement delete logic
   };

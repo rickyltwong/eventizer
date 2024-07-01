@@ -35,14 +35,14 @@ type SurfaceProps = { children: ReactNode } & BoxProps & PaperProps;
 const Surface = createPolymorphicComponent<'div', SurfaceProps>(
   forwardRef<HTMLDivElement, SurfaceProps>(function Surface(
     { children, ...others },
-    ref
+    ref,
   ) {
     return (
       <Box component="div" {...others} ref={ref}>
         {children}
       </Box>
     );
-  })
+  }),
 );
 
 Surface.displayName = 'Surface';

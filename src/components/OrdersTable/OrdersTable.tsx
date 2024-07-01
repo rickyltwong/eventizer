@@ -1,23 +1,18 @@
 'use client';
 
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import { Badge, MantineColor, MultiSelect, TextInput } from '@mantine/core';
+import { useDebouncedValue } from '@mantine/hooks';
+import { IconSearch } from '@tabler/icons-react';
+import sortBy from 'lodash/sortBy';
 import {
   DataTable,
   DataTableProps,
   DataTableSortStatus,
 } from 'mantine-datatable';
-import {
-  Badge,
-  MantineColor,
-  MultiSelect,
-  Text,
-  TextInput,
-} from '@mantine/core';
-import sortBy from 'lodash/sortBy';
-import { Orders, OrderStatus } from '@/types';
-import { useDebouncedValue } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
+
 import { ErrorAlert } from '@/components';
+import { Orders, OrderStatus } from '@/types';
 
 type StatusBadgeProps = {
   status: OrderStatus;
@@ -69,7 +64,7 @@ const OrdersTable = ({ data, loading, error }: OrdersTableProps) => {
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const statuses = useMemo(() => {
     const statuses = new Set(data.map((e) => e.status));
-    // @ts-ignore
+
     return [...statuses];
   }, [data]);
 
@@ -146,7 +141,6 @@ const OrdersTable = ({ data, loading, error }: OrdersTableProps) => {
             return false;
           }
 
-          // @ts-ignore
           if (
             selectedStatuses.length &&
             !selectedStatuses.some((s) => s === status)
@@ -168,11 +162,9 @@ const OrdersTable = ({ data, loading, error }: OrdersTableProps) => {
       minHeight={200}
       verticalSpacing="sm"
       striped={true}
-      // @ts-ignore
       columns={columns}
       records={records}
       selectedRecords={selectedRecords}
-      // @ts-ignore
       onSelectedRecordsChange={setSelectedRecords}
       totalRecords={
         debouncedQuery || selectedStatuses.length > 0

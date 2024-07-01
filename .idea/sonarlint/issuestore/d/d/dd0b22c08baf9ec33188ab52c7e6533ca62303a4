@@ -1,0 +1,11 @@
+
+Gtypescript:S1128"&Remove this unused import of 'Button'.(óŸ•ÿÿÿÿÿ
+Ytypescript:S6767"8'showAddUSer' PropType is defined but prop is never used(êÊ»¬øÿÿÿÿ
+Itypescript:S6759"-Mark the props of the component as read-only.(¯ÓÍÜ
+Ttypescript:S1854"8Remove this useless assignment to variable "deleteUser".(ÚÜ³ç
+Vtypescript:S1854"5Remove this useless assignment to variable "addUser".(Ö×”˜şÿÿÿÿ
+Ytypescript:S1854"8Remove this useless assignment to variable "setAddUser".(Ö×”˜şÿÿÿÿ
+ßtypescript:S6848^"ÂAvoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.(Ø«´À
+{typescript:S1082^"_Visible, non-interactive elements with click handlers must have at least one keyboard listener.(Ø«´À
+ätypescript:S6848o"ÂAvoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.(û“­Œùÿÿÿÿ
+€typescript:S1082o"_Visible, non-interactive elements with click handlers must have at least one keyboard listener.(û“­Œùÿÿÿÿ

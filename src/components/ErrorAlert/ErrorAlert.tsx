@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
 import { Alert, AlertProps } from '@mantine/core';
 import { IconBug } from '@tabler/icons-react';
+import { ReactNode } from 'react';
 
 type Props = { message: ReactNode } & AlertProps;
 
