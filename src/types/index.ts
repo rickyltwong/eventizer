@@ -98,3 +98,10 @@ export type Invoices = {
   client_name: string;
   client_company: string;
 };
+
+export type Status = 'Upcoming' | 'Cancelled' | 'Expired' | string;
+
+export type UserLocation = {
+  latitude: number;
+  longitude: number;
+} | null;

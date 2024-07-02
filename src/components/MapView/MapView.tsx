@@ -48,6 +48,10 @@ const SetMap = ({ center }: { center: [number, number] }) => {
   return null;
 };
 
+const isValidLatLng = (lat: number, lng: number): boolean => {
+  return !isNaN(lat) && !isNaN(lng) && lat !== undefined && lng !== undefined;
+};
+
 export default function MapView({
   events,
   center,
@@ -88,21 +92,33 @@ export default function MapView({
         </Marker>
       )}
 
-      {events.map((event) => (
-        <Marker
-          icon={redMarker}
-          key={event.eventName}
-          position={[event.eventAddress.latitude, event.eventAddress.longitude]}
-        >
-          <Popup>
-            <strong>{event.eventName}</strong>
-            <p>{event.eventDescription}</p>
-            <p>{`${event.eventAddress.venueName}, ${event.eventAddress.addressLine1}, ${event.eventAddress.city}, ${event.eventAddress.state}`}</p>
-            <p>Starts: {new Date(event.eventStartDateTime).toLocaleString()}</p>
-            <p>Ends: {new Date(event.eventEndDateTime).toLocaleString()}</p>
-          </Popup>
-        </Marker>
-      ))}
+      {events
+        .filter((event) =>
+          isValidLatLng(
+            event.eventAddress.latitude,
+            event.eventAddress.longitude,
+          ),
+        )
+        .map((event) => (
+          <Marker
+            icon={redMarker}
+            key={event.eventName}
+            position={[
+              event.eventAddress.latitude,
+              event.eventAddress.longitude,
+            ]}
+          >
+            <Popup>
+              <strong>{event.eventName}</strong>
+              <p>{event.eventDescription}</p>
+              <p>{`${event.eventAddress.venueName}, ${event.eventAddress.addressLine1}, ${event.eventAddress.city}, ${event.eventAddress.state}`}</p>
+              <p>
+                Starts: {new Date(event.eventStartDateTime).toLocaleString()}
+              </p>
+              <p>Ends: {new Date(event.eventEndDateTime).toLocaleString()}</p>
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 }

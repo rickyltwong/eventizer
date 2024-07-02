@@ -59,14 +59,13 @@ export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): Promise<JSX.Element> {
   const session = await auth();
 
   return (
     <html lang="en">
       <head>
         <ColorSchemeScript />
-        {/* <link rel="shortcut icon" href="/favicon.svg" /> */}
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"

@@ -11,11 +11,9 @@ import {
 } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 
-import { IEvent } from '@/types';
+import { IEvent, Status } from '@/types';
 
 import classes from './BadgeCard.module.css';
-
-type Status = 'Upcoming' | 'Cancelled' | 'Expired' | string;
 
 const StatusBadge = ({ status }: { status: Status }) => {
   let color: MantineColor = '';
@@ -46,12 +44,13 @@ const StatusBadge = ({ status }: { status: Status }) => {
   );
 };
 
-export default function BadgeCard(event: IEvent) {
+export default function BadgeCard({ event }: { event: IEvent }) {
   const router = useRouter();
 
   const handleShowDetails = (id: string) => {
     router.push(`/events/${id}`);
   };
+
   const {
     eventName,
     eventStartDateTime,
@@ -139,9 +138,6 @@ export default function BadgeCard(event: IEvent) {
         <Button radius="md" style={{ flex: 1 }}>
           Book now
         </Button>
-        {/* <ActionIcon variant="default" radius="md" size={36}>
-          <IconHeart className={classes.like} stroke={1.5} />
-        </ActionIcon> */}
       </Group>
     </Card>
   );

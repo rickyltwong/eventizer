@@ -1,9 +1,9 @@
 import 'next-auth/jwt';
 
-// import User from @auth/core/src/types.ts
 import { FirestoreAdapter } from '@auth/firebase-adapter';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import type { GoogleProfile } from 'next-auth/providers/google';
 import Google from 'next-auth/providers/google';
 
 import { adminDb } from '@/firebase-admin';
@@ -15,6 +15,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      profile: (_profile: GoogleProfile) => {
+        return {
+          id: _profile.sub,
+          firstname: _profile.given_name,
+          lastname: _profile.family_name,
+          email: _profile.email,
+          image: _profile.picture,
+        };
+      },
     }),
     Credentials({
       credentials: {
@@ -30,7 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: credentials.username as string,
         });
 
-        if (user && user.password === credentials.password) {
+        if (user && user.password && user.password === credentials.password) {
           console.log(user);
           return {
             id: user.id,
@@ -51,7 +60,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        console.log('JWT User:', user); // Debug log
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
@@ -61,7 +69,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (token) {
-        console.log('Session Token:', token); // Debug log
         session.user = {
           id: token.id,
           name: token.name,
@@ -69,7 +76,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           image: token.picture,
         };
       }
-      console.log('Session Object:', session); // Debug log
       return session;
     },
   },

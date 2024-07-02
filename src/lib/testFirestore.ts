@@ -8,14 +8,12 @@ interface ServiceAccount {
   client_email: string;
 }
 
-// Path to your service account key file
 const serviceAccountPath = path.resolve(
   __dirname,
   '../../eventizer-dev-firebase-adminsdk-vtf85-39579781a7.json',
 );
 
 try {
-  // Reading the service account key file
   const serviceAccount: ServiceAccount = JSON.parse(
     fs.readFileSync(serviceAccountPath, 'utf8'),
   );
@@ -42,7 +40,6 @@ async function testFirestore() {
   try {
     console.log('Testing Firestore access...');
 
-    // Check Firestore initialization
     const testRef = db.collection('test').doc('initializationCheck');
     await testRef.set({ init: 'check' });
 
@@ -54,14 +51,12 @@ async function testFirestore() {
       console.log('Initialization check succeeded:', doc.data());
     }
 
-    // Create a test document
     const docRef = db.collection('test').doc('testDoc');
     await docRef.set({
       testField: 'Hello, Firestore!',
     });
     console.log('Test document created.');
 
-    // Read the test document
     const testDoc = await docRef.get();
     if (!testDoc.exists) {
       console.log('No such document!');
@@ -69,7 +64,6 @@ async function testFirestore() {
       console.log('Document data:', testDoc.data());
     }
 
-    // Clean up: delete the test document
     await docRef.delete();
     console.log('Test document deleted.');
   } catch (error) {
@@ -80,5 +74,4 @@ async function testFirestore() {
   }
 }
 
-// Run the test function
 testFirestore();

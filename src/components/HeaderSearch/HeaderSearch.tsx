@@ -28,7 +28,13 @@ export default function HeaderSearch(): JSX.Element {
       <div className={classes.inner}>
         <Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-          <Image src="/logo.png" alt="Studio logo" height={300} width={200} />
+          <Image
+            src="/logo.svg"
+            alt="Studio logo"
+            height={300}
+            width={200}
+            onClick={() => router.push('/')}
+          />
         </Group>
         {/* TODO: Create toggle mobile menu for the nav items */}
 
