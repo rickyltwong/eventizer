@@ -10,11 +10,15 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcEle
 interface Event {
   eventType: string;
   capacity: number;
-  remainingSeats: number;
   ticketsClasses: {
     ticketType: string;
     availability: number;
   }[];
+}
+
+interface EventTicket {
+  event: string;
+  noOfTickets: number;
 }
 
 const Dashboard = () => {
@@ -35,10 +39,16 @@ const Dashboard = () => {
       {
         label: 'Remaining Seats',
         data: [],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
       },
       {
         label: 'Total Capacity',
         data: [],
+        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 1,
       },
     ],
   });
@@ -46,30 +56,44 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch('/api/events/v2');
-        const data: Event[] = await response.json();
-        console.log(data);
+        // Fetch event data
+        const response = await fetch('/api/events');
+        const eventData: Event[] = await response.json();
+        console.log('Events:', eventData);
 
-        const eventTypes = Array.from(new Set(data.map((event: Event) => event.eventType)));
+        // Fetch ticket sales data
+        const response2 = await fetch('/api/admin2');
+        const ticketData: EventTicket[] = await response2.json();
+        console.log('Ticket Sales:', ticketData);
 
-        const eventCounts = eventTypes.map((type: string) =>
-          data.filter((event: Event) => event.eventType === type).length
+        // Calculate total sales
+        const totalSales = eventData.reduce((acc, event) => {
+          const soldTickets = ticketData
+            .filter(ticket => ticket.event === event._id)
+            .reduce((total, ticket) => total + ticket.noOfTickets, 0);
+          return acc + soldTickets;
+        }, 0);
+        setTotalSales(totalSales);
+
+        // Calculate event counts
+        const eventTypes = Array.from(new Set(eventData.map(event => event.eventType)));
+        const eventCounts = eventTypes.map(type =>
+          eventData.filter(event => event.eventType === type).length
         );
 
-        const remainingSeats = eventTypes.map((type: string) =>
-          data.filter((event: Event) => event.eventType === type)
-            .reduce((acc, event) => acc + event.remainingSeats, 0)
+        // Calculate remaining seats and total capacity
+        const remainingSeats = eventTypes.map(type =>
+          eventData
+            .filter(event => event.eventType === type)
+            .reduce((acc, event) => acc + event.capacity - calculateSoldTickets(event, ticketData), 0)
         );
-
-        const totalCapacity = eventTypes.map((type: string) =>
-          data.filter((event: Event) => event.eventType === type)
+        const totalCapacity = eventTypes.map(type =>
+          eventData
+            .filter(event => event.eventType === type)
             .reduce((acc, event) => acc + event.capacity, 0)
         );
 
-        const totalSales = data.reduce((acc, event) => acc + (event.capacity - event.remainingSeats), 0)
-        setTotalSales(totalSales);
-
-        // Pie chart data
+        // Update state with pie chart data
         setPieData({
           labels: eventTypes,
           datasets: [
@@ -79,7 +103,6 @@ const Dashboard = () => {
               backgroundColor: eventTypes.map((_, index) => {
                 const colors = [
                   'rgba(255, 99, 132, 0.2)',
-                  //'#8fbc8f',
                   'rgba(54, 162, 235, 0.2)',
                   'rgba(255, 206, 86, 0.2)',
                   'rgba(75, 192, 192, 0.2)',
@@ -104,7 +127,7 @@ const Dashboard = () => {
           ],
         });
 
-        // Bar chart data
+        // Update state with bar chart data
         setBarData({
           labels: eventTypes,
           datasets: [
@@ -131,6 +154,12 @@ const Dashboard = () => {
 
     fetchEvents();
   }, []);
+
+  function calculateSoldTickets(event: Event, tickets: EventTicket[]): number {
+    return tickets
+      .filter(ticket => ticket.event === event._id)
+      .reduce((total, ticket) => total + ticket.noOfTickets, 0);
+  }
 
   return (
     <Container>

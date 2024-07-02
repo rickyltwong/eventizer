@@ -14,13 +14,15 @@ import UserTable from '@/components/UserManagement/UserTable';
 
 export interface User {
   id: number;
-  username: string;
+  name: string;
   role: string;
   status: string;
   createdAt: string;
-  profile: {
-    phone: string;
-  };
+  email: string;
+  phoneNumber: string;
+  authentication: {
+    provider: string,
+  },
 }
 
 export default function UserManagementPage() {
@@ -29,25 +31,24 @@ export default function UserManagementPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [showAddUser, setShowAddUser] = useState(false);
   const [newUser, setNewUser] = useState<User | null>(null);
-  // const [addingUser, setAddingUser] = useState<User | null>(null);
 
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await fetch('/api/admin'); // Fetching the list of users from the API
+        const response = await fetch('/api/admin');
         console.log(response);
-        const data = await response.json(); // Parsing the response JSON data
-        setUsers(data); // Setting the users state with the fetched data
+        const data = await response.json();
+        setUsers(data);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     }
-    fetchUsers(); // Calling the fetchUsers function when the component mounts
+    fetchUsers();
   }, []);
 
   // Filter users based on search term and filter status
   const filteredUsers = users.filter((user) => {
-    const matchesSearchTerm = user.username
+    const matchesSearchTerm = user.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesStatus =
@@ -87,15 +88,25 @@ export default function UserManagementPage() {
   // Handle role change
   const handleRoleChange = async (id: number, role: string) => {
     try {
-      await fetch('/api/admin', {
+      const response = await fetch('/api/admin', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ id: id, role: role }),
       });
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.error || 'Failed to update user role');
+      }
+
+      const updatedUser = await response.json();
+
       setUsers((prevUsers) =>
-        prevUsers.map((user) => (user.id === id ? { ...user, role } : user)),
+        prevUsers.map((user) =>
+          user._id === updatedUser._id ? updatedUser : user
+        )
       );
     } catch (error) {
       console.error('Error updating user role:', error);
@@ -120,34 +131,37 @@ export default function UserManagementPage() {
   const handleAddUser = async () => {
     setNewUser({
       id: Math.random(),
-      username: '',
+      name: '',
       role: '',
       status: '',
       createdAt: '',
-      profile: {
-        phone: '',
+      email: '',
+      phoneNumber: '',
+      authentication: {
+        provider: 'credential',
       },
     });
 
     setShowAddUser(!showAddUser);
   };
 
-  const handleSaveUser = async (newUser1: User) => {
-    console.log(newUser1);
+  const handleSaveUser = async (newUser: User) => {
     try {
       const response = await fetch('/api/admin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newUser1),
+        body: JSON.stringify(newUser),
       });
+
       if (!response.ok) {
         throw new Error('Failed to add user');
       }
+
       const addedUser = await response.json();
       setUsers((prevUsers) => [...prevUsers, addedUser]);
-      setShowAddUser(false); // Hide the AddUserForm after successful addition
+      setShowAddUser(false); // Hide the AddUser form after successful addition
     } catch (error) {
       console.error('Error adding user:', error);
     }
