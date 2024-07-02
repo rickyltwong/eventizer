@@ -3,10 +3,6 @@ import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/connectDB';
 import User from '@/models/User';
 
-// src/app/api/admin/route.js
-//let r=dbConnect();
-//console.log('db connected! '+JSON.stringify(r));
-
 export async function GET() {
   await dbConnect();
   const users = await User.find({});

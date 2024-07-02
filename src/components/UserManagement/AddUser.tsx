@@ -1,5 +1,5 @@
-import { Button } from '@mantine/core';
 import { useState } from 'react';
+import { Button } from '@mantine/core';
 
 import { User } from '@/app/admin/usermanagement/page';
 
@@ -9,28 +9,33 @@ interface AddUserProps {
 }
 
 export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [role, setRole] = useState('');
   const [status, setStatus] = useState('');
+  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const provider = 'credential';
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newUser: User = {
       id: Math.random(),
-      username: username,
+      name: name,
       role: role,
       status: status,
-      createdAt: '2024-06-11T12:00:00Z', // new Date()
-      profile: {
-        phone: phone,
+      createdAt: new Date().toISOString(),
+      email: email,
+      phoneNumber: phone,
+      authentication: {
+        provider: provider,
       },
     };
     console.log(newUser);
     onSubmit(newUser);
-    setUsername('');
+    setName('');
     setRole('');
     setStatus('');
+    setEmail('');
     setPhone('');
   };
 
@@ -39,30 +44,37 @@ export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
       <input
         type="text"
         placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required // Added the "required" attribute for validation
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
       />
       <input
         type="text"
         placeholder="Role"
         value={role}
         onChange={(e) => setRole(e.target.value)}
-        required // Added the "required" attribute for validation
+        required
       />
       <input
         type="text"
         placeholder="Status"
         value={status}
         onChange={(e) => setStatus(e.target.value)}
-        required // Added the "required" attribute for validation
+        required
+      />
+      <input
+        type="text"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
       />
       <input
         type="text"
         placeholder="Phone"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        required // Added the "required" attribute for validation
+        required
       />
       <Button variant="filled" ml="md" type="submit">
         Save
