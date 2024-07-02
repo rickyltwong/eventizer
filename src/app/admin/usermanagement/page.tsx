@@ -1,13 +1,5 @@
 'use client';
-import {
-  Box,
-  Button,
-  Container,
-  Group,
-  Input,
-  Select,
-  Title,
-} from '@mantine/core';
+import { Box, Button, Container, Group, Input, Select, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
 import UserTable from '@/components/UserManagement/UserTable';

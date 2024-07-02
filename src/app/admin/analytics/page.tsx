@@ -21,8 +21,14 @@ interface EventTicket {
   noOfTickets: number;
 }
 
+interface User {
+  name: string;
+  role: string;
+}
+
 const Dashboard = () => {
   const [totalSales, setTotalSales] = useState<number>(0);
+  const [userCount, setUserCount] = useState<number>(0);
   const [pieData, setPieData] = useState({
     labels: [],
     datasets: [
@@ -92,6 +98,17 @@ const Dashboard = () => {
             .filter(event => event.eventType === type)
             .reduce((acc, event) => acc + event.capacity, 0)
         );
+
+
+        // Fetch user data
+        const response3 = await fetch('/api/admin');
+        const user: User[] = await response3.json();
+        console.log('Users:', user);
+
+        //Calculate Users numbers
+        const userCount = user.length;
+        setUserCount(userCount);
+
 
         // Update state with pie chart data
         setPieData({
@@ -173,12 +190,12 @@ const Dashboard = () => {
         </Card>
         <Card shadow="sm" p="lg" style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}>
           <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>Active Subscriptions</Text>
-          <Text size="xl" >300</Text>
+          <Text size="xl" >{userCount}</Text>
         </Card>
       </SimpleGrid>
       <SimpleGrid cols={2} spacing="lg" mt="xl">
         <Card shadow="sm" p="lg" style={{ height: '450px' }}>
-          <Title order={3}>Sales Over Time</Title>
+          <Title order={3}>Events Sales Trends</Title>
           <Bar
             data={barData}
             options={{
