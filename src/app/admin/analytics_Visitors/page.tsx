@@ -1,8 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 import { Card } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
-import analytics, { Analytics } from '@/components/Analytics/analytics';
+
+import analytics from '@/components/Analytics/analytics';
 
 // Define props interface if needed
 interface AnalyticsDashboardProps {}
@@ -21,7 +22,9 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = () => {
         // const avgVisitors = await analytics.getAverageVisitorsPerDay();
 
         // Fetch visitors today
-        const visitorsToday = await analytics.getVisitorCount(new Date().toISOString().slice(0, 10));
+        const visitorsToday = await analytics.getVisitorCount(
+          new Date().toISOString().slice(0, 10),
+        );
 
         // Fetch visitors over the last 7 days
         const visitorsLast7 = await analytics.getVisitorsLast7Days();
@@ -86,19 +89,27 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = () => {
       <div className="grid w-full mx-auto grid-cols-1 sm:grid-cols-2 gap-6">
         <Card className="w-full mx-auto max-w-xs bg-gray-800">
           <p className="text-tremor-default text-gray-400">Avg. visitors/day</p>
-          <p className="text-3xl text-gray-200 font-semibold">{avgVisitorsPerDay}</p>
+          <p className="text-3xl text-gray-200 font-semibold">
+            {avgVisitorsPerDay}
+          </p>
         </Card>
         <Card className="w-full mx-auto max-w-xs bg-gray-800">
           <p className="text-tremor-default text-gray-400">Visitors Today</p>
-          <p className="text-3xl text-gray-200 font-semibold">{amtVisitorsToday}</p>
+          <p className="text-3xl text-gray-200 font-semibold">
+            {amtVisitorsToday}
+          </p>
         </Card>
 
         <Card className="w-full mx-auto max-w-xs bg-gray-800">
-          <p className="text-tremor-default text-gray-400 mb-4">Visitors Over the Last 7 Days</p>
+          <p className="text-tremor-default text-gray-400 mb-4">
+            Visitors Over the Last 7 Days
+          </p>
           <Bar data={barChartData} options={{ maintainAspectRatio: false }} />
         </Card>
         <Card className="w-full mx-auto max-w-xs bg-gray-800">
-          <p className="text-tremor-default text-gray-400 mb-4">Visitors Distribution</p>
+          <p className="text-tremor-default text-gray-400 mb-4">
+            Visitors Distribution
+          </p>
           <Pie data={pieChartData} options={{ maintainAspectRatio: false }} />
         </Card>
       </div>

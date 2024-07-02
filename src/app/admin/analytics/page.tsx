@@ -46,27 +46,27 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch('/api/events/v2'); 
+        const response = await fetch('/api/events/v2');
         const data: Event[] = await response.json();
         console.log(data);
 
         const eventTypes = Array.from(new Set(data.map((event: Event) => event.eventType)));
 
-        const eventCounts = eventTypes.map((type: string) => 
+        const eventCounts = eventTypes.map((type: string) =>
           data.filter((event: Event) => event.eventType === type).length
         );
 
-        const remainingSeats = eventTypes.map((type: string) => 
+        const remainingSeats = eventTypes.map((type: string) =>
           data.filter((event: Event) => event.eventType === type)
-              .reduce((acc, event) => acc + event.remainingSeats, 0)
+            .reduce((acc, event) => acc + event.remainingSeats, 0)
         );
 
-        const totalCapacity = eventTypes.map((type: string) => 
+        const totalCapacity = eventTypes.map((type: string) =>
           data.filter((event: Event) => event.eventType === type)
-              .reduce((acc, event) => acc + event.capacity, 0)
+            .reduce((acc, event) => acc + event.capacity, 0)
         );
 
-        const totalSales = data.reduce((acc, event) => acc + (event.capacity-event.remainingSeats), 0)
+        const totalSales = data.reduce((acc, event) => acc + (event.capacity - event.remainingSeats), 0)
         setTotalSales(totalSales);
 
         // Pie chart data
@@ -139,19 +139,19 @@ const Dashboard = () => {
       </Title> */}
       <SimpleGrid cols={2} spacing="lg">
         <Card shadow="sm" p="lg" style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}>
-          <Text size="lg" style={{ marginBottom: '8px', fontWeight:'bold' }}>Total Sales</Text>
+          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>Total Sales</Text>
           <Text size="xl">{totalSales}</Text>
         </Card>
         <Card shadow="sm" p="lg" style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}>
-          <Text size="lg" style={{ marginBottom: '8px', fontWeight:'bold' }}>Active Subscriptions</Text>
+          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>Active Subscriptions</Text>
           <Text size="xl" >300</Text>
         </Card>
       </SimpleGrid>
       <SimpleGrid cols={2} spacing="lg" mt="xl">
         <Card shadow="sm" p="lg" style={{ height: '450px' }}>
           <Title order={3}>Sales Over Time</Title>
-          <Bar 
-            data={barData} 
+          <Bar
+            data={barData}
             options={{
               maintainAspectRatio: false,
               layout: {
@@ -191,13 +191,13 @@ const Dashboard = () => {
                   },
                 },
               },
-            }} 
+            }}
           />
         </Card>
         <Card shadow="sm" p="lg" style={{ height: '450px' }}>
           <Title order={3}>Events Distribution</Title>
-          <Pie 
-            data={pieData} 
+          <Pie
+            data={pieData}
             options={{
               maintainAspectRatio: false,
               layout: {
@@ -224,12 +224,12 @@ const Dashboard = () => {
                   offset: 0,
                   font: {
                     size: 14,
-                    
+
                   },
                   formatter: (value) => value,
                 },
               },
-            }} 
+            }}
           />
         </Card>
       </SimpleGrid>

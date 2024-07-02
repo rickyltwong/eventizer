@@ -1,5 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import connectDB from '@/config/connectDB';
+import mongoose, { Document, Schema } from 'mongoose';
+
+import connectDB from '@/lib/connectDB';
 
 interface VisitorDocument extends Document {
   date: Date;
@@ -26,7 +27,7 @@ export class Analytics {
       await VisitorModel.findOneAndUpdate(
         { date: formattedDate },
         { $inc: { count: 1 } },
-        { upsert: true }
+        { upsert: true },
       );
     } catch (error) {
       console.error('Error tracking visitor:', error);
@@ -44,7 +45,8 @@ export class Analytics {
   }
 
   async getVisitorsLast7Days() {
-    const promises: Promise<any>[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const promises: Promise<any>[] = []; // FIXME: Unexpected any. Specify a different type
     const today = new Date();
 
     for (let i = 0; i < 7; i++) {

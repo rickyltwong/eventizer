@@ -1,76 +1,68 @@
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
-const ObjectId = Schema.Types.ObjectId; 
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
-const userSchema = new Schema({
-  _id: {
-    type: ObjectId,
-    default: new mongoose.Types.ObjectId(), 
-  },
-  username: {
-    type: String,
-    unique: true,
-  },
-  role: {
-    type: String,
-  },
-  profile: {
-    firstName: {
+export interface IUser extends Document {
+  name: string;
+  email?: string;
+  password?: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  role: string;
+  image: string;
+  createdAt: Date;
+  updatedAt: Date;
+  status: string;
+  eventHistory?: mongoose.Types.ObjectId[];
+  favourites?: mongoose.Types.ObjectId[];
+  authentication: {
+    provider: string;
+    providerId?: string;
+    googleId?: string;
+  };
+}
+
+const userSchema: Schema<IUser> = new mongoose.Schema(
+  {
+    email: { type: String, unique: true },
+    password: { type: String },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    role: {
       type: String,
+      required: true,
+      enum: ['attendee', 'admin'],
+      default: 'attendee',
     },
-    lastName: {
-      type: String,
-    },
-    dateOfBirth: {
-      type: Date,
-    },
-    phone: {
-      type: String,
-    },
-    avatarUrl: {
-      type: String,
-    },
-    bio: {
-      type: String,
-    },
-  },
-  preferences: {
-    language: {
-      type: String,
-    },
-    notificationSettings: {
-      emailNotifications: {
-        type: Boolean,
+    name: { type: String },
+    image: { type: String },
+    eventHistory: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'events',
       },
+    ],
+    favourites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'events',
+      },
+    ],
+    authentication: {
+      provider: { type: String, required: true },
+      providerId: { type: String },
+      googleId: { type: String },
     },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+    status: { type: String, default: 'active' },
   },
-  eventsAttending: [
-    {
-      type: ObjectId,
-      ref: 'events', 
-    },
-  ],
-  eventsHosting: [
-    {
-      type: ObjectId,
-      ref: 'events', 
-    },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  {
+    timestamps: true,
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  status: {
-    type: String,
-  },
-}, {
-  timestamps: true, 
-});
+);
 
-const User =  mongoose.models.User || mongoose.model('User', userSchema);
+const User: Model<IUser> =
+  mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
 export default User;

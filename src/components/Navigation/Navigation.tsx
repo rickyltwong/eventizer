@@ -1,22 +1,20 @@
 import { ActionIcon, Box, Flex, Group, ScrollArea, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import {
-  IconTicket,
-  IconChecklist,
-  IconUser,
-  IconChartBar,
   IconCalendarEvent,
+  IconChartBar,
+  IconChecklist,
+  IconTicket,
+  IconUser,
   IconX,
 } from '@tabler/icons-react';
-import { Logo, UserProfileButton } from '@/components';
-import {
- 
-  PATH_DASHBOARD,
 
-} from '@/routes';
-import UserProfileData from '../../../public/mocks/UserProfile.json';
-import { useMediaQuery } from '@mantine/hooks';
-import classes from './Navigation.module.css';
+import { Logo, UserProfileButton } from '@/components';
 import { LinksGroup } from '@/components/Navigation/Links/Links';
+import { PATH_DASHBOARD } from '@/routes';
+
+import UserProfileData from '../../../public/mocks/UserProfile.json';
+import classes from './Navigation.module.css';
 
 const mockdata = [
   {
@@ -30,10 +28,14 @@ const mockdata = [
       },
       { label: 'Tickets', icon: IconTicket, link: PATH_DASHBOARD.tickets },
       { label: 'Users', icon: IconUser, link: PATH_DASHBOARD.users },
-      { label: 'Attendees', icon: IconChecklist, link: PATH_DASHBOARD.attendees }
+      {
+        label: 'Attendees',
+        icon: IconChecklist,
+        link: PATH_DASHBOARD.attendees,
+      },
     ],
   },
-  
+
   // {
   //   title: 'Auth',
   //   links: [
@@ -46,8 +48,6 @@ const mockdata = [
   //     },
   //   ],
   // },
- 
-
 ];
 
 type NavigationProps = {

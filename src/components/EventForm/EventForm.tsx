@@ -1,8 +1,16 @@
-'use client'
-import { Button, TextInput, Textarea, NumberInput, Select, Group, Container, Title, Center } from '@mantine/core';
+'use client';
+import {
+  Button,
+  Container,
+  Group,
+  NumberInput,
+  Select,
+  Textarea,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import React from 'react';
 
 interface EventFormValues {
   title: string;
@@ -30,7 +38,7 @@ const types = [
   { value: 'course', label: 'Course' },
 ];
 
-const  EventForm = () => {
+const EventForm = () => {
   const form = useForm<EventFormValues>({
     initialValues: {
       title: '',
@@ -49,7 +57,9 @@ const  EventForm = () => {
 
   return (
     <Container size="xxl" px={50} py={30}>
-      <Title order={2} ta="center">Event Details</Title>
+      <Title order={2} ta="center">
+        Event Details
+      </Title>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           label="Event Title"
@@ -126,5 +136,5 @@ const  EventForm = () => {
       </form>
     </Container>
   );
-}
+};
 export default EventForm;

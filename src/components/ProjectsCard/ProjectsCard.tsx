@@ -1,28 +1,26 @@
 'use client';
 
 import {
-  Avatar,
   Badge,
   Button,
   Divider,
   Flex,
   Group,
-  Image,
-  Modal,
   MantineColor,
+  Modal,
   Paper,
   PaperProps,
   Progress,
   Stack,
   Text,
-  Tooltip,
-  useMantineColorScheme,
 } from '@mantine/core';
-import { Surface, EventForm } from '@/components';
-import { IconNotebook, IconShare, IconEdit, IconBuilding } from '@tabler/icons-react';
-import classes from './ProjectsCard.module.css';
 import { useDisclosure } from '@mantine/hooks';
+import { IconBuilding, IconEdit } from '@tabler/icons-react';
 import { format } from 'date-fns';
+
+import { EventForm, Surface } from '@/components';
+
+import classes from './ProjectsCard.module.css';
 
 type Address = {
   venueName: string;
@@ -43,10 +41,13 @@ type ProjectsCardProps = {
   capacity: number;
   remainingSeats: number;
   eventStartDateTime: string;
-  eventEndDateTime: string
+  eventEndDateTime: string;
 } & Omit<PaperProps, 'children'>;
 
-const determineEventStatus = (eventStartDateTime: string, eventEndDateTime: string): Status => {
+const determineEventStatus = (
+  eventStartDateTime: string,
+  eventEndDateTime: string,
+): Status => {
   const now = new Date();
   const start = new Date(eventStartDateTime);
   const end = new Date(eventEndDateTime);
@@ -60,17 +61,13 @@ const determineEventStatus = (eventStartDateTime: string, eventEndDateTime: stri
   }
 };
 
-type Status =
-  | 'upcoming'
-  | 'cancelled'
-  | 'expired'
-  | string;
+type Status = 'upcoming' | 'cancelled' | 'expired' | string;
 
-type StatusProps = {
-  status: Status;
-};
+// type StatusProps = {
+//   status: Status;
+// };
 
-const StatusBadge = ({ status }: { status: string}) => {
+const StatusBadge = ({ status }: { status: string }) => {
   let color: MantineColor;
 
   switch (status) {
@@ -83,9 +80,9 @@ const StatusBadge = ({ status }: { status: string}) => {
     case 'upcoming':
       color = 'yellow.8';
       break;
-      case 'ongoing':
-        color = 'teal';
-        break;
+    case 'ongoing':
+      color = 'teal';
+      break;
     default:
       color = 'gray';
   }
@@ -97,14 +94,22 @@ const StatusBadge = ({ status }: { status: string}) => {
   );
 };
 
-
-
 const ProjectsCard = (props: ProjectsCardProps) => {
-  const { colorScheme } = useMantineColorScheme();
-  const { id, capacity,remainingSeats,eventAddress, eventStartDateTime,eventEndDateTime, eventDescription, eventName, venue, ...others } =
-    props;
-const [opened, { open, close }] = useDisclosure(false);
-const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
+  // const { colorScheme } = useMantineColorScheme();
+  const {
+    // id,
+    capacity,
+    remainingSeats,
+    eventAddress,
+    eventStartDateTime,
+    eventEndDateTime,
+    // eventDescription,
+    eventName,
+    // venue,
+    ...others
+  } = props;
+  const [opened, { open, close }] = useDisclosure(false);
+  const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
   const formattedEnd = format(new Date(eventEndDateTime), 'PPpp');
   const status = determineEventStatus(eventStartDateTime, eventEndDateTime);
   const venueName = eventAddress.venueName;
@@ -135,22 +140,24 @@ const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
         </Text>
 
         <Progress
-          value={((capacity - remainingSeats) * 100 / capacity)}
+          value={((capacity - remainingSeats) * 100) / capacity}
           mt={5}
           size="sm"
           color={
-            ((capacity - remainingSeats) * 100 / capacity)  < 21
+            ((capacity - remainingSeats) * 100) / capacity < 21
               ? 'red'
-              : ((capacity - remainingSeats) * 100 / capacity) < 51
+              : ((capacity - remainingSeats) * 100) / capacity < 51
                 ? 'yellow'
-                : ((capacity - remainingSeats) * 100 / capacity) < 86
+                : ((capacity - remainingSeats) * 100) / capacity < 86
                   ? 'blue'
                   : 'green'
           }
         />
         <Group align="center" gap="xs" wrap="nowrap">
           <IconBuilding size={14} />
-          <Text fz="sm" lineClamp={1}>{venueName}</Text>
+          <Text fz="sm" lineClamp={1}>
+            {venueName}
+          </Text>
         </Group>
 
         {/* <Avatar.Group spacing="sm">
@@ -173,16 +180,21 @@ const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
         <Divider />
 
         <Group gap="sm">
-        <StatusBadge status={status} />
-          <Modal opened={opened} onClose={close} title="Event Detail" centered size="lg">
+          <StatusBadge status={status} />
+          <Modal
+            opened={opened}
+            onClose={close}
+            title="Event Detail"
+            centered
+            size="lg"
+          >
             <EventForm />
           </Modal>
           <Button
             size="compact-md"
             variant="subtle"
             onClick={open}
-            leftSection={<IconEdit size={14}
-             />}
+            leftSection={<IconEdit size={14} />}
           >
             Edit
           </Button>

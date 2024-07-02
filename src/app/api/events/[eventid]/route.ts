@@ -1,32 +1,38 @@
-import {ObjectId} from "mongodb";
-import clientPromise from '@/app/lib/mongodb';
-import {NextApiRequest, NextApiResponse} from "next";
-import {NextResponse} from "next/server";
+import mongoose from 'mongoose';
+import { NextRequest, NextResponse } from 'next/server';
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
+import dbConnect from '@/lib/connectDB';
+import Events from '@/models/Event';
 
-// Ensure the environment variable is defined
-if (!MONGODB_URI) {
-    throw new Error(
-        'Please define the MONGODB_URI environment variable inside .env.local'
-    );
-}
+type Params = {
+  eventid: string;
+};
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-    const id = req.url?.slice(req.url?.lastIndexOf('/')).replace("/","")
+export async function GET(request: NextRequest, context: { params: Params }) {
+  await dbConnect();
 
-    try {
-        const client = await clientPromise;
-        const database = client.db('Eventizer');
-        const collection = database.collection('events');
-        const eventData = await collection.findOne({_id: new ObjectId(id)})
+  const { eventid } = context.params;
 
-        return NextResponse.json(eventData, {status: 200});
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json(
-            {message: 'Something went wrong!'},
-            {status: 500}
-        );
+  try {
+    if (!mongoose.Types.ObjectId.isValid(eventid)) {
+      return NextResponse.json(
+        { message: 'Invalid event ID' },
+        { status: 400 },
+      );
     }
+
+    const eventData = await Events.findById(eventid);
+
+    if (!eventData) {
+      return NextResponse.json({ message: 'Event not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(eventData, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { message: 'Something went wrong!' },
+      { status: 500 },
+    );
+  }
 }

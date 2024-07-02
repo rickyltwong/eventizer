@@ -1,5 +1,3 @@
-const page = (props: any) => {
+export default function Page(): JSX.Element {
   return <></>;
-};
-
-export default page;
+}

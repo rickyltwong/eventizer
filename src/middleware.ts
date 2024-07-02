@@ -1,4 +1,7 @@
-import { NextResponse, type NextRequest } from 'next/server';
-export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
+import { NextRequest, NextResponse } from 'next/server';
+
+export function middleware(request: NextRequest): void | NextResponse<unknown> {
+  if (request.nextUrl.pathname === '/') {
+    return NextResponse.redirect(new URL('/events', request.url));
+  }
 }

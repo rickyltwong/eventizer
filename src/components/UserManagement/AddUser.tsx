@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { User } from '@/app/admin/usermanagement/page';
 import { Button } from '@mantine/core';
+import { useState } from 'react';
+
+import { User } from '@/app/admin/usermanagement/page';
 
 interface AddUserProps {
-    onSubmit: (newUserData: User) => void;
-    onCancel:() =>void;
-  }
+  onSubmit: (newUserData: User) => void;
+  onCancel: () => void;
+}
 
 export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
   const [username, setUsername] = useState('');
@@ -20,10 +21,10 @@ export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
       username: username,
       role: role,
       status: status,
-      createdAt:  '2024-06-11T12:00:00Z', // new Date() 
+      createdAt: '2024-06-11T12:00:00Z', // new Date()
       profile: {
-        phone: phone
-      }
+        phone: phone,
+      },
     };
     console.log(newUser);
     onSubmit(newUser);
@@ -63,8 +64,13 @@ export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
         onChange={(e) => setPhone(e.target.value)}
         required // Added the "required" attribute for validation
       />
-      <Button variant="filled" ml="md" type="submit" >Save</Button>&nbsp;
-      <Button variant="filled" ml="md" onClick={onCancel}>Cancel</Button>
+      <Button variant="filled" ml="md" type="submit">
+        Save
+      </Button>
+      &nbsp;
+      <Button variant="filled" ml="md" onClick={onCancel}>
+        Cancel
+      </Button>
     </form>
   );
 }
