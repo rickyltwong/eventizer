@@ -1,4 +1,9 @@
-import { Group, UnstyledButton, UnstyledButtonProps } from '@mantine/core';
+import {
+  Group,
+  UnstyledButton,
+  UnstyledButtonProps,
+  Text,
+} from '@mantine/core';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -23,6 +28,7 @@ const Logo = ({ href, ...others }: LogoProps) => {
           width={24}
           alt="design sparx logo"
         />
+        <Text fw={700}>Mantine admin</Text>
       </Group>
     </UnstyledButton>
   );

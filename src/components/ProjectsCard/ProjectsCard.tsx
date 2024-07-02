@@ -6,66 +6,49 @@ import {
   Divider,
   Flex,
   Group,
-  MantineColor,
   Modal,
+  MantineColor,
   Paper,
   PaperProps,
   Progress,
   Stack,
   Text,
+  useMantineColorScheme,
 } from '@mantine/core';
+import { IconBuilding, IconEdit, IconTrash } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
-import { IconBuilding, IconEdit } from '@tabler/icons-react';
 import { format } from 'date-fns';
-
-import { EventForm, Surface } from '@/components';
-
-import classes from './ProjectsCard.module.css';
-
-type Address = {
-  venueName: string;
-  addressLine1: string;
-  addressLine2?: string;
-  city: string;
-  state: string;
-  country: string;
-  postalCode: string;
-  latitude: number;
-  longitude: number;
-};
-type ProjectsCardProps = {
-  id: string;
-  eventName: string;
-  eventDescription: string;
-  eventAddress: Address;
-  capacity: number;
-  remainingSeats: number;
-  eventStartDateTime: string;
-  eventEndDateTime: string;
-} & Omit<PaperProps, 'children'>;
+import { EventFormValues } from '@/types/event';
+import { EventForm } from '@/components';
+import { useState } from 'react';
+import axios from 'axios';
 
 const determineEventStatus = (
-  eventStartDateTime: string,
-  eventEndDateTime: string,
+  eventStartDateTime: Date,
+  eventEndDateTime: Date,
 ): Status => {
   const now = new Date();
   const start = new Date(eventStartDateTime);
   const end = new Date(eventEndDateTime);
 
   if (now < start) {
-    return 'upcoming'; // The current time is before the event start time
+    return 'upcoming';
   } else if (now >= start && now <= end) {
-    return 'ongoing'; // The current time is during the event
+    return 'ongoing';
   } else {
-    return 'expired'; // The current time is after the event end time
+    return 'expired';
   }
 };
 
-type Status = 'upcoming' | 'cancelled' | 'expired' | string;
+type Status = 'upcoming' | 'cancelled' | 'expired' | 'ongoing';
 
-// type StatusProps = {
-//   status: Status;
-// };
+type ProjectsCardProps = {
+  _id: string;
+  remainingSeats: number;
+  onDelete: (id: string) => void;
+  onUpdate: (event: EventFormValues & { _id: string }) => void;
+} & EventFormValues &
+  Omit<PaperProps, 'children'>;
 
 const StatusBadge = ({ status }: { status: string }) => {
   let color: MantineColor;
@@ -95,35 +78,79 @@ const StatusBadge = ({ status }: { status: string }) => {
 };
 
 const ProjectsCard = (props: ProjectsCardProps) => {
-  // const { colorScheme } = useMantineColorScheme();
+  const { colorScheme } = useMantineColorScheme();
   const {
-    // id,
+    _id,
     capacity,
     remainingSeats,
     eventAddress,
     eventStartDateTime,
     eventEndDateTime,
-    // eventDescription,
+    eventDescription,
     eventName,
-    // venue,
+    onDelete,
+    onUpdate,
     ...others
   } = props;
+
   const [opened, { open, close }] = useDisclosure(false);
-  const formattedStart = format(new Date(eventStartDateTime), 'PPpp');
-  const formattedEnd = format(new Date(eventEndDateTime), 'PPpp');
+  const [
+    deleteModalOpened,
+    { open: openDeleteModal, close: closeDeleteModal },
+  ] = useDisclosure(false);
+  const [eventDetails, setEventDetails] = useState<EventFormValues | null>(
+    null,
+  );
+
+  const formattedStart = eventStartDateTime
+    ? format(new Date(eventStartDateTime), 'PPpp')
+    : 'Invalid date';
+  const formattedEnd = eventEndDateTime
+    ? format(new Date(eventEndDateTime), 'PPpp')
+    : 'Invalid date';
   const status = determineEventStatus(eventStartDateTime, eventEndDateTime);
-  const venueName = eventAddress.venueName;
+  const venueName = eventAddress?.venueName || 'Unknown venue';
+
+  const handleEdit = async () => {
+    try {
+      console.log('Fetching event details...');
+      const response = await axios.get(`/api/events/${_id}`);
+      setEventDetails({
+        _id,
+        eventName: response.data.eventName,
+        eventDescription: response.data.eventDescription,
+        eventAddress: {
+          venueName: response.data.eventAddress.venueName,
+          addressLine1: response.data.eventAddress.addressLine1,
+        },
+        eventStartDateTime: new Date(response.data.eventStartDateTime),
+        eventEndDateTime: new Date(response.data.eventEndDateTime),
+        instructorName: response.data.instructorName,
+        eventType: response.data.eventType,
+        capacity: response.data.capacity,
+        difficulty: response.data.difficulty,
+        minimumAge: response.data.minimumAge,
+      });
+      open();
+    } catch (error) {
+      console.error('Failed to fetch event details:', error);
+    }
+  };
+
+  const handleDelete = () => {
+    onDelete(_id);
+    closeDeleteModal();
+  };
+
   return (
-    <Surface component={Paper} {...others}>
+    <Paper {...others}>
       <Stack gap="sm">
         <Flex justify="space-between" align="center">
           <Flex align="center" gap="xs">
-            {/* {image && <Image src={image} width={20} height={20} radius="50%" />} */}
             <Text fz="md" fw={600} lineClamp={1}>
               {eventName}
             </Text>
           </Flex>
-          {/* <StatusBadge status={status} /> */}
         </Flex>
         <Text fz="sm" lineClamp={1}>
           From: {formattedStart}
@@ -134,7 +161,7 @@ const ProjectsCard = (props: ProjectsCardProps) => {
 
         <Text fz="sm">
           Enrollment:{' '}
-          <Text span fz="sm" fw={500} className={classes.tasksCompleted}>
+          <Text span fz="sm" fw={500}>
             {capacity - remainingSeats} / {capacity}
           </Text>
         </Text>
@@ -160,23 +187,6 @@ const ProjectsCard = (props: ProjectsCardProps) => {
           </Text>
         </Group>
 
-        {/* <Avatar.Group spacing="sm">
-          <Tooltip label="Anne Doe">
-            <Avatar src={avatars[0]} size="md" radius="xl" />
-          </Tooltip>
-          <Tooltip label="Alex Doe">
-            <Avatar src={avatars[1]} size="md" radius="xl" />
-          </Tooltip>
-          <Tooltip label="Abby Doe">
-            <Avatar src={avatars[2]} size="md" radius="xl" />
-          </Tooltip>
-          <Tooltip label="and 5 others">
-            <Avatar size="md" radius="xl">
-              +5
-            </Avatar>
-          </Tooltip>
-        </Avatar.Group> */}
-
         <Divider />
 
         <Group gap="sm">
@@ -188,19 +198,47 @@ const ProjectsCard = (props: ProjectsCardProps) => {
             centered
             size="lg"
           >
-            <EventForm />
+            {eventDetails && (
+              <EventForm
+                onUpdateEvent={onUpdate}
+                closeModal={close}
+                initialValues={eventDetails}
+              />
+            )}
           </Modal>
           <Button
             size="compact-md"
             variant="subtle"
-            onClick={open}
+            onClick={handleEdit}
             leftSection={<IconEdit size={14} />}
           >
             Edit
           </Button>
+          <IconTrash
+            style={{ width: 20, height: 20 }}
+            color="var(--mantine-color-red-filled)"
+            onClick={openDeleteModal}
+          />
+          <Modal
+            opened={deleteModalOpened}
+            onClose={closeDeleteModal}
+            title="Confirm Deletion"
+            centered
+            size="sm"
+          >
+            <Text>Are you sure you want to delete this event?</Text>
+            <Group align="center" mt="md">
+              <Button color="red" onClick={handleDelete}>
+                Confirm
+              </Button>
+              <Button variant="outline" onClick={closeDeleteModal}>
+                Cancel
+              </Button>
+            </Group>
+          </Modal>
         </Group>
       </Stack>
-    </Surface>
+    </Paper>
   );
 };
 

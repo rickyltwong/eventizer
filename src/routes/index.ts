@@ -3,6 +3,7 @@ function path(root: string, sublink: string) {
 }
 
 const ROOTS_DASHBOARD = '/admin';
+
 const ROOT_APPS = '/apps';
 const ROOTS_PAGES = '/pages';
 const ROOTS_PROJECTS = '/projects';
@@ -23,33 +24,6 @@ export const PATH_DASHBOARD = {
   tickets: path(ROOTS_DASHBOARD, '/tickets'),
   users: path(ROOTS_DASHBOARD, '/usermanagement'),
   attendees: path(ROOTS_DASHBOARD, '/attendee'),
-};
-
-export const PATH_APPS = {
-  root: ROOT_APPS,
-  calendar: path(ROOT_APPS, '/calendar'),
-  chat: path(ROOT_APPS, '/chat'),
-  invoices: {
-    all: path(ROOT_APPS, ROOTS_INVOICES + '/list'),
-    sample: path(ROOT_APPS, ROOTS_INVOICES + '/details/'),
-    invoice_details: (id: string): string =>
-      path(ROOT_APPS, ROOTS_INVOICES + `/details/${id}`),
-  },
-  orders: path(ROOT_APPS, '/orders'),
-  profile: path(ROOT_APPS, '/profile'),
-  projects: path(ROOT_APPS, '/projects'),
-  settings: path(ROOT_APPS, '/settings'),
-  tasks: path(ROOT_APPS, '/tasks'),
-};
-
-export const PATH_PAGES = {
-  root: ROOTS_PAGES,
-  pricing: path(ROOTS_PAGES, '/pricing'),
-  blank: path(ROOTS_PAGES, '/blank'),
-};
-
-export const PATH_PROJECTS = {
-  root: ROOTS_PROJECTS,
 };
 
 export const PATH_ORDERS = {

@@ -6,13 +6,16 @@ import {
   CardProps,
   Container,
   Group,
-  Modal,
   SimpleGrid,
   Skeleton,
   Stack,
+  Modal,
+  Notification,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { EventFormValues } from '@/types/event';
 import { ErrorAlert, EventForm, PageHeader, ProjectsCard } from '@/components';
 import { useFetchData } from '@/hooks';
 import { PATH_DASHBOARD } from '@/routes';
@@ -39,10 +42,75 @@ function Events() {
     loading: projectsLoading,
     error: projectsError,
   } = useFetchData('/api/events');
-  const projectItems = events.map((p: IEvent) => (
-    <ProjectsCard key={p.id} {...p} {...CARD_PROPS} />
-  ));
+
+  const [eventList, setEventList] = useState<EventFormValues[]>([]);
+  const [notification, setNotification] = useState({ message: '', color: '' });
+  // const projectItems = eventList.map((p: any) => (
+  //   <ProjectsCard key={p.id} {...p} {...CARD_PROPS} onDelete={handleDeleteEvent} />
+  // ));
+
   const [opened, { open, close }] = useDisclosure(false);
+
+  useEffect(() => {
+    if (events) {
+      setEventList(events);
+    }
+  }, [events]);
+
+  const handleAddEvent = async () => {
+    try {
+      const response = await axios.get('/api/events');
+      setEventList(response.data);
+      setNotification({
+        message: 'Event created successfully!',
+        color: 'green',
+      });
+    } catch (error) {
+      console.error('Failed to fetch events:', error);
+    }
+    close();
+  };
+
+  const handleDeleteEvent = async (id: string) => {
+    try {
+      await axios.delete(`/admin/api/events`, { data: { id } });
+
+      console.log(`Deleted event with ID: ${id}`);
+      setEventList((prevEvents) =>
+        prevEvents.filter((event) => event._id !== id),
+      );
+      setNotification({
+        message: 'Event deleted successfully!',
+        color: 'green',
+      });
+    } catch (error) {
+      setNotification({
+        message: 'Failed to delete event. Please try again.',
+        color: 'red',
+      });
+    }
+  };
+
+  const handleUpdateEvent = async (
+    updatedEvent: EventFormValues & { _id: string },
+  ) => {
+    try {
+      const { _id, ...updateData } = updatedEvent;
+      await axios.put(`/admin/api/events`, { id: _id, ...updateData });
+      const response = await axios.get('/api/events');
+      setEventList(response.data);
+      setNotification({
+        message: 'Event updated successfully!',
+        color: 'green',
+      });
+    } catch (error) {
+      console.error('Failed to update event:', error);
+      setNotification({
+        message: 'Failed to update event. Please try again.',
+        color: 'red',
+      });
+    }
+  };
 
   return (
     <>
@@ -52,12 +120,20 @@ function Events() {
           <Group justify="space-between" align="center">
             <PageHeader title="Events" breadcrumbItems={items} />
             <Modal opened={opened} onClose={close} centered size="lg">
-              <EventForm />
+              <EventForm onAddEvent={handleAddEvent} closeModal={close} />
             </Modal>
             <Button variant="outline" color="blue" onClick={open}>
               Add New +
             </Button>
           </Group>
+          {notification.message && (
+            <Notification
+              color={notification.color}
+              onClose={() => setNotification({ message: '', color: '' })}
+            >
+              {notification.message}
+            </Notification>
+          )}
           {projectsError ? (
             <ErrorAlert
               title="Error loading projects"
@@ -77,7 +153,15 @@ function Events() {
                       height={300}
                     />
                   ))
-                : projectItems}
+                : eventList.map((event) => (
+                    <ProjectsCard
+                      key={event._id}
+                      {...event}
+                      {...CARD_PROPS}
+                      onDelete={handleDeleteEvent}
+                      onUpdate={handleUpdateEvent}
+                    />
+                  ))}
             </SimpleGrid>
           )}
         </Stack>

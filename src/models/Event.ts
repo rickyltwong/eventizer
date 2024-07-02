@@ -7,9 +7,9 @@ import { IEvent, IEventAddress } from '@/types';
 const EventAddressSchema = new Schema<IEventAddress>({
   venueName: { type: String, required: true },
   addressLine1: { type: String },
-  addressLine2: { type: String },
-  city: { type: String, required: true },
-  state: { type: String, required: true },
+  addressLine2: { type: String, required: false },
+  city: { type: String, required: false },
+  state: { type: String, required: false },
   country: { type: String },
   postalCode: { type: String },
   latitude: { type: Number },
@@ -20,7 +20,7 @@ const EventSchema = new Schema<IEvent>(
   {
     eventName: { type: String, required: true },
     eventDescription: { type: String, required: true },
-    eventAddress: { type: EventAddressSchema, required: true },
+    eventAddress: { type: EventAddressSchema },
     eventStartDateTime: { type: Date, required: true },
     eventEndDateTime: { type: Date, required: true },
     instructorName: { type: String, required: true },
