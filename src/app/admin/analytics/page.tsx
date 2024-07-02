@@ -1,11 +1,27 @@
-"use client";
-import React, { useEffect, useState } from 'react';
-import { Card, SimpleGrid, Text, Title, Container } from '@mantine/core';
-import { Bar, Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcElement } from 'chart.js';
+'use client';
+import { Card, Container, SimpleGrid, Text, Title } from '@mantine/core';
+import {
+  ArcElement,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  Tooltip,
+} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { useEffect, useState } from 'react';
+import { Bar, Pie } from 'react-chartjs-2';
 
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcElement, ChartDataLabels);
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+  ArcElement,
+  ChartDataLabels,
+);
 
 interface Event {
   eventType: string;
@@ -75,30 +91,36 @@ const Dashboard = () => {
         // Calculate total sales
         const totalSales = eventData.reduce((acc, event) => {
           const soldTickets = ticketData
-            .filter(ticket => ticket.event === event._id)
+            .filter((ticket) => ticket.event === event._id)
             .reduce((total, ticket) => total + ticket.noOfTickets, 0);
           return acc + soldTickets;
         }, 0);
         setTotalSales(totalSales);
 
         // Calculate event counts
-        const eventTypes = Array.from(new Set(eventData.map(event => event.eventType)));
-        const eventCounts = eventTypes.map(type =>
-          eventData.filter(event => event.eventType === type).length
+        const eventTypes = Array.from(
+          new Set(eventData.map((event) => event.eventType)),
+        );
+        const eventCounts = eventTypes.map(
+          (type) =>
+            eventData.filter((event) => event.eventType === type).length,
         );
 
         // Calculate remaining seats and total capacity
-        const remainingSeats = eventTypes.map(type =>
+        const remainingSeats = eventTypes.map((type) =>
           eventData
-            .filter(event => event.eventType === type)
-            .reduce((acc, event) => acc + event.capacity - calculateSoldTickets(event, ticketData), 0)
+            .filter((event) => event.eventType === type)
+            .reduce(
+              (acc, event) =>
+                acc + event.capacity - calculateSoldTickets(event, ticketData),
+              0,
+            ),
         );
-        const totalCapacity = eventTypes.map(type =>
+        const totalCapacity = eventTypes.map((type) =>
           eventData
-            .filter(event => event.eventType === type)
-            .reduce((acc, event) => acc + event.capacity, 0)
+            .filter((event) => event.eventType === type)
+            .reduce((acc, event) => acc + event.capacity, 0),
         );
-
 
         // Fetch user data
         const response3 = await fetch('/api/admin');
@@ -108,7 +130,6 @@ const Dashboard = () => {
         //Calculate Users numbers
         const userCount = user.length;
         setUserCount(userCount);
-
 
         // Update state with pie chart data
         setPieData({
@@ -174,7 +195,7 @@ const Dashboard = () => {
 
   function calculateSoldTickets(event: Event, tickets: EventTicket[]): number {
     return tickets
-      .filter(ticket => ticket.event === event._id)
+      .filter((ticket) => ticket.event === event._id)
       .reduce((total, ticket) => total + ticket.noOfTickets, 0);
   }
 
@@ -184,13 +205,25 @@ const Dashboard = () => {
         Dashboard
       </Title> */}
       <SimpleGrid cols={2} spacing="lg">
-        <Card shadow="sm" p="lg" style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}>
-          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>Total Sales</Text>
+        <Card
+          shadow="sm"
+          p="lg"
+          style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}
+        >
+          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+            Total Sales
+          </Text>
           <Text size="xl">{totalSales}</Text>
         </Card>
-        <Card shadow="sm" p="lg" style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}>
-          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>Active Subscriptions</Text>
-          <Text size="xl" >{userCount}</Text>
+        <Card
+          shadow="sm"
+          p="lg"
+          style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}
+        >
+          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+            Active Subscriptions
+          </Text>
+          <Text size="xl">{userCount}</Text>
         </Card>
       </SimpleGrid>
       <SimpleGrid cols={2} spacing="lg" mt="xl">
@@ -270,7 +303,6 @@ const Dashboard = () => {
                   offset: 0,
                   font: {
                     size: 14,
-
                   },
                   formatter: (value) => value,
                 },

@@ -60,4 +60,4 @@ interface EventFormValues {
   minimumAge: number;
 }
 
-export { IEvent, IEventAddress, TicketClass, Discount, EventFormValues };
+export { Discount, EventFormValues, IEvent, IEventAddress, TicketClass };

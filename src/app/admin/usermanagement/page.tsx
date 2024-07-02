@@ -1,5 +1,13 @@
 'use client';
-import { Box, Button, Container, Group, Input, Select, Title } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Container,
+  Group,
+  Input,
+  Select,
+  Title,
+} from '@mantine/core';
 import { useEffect, useState } from 'react';
 
 import UserTable from '@/components/UserManagement/UserTable';
@@ -13,8 +21,8 @@ export interface User {
   email: string;
   phoneNumber: string;
   authentication: {
-    provider: string,
-  },
+    provider: string;
+  };
 }
 
 export default function UserManagementPage() {
@@ -97,8 +105,8 @@ export default function UserManagementPage() {
 
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
-          user._id === updatedUser._id ? updatedUser : user
-        )
+          user._id === updatedUser._id ? updatedUser : user,
+        ),
       );
     } catch (error) {
       console.error('Error updating user role:', error);

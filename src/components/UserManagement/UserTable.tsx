@@ -142,9 +142,7 @@ export default function UsersTable({
                       second: 'numeric',
                     })}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {user.email}
-                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">{user.email}</td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {user.phoneNumber}
                   </td>

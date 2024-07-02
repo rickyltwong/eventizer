@@ -1,7 +1,5 @@
-import { NextRequest } from 'next/server';
-
 import dbConnect from '@/lib/connectDB';
-import EventTicket from '@/models/eventTicket';
+import EventTicket from '@/models/EventTicket';
 
 export async function GET() {
   await dbConnect();

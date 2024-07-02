@@ -1,11 +1,12 @@
-import connectDB from '@/lib/connectDB';
-import Event from '@/models/Event';
 import { NextRequest, NextResponse } from 'next/server';
 
-let r = connectDB();
+import connectDB from '@/lib/connectDB';
+import Event from '@/models/Event';
+
+const r = connectDB();
 console.log('db connected! ' + JSON.stringify(r));
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET() {
   const events = await Event.find({});
   console.log(events);
   return new Response(JSON.stringify(events), {
@@ -52,6 +53,7 @@ export async function POST(request: NextRequest) {
       success: true,
       event: newEvent,
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error(error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });

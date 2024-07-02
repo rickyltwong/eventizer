@@ -6,22 +6,22 @@ import {
   Divider,
   Flex,
   Group,
-  Modal,
   MantineColor,
+  Modal,
   Paper,
   PaperProps,
   Progress,
   Stack,
   Text,
-  useMantineColorScheme,
 } from '@mantine/core';
-import { IconBuilding, IconEdit, IconTrash } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
-import { format } from 'date-fns';
-import { EventFormValues } from '@/types/event';
-import { EventForm } from '@/components';
-import { useState } from 'react';
+import { IconBuilding, IconEdit, IconTrash } from '@tabler/icons-react';
 import axios from 'axios';
+import { format } from 'date-fns';
+import { useState } from 'react';
+
+import { EventForm } from '@/components';
+import { EventFormValues } from '@/types/event';
 
 const determineEventStatus = (
   eventStartDateTime: Date,
@@ -78,7 +78,7 @@ const StatusBadge = ({ status }: { status: string }) => {
 };
 
 const ProjectsCard = (props: ProjectsCardProps) => {
-  const { colorScheme } = useMantineColorScheme();
+  // const { colorScheme } = useMantineColorScheme();
   const {
     _id,
     capacity,
@@ -86,7 +86,7 @@ const ProjectsCard = (props: ProjectsCardProps) => {
     eventAddress,
     eventStartDateTime,
     eventEndDateTime,
-    eventDescription,
+    // eventDescription,
     eventName,
     onDelete,
     onUpdate,

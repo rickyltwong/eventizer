@@ -6,20 +6,20 @@ import {
   CardProps,
   Container,
   Group,
+  Modal,
+  Notification,
   SimpleGrid,
   Skeleton,
   Stack,
-  Modal,
-  Notification,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { EventFormValues } from '@/types/event';
+import { useEffect, useState } from 'react';
+
 import { ErrorAlert, EventForm, PageHeader, ProjectsCard } from '@/components';
 import { useFetchData } from '@/hooks';
 import { PATH_DASHBOARD } from '@/routes';
-import { IEvent } from '@/types';
+import { EventFormValues } from '@/types/event';
 
 const items = [
   { title: 'Dashboard', href: PATH_DASHBOARD.default },
@@ -73,7 +73,7 @@ function Events() {
 
   const handleDeleteEvent = async (id: string) => {
     try {
-      await axios.delete(`/admin/api/events`, { data: { id } });
+      await axios.delete('/admin/api/events', { data: { id } });
 
       console.log(`Deleted event with ID: ${id}`);
       setEventList((prevEvents) =>
@@ -96,7 +96,7 @@ function Events() {
   ) => {
     try {
       const { _id, ...updateData } = updatedEvent;
-      await axios.put(`/admin/api/events`, { id: _id, ...updateData });
+      await axios.put('/admin/api/events', { id: _id, ...updateData });
       const response = await axios.get('/api/events');
       setEventList(response.data);
       setNotification({

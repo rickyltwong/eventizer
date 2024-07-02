@@ -4,9 +4,9 @@ function path(root: string, sublink: string) {
 
 const ROOTS_DASHBOARD = '/admin';
 
-const ROOT_APPS = '/apps';
-const ROOTS_PAGES = '/pages';
-const ROOTS_PROJECTS = '/projects';
+// const ROOT_APPS = '/apps';
+// const ROOTS_PAGES = '/pages';
+// const ROOTS_PROJECTS = '/projects';
 const ROOTS_ORDERS = '/orders';
 const ROOTS_INVOICES = '/invoices';
 const ROOTS_TASKS = '/tasks';

@@ -1,20 +1,20 @@
 'use client';
 import {
   Button,
-  TextInput,
-  Textarea,
+  Container,
+  Group,
+  Notification,
   NumberInput,
   Select,
-  Group,
-  Container,
+  Textarea,
+  TextInput,
   Title,
-  Center,
-  Notification,
 } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { EventFormValues } from '@/types/event';
 
 interface EventFormProps {
