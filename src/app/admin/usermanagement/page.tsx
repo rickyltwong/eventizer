@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import UserTable from '@/components/UserManagement/UserTable';
 
 export interface User {
-  id: number;
+  _id: number;
   name: string;
   role: string;
   status: string;
@@ -130,7 +130,7 @@ export default function UserManagementPage() {
 
   const handleAddUser = async () => {
     setNewUser({
-      id: Math.random(),
+      _id: Math.random(),
       name: '',
       role: '',
       status: '',

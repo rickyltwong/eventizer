@@ -44,7 +44,9 @@ const Page = () => {
         console.error('Error:', data);
       }
     } catch (error) {
-      console.log('Login failed', error.message);
+      if (error instanceof Error) {
+        console.log('Login failed', error.message);
+      }
     } finally {
       setLoading(false);
       // Clear fields after attempt

@@ -24,6 +24,7 @@ ChartJS.register(
 );
 
 interface Event {
+  _id: string;
   eventType: string;
   capacity: number;
   ticketsClasses: {
@@ -45,17 +46,38 @@ interface User {
 const Dashboard = () => {
   const [totalSales, setTotalSales] = useState<number>(0);
   const [userCount, setUserCount] = useState<number>(0);
-  const [pieData, setPieData] = useState({
+  const [pieData, setPieData] = useState<{
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      backgroundColor: string[];
+      borderColor: string[];
+      borderWidth: number;
+    }[];
+  }>({
     labels: [],
     datasets: [
       {
         label: 'Events',
         data: [],
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 1,
       },
     ],
   });
 
-  const [barData, setBarData] = useState({
+  const [barData, setBarData] = useState<{
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      backgroundColor: string;
+      borderColor: string;
+      borderWidth: number;
+    }[];
+  }>({
     labels: [],
     datasets: [
       {

@@ -84,7 +84,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
 declare module 'next-auth' {
   interface Session {
-    user?: {
+    user: {
       id: string;
       name: string;
       email: string;
@@ -96,10 +96,10 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    id?: string;
-    name?: string;
-    email?: string;
-    picture?: string;
+    id: string;
+    name: string;
+    email: string;
+    picture: string;
     accessToken?: string;
   }
 }

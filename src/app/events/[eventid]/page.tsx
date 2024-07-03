@@ -135,7 +135,7 @@ const Page = () => {
               <Divider my="sm" />
               <Text size="md">Venue:</Text>
               <Text size="sm" color="dimmed">
-                {`${event?.eventAddress.addressLine1} ${event?.eventAddress.addressLine2} ${event?.eventAddress.city}` ??
+                {`${event?.eventAddress?.addressLine1} ${event?.eventAddress?.addressLine2} ${event?.eventAddress?.city}` ??
                   ''}
               </Text>
               <Divider my="sm" />

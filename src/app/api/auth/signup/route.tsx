@@ -57,6 +57,10 @@ export async function POST(request: NextRequest) {
       savedUser,
     });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    } else {
+      return NextResponse.json({ error: 'Unknown error' }, { status: 500 });
+    }
   }
 }

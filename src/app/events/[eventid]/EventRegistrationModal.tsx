@@ -134,7 +134,7 @@ const EventRegistrationModal = function ({
         size="lg"
       >
         <form onSubmit={form.onSubmit((values) => handleEventRegister(values))}>
-          <Text className="mb-4">{`Location: ${event.eventAddress.venueName}, ${event.eventAddress.addressLine1}, ${event.eventAddress.city}`}</Text>
+          <Text className="mb-4">{`Location: ${event.eventAddress?.venueName}, ${event.eventAddress?.addressLine1}, ${event.eventAddress?.city}`}</Text>
           <Text className="mb-4">{`Date: ${new Date(event.eventStartDateTime).toLocaleString()}`}</Text>
           <TextInput
             withAsterisk

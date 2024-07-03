@@ -98,9 +98,9 @@ const ProjectsCard = (props: ProjectsCardProps) => {
     deleteModalOpened,
     { open: openDeleteModal, close: closeDeleteModal },
   ] = useDisclosure(false);
-  const [eventDetails, setEventDetails] = useState<EventFormValues | null>(
-    null,
-  );
+  const [eventDetails, setEventDetails] = useState<
+    (EventFormValues & { _id: string }) | null
+  >(null);
 
   const formattedStart = eventStartDateTime
     ? format(new Date(eventStartDateTime), 'PPpp')
@@ -108,7 +108,13 @@ const ProjectsCard = (props: ProjectsCardProps) => {
   const formattedEnd = eventEndDateTime
     ? format(new Date(eventEndDateTime), 'PPpp')
     : 'Invalid date';
-  const status = determineEventStatus(eventStartDateTime, eventEndDateTime);
+  const status =
+    eventStartDateTime && eventEndDateTime
+      ? determineEventStatus(
+          new Date(eventStartDateTime),
+          new Date(eventEndDateTime),
+        )
+      : 'unknown';
   const venueName = eventAddress?.venueName || 'Unknown venue';
 
   const handleEdit = async () => {

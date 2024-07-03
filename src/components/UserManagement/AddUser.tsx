@@ -19,7 +19,7 @@ export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newUser: User = {
-      id: Math.random(),
+      _id: Math.random(),
       name: name,
       role: role,
       status: status,

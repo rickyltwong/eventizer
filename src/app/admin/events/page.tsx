@@ -3,11 +3,11 @@
 import {
   Anchor,
   Button,
-  CardProps,
   Container,
   Group,
   Modal,
   Notification,
+  PaperProps,
   SimpleGrid,
   Skeleton,
   Stack,
@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import { ErrorAlert, EventForm, PageHeader, ProjectsCard } from '@/components';
 import { useFetchData } from '@/hooks';
 import { PATH_DASHBOARD } from '@/routes';
-import { EventFormValues } from '@/types/event';
+import { EventFormValues } from '@/types';
 
 const items = [
   { title: 'Dashboard', href: PATH_DASHBOARD.default },
@@ -30,7 +30,7 @@ const items = [
   </Anchor>
 ));
 
-const CARD_PROPS: Omit<CardProps, 'children'> = {
+const CARD_PROPS: Omit<PaperProps, 'children'> = {
   p: 'md',
   shadow: 'md',
   radius: 'md',

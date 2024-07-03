@@ -111,12 +111,17 @@ export default function Page(): JSX.Element {
             }
             return inclCategory.includes(event.eventType);
           })
-          .sort((a, b) => {
-            return (
-              new Date(b.eventStartDateTime).getTime() -
-              new Date(a.eventStartDateTime).getTime()
-            );
-          });
+          .sort(
+            (
+              a: { eventStartDateTime: string | number | Date },
+              b: { eventStartDateTime: string | number | Date },
+            ) => {
+              return (
+                new Date(b.eventStartDateTime).getTime() -
+                new Date(a.eventStartDateTime).getTime()
+              );
+            },
+          );
 
         const pageCount = Math.ceil(filtered.length / itemsPerPage);
         setPageCount(pageCount);

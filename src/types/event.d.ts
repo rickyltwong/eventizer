@@ -1,6 +1,6 @@
-interface IEventAddress {
+export interface IEventAddress {
   venueName: string;
-  addressLine1: string;
+  addressLine1?: string;
   addressLine2?: string;
   city?: string;
   state?: string;
@@ -10,14 +10,14 @@ interface IEventAddress {
   longitude?: number;
 }
 
-interface TicketClass {
+export interface TicketClass {
   ticketType: string;
   price: number;
   benefits: string[];
   availability: number;
 }
 
-interface Discount {
+export interface Discount {
   discountCode: string;
   discountAmount: number;
   discountType: 'Fixed' | 'Percentage' | string;
@@ -25,10 +25,11 @@ interface Discount {
   discountExpiry: string;
 }
 
-interface IEvent {
+export interface IEvent {
+  _id: string;
   eventName: string;
   eventDescription: string;
-  eventAddress?: EventAddress;
+  eventAddress?: IEventAddress;
   eventStartDateTime: Date;
   eventEndDateTime: Date;
   instructorName: string;
@@ -43,14 +44,22 @@ interface IEvent {
   discounts: Discount[];
 }
 
-interface EventFormValues {
-  _id?: string;
+export interface EventFormValues {
+  _id: string;
   eventName: string;
   eventDescription: string;
   eventAddress: {
     venueName: string;
     addressLine1: string;
+    addressLine2?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    postalCode?: string;
+    latitude?: number;
+    longitude?: number;
   };
+  remainingSeats: number;
   eventStartDateTime: Date | null;
   eventEndDateTime: Date | null;
   instructorName: string;
@@ -60,4 +69,4 @@ interface EventFormValues {
   minimumAge: number;
 }
 
-export { Discount, EventFormValues, IEvent, IEventAddress, TicketClass };
+export type Status = 'Upcoming' | 'Cancelled' | 'Expired' | string;

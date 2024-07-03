@@ -26,6 +26,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // check if password and user password is null
+    if (!password || !user.password) {
+      return NextResponse.json(
+        { error: 'Please enter a password' },
+        { status: 400 },
+      );
+    }
+
     //check if password is correct
     const validPassword = await bcryptjs.compare(password, user.password);
     if (!validPassword) {
@@ -35,7 +43,6 @@ export async function POST(request: NextRequest) {
     //create token data
     const tokenData = {
       id: user._id,
-      username: user.username,
       email: user.email,
     };
 
@@ -59,6 +66,10 @@ export async function POST(request: NextRequest) {
     return response;
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    } else {
+      return NextResponse.json({ error: 'Unknown error' }, { status: 500 });
+    }
   }
 }
