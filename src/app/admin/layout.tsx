@@ -2,7 +2,9 @@
 
 import { AppShell, Container, rem, useMantineTheme } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { ReactNode, useEffect } from 'react';
 
 import AppMain from '@/components/AppMain';
 import HeaderNav from '@/components/HeaderNav';
@@ -18,7 +20,17 @@ function AppsLayout({ children }: Props) {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
-  return (
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session?.user?.email && !session.user.email.endsWith('@admin.com')) {
+      router.push('/');
+    }
+  }, [session, router]);
+
+  return session?.user?.email &&
+    !session.user.email.endsWith('@admin.com') ? null : (
     <AppShell
       layout="alt"
       header={{ height: 60 }}
