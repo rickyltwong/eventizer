@@ -21,6 +21,7 @@ import {
 } from '@mantine/core';
 import {
   IconChevronDown,
+  IconHistory,
   IconLogout,
   IconSettings,
   IconStar,
@@ -93,6 +94,17 @@ export default function UserButton() {
           }
         >
           Saved events
+        </Menu.Item>
+        <Menu.Item
+          leftSection={
+            <IconHistory
+              style={{ width: rem(16), height: rem(16) }}
+              color={theme.colors.yellow[6]}
+              stroke={1.5}
+            />
+          }
+        >
+          Registration History
         </Menu.Item>
 
         <Menu.Label>Settings</Menu.Label>
