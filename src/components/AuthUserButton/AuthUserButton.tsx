@@ -30,7 +30,7 @@ import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
-import { SignInButton } from '@/components/';
+import { NextLink, SignInButton } from '@/components/';
 
 import classes from './AuthUserButton.module.css';
 
@@ -62,7 +62,7 @@ export default function UserButton() {
           <Group gap={7}>
             <Avatar
               src={session?.user?.image}
-              alt={session?.user?.name}
+              alt={session?.user?.name || undefined}
               radius="xl"
               size={26}
             />
@@ -97,6 +97,8 @@ export default function UserButton() {
 
         <Menu.Label>Settings</Menu.Label>
         <Menu.Item
+          component={NextLink}
+          href="/u"
           leftSection={
             <IconSettings
               style={{ width: rem(16), height: rem(16) }}

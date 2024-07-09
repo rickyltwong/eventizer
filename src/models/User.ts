@@ -8,10 +8,9 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     password: { type: String },
     firstName: { type: String },
     lastName: { type: String },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: { type: String },
     role: {
       type: String,
-      required: true,
       enum: ['attendee', 'admin'],
       default: 'attendee',
     },
@@ -29,11 +28,6 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
         ref: 'events',
       },
     ],
-    authentication: {
-      provider: { type: String, required: true },
-      providerId: { type: String },
-      googleId: { type: String },
-    },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     status: { type: String, default: 'active' },
