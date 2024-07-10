@@ -1,15 +1,14 @@
 'use client';
-import { Button, Checkbox, Select } from '@mantine/core';
+import { Button, Select, Card, Group, Text, Container, ActionIcon } from '@mantine/core';
 import { useState } from 'react';
-
 import { Attendee } from '@/app/admin/attendee/page';
-
 import AttendeeStatus from './AttendeeStatus';
+import { IconPencil } from '@tabler/icons-react';
 
 interface AttendeesTableProps {
   attendees: Attendee[];
-  onCheckboxChange: (id: number) => void;
-  onStatusChange: (id: number, status: string) => void;
+  onCheckboxChange: (id: string) => void;
+  onStatusChange: (id: string, status: string) => void;
 }
 
 export default function AttendeesTable({
@@ -17,104 +16,66 @@ export default function AttendeesTable({
   onCheckboxChange,
   onStatusChange,
 }: AttendeesTableProps) {
-  const [editingStatusId, setEditingStatusId] = useState<number | null>(null);
+  const [editingStatusId, setEditingStatusId] = useState<string | null>(null);
 
-  const handleStatusChange = (id: number, newStatus: string) => {
+  const handleStatusChange = (id: string, newStatus: string) => {
     onStatusChange(id, newStatus);
-    setEditingStatusId(null); // Exit edit mode after changing the status
+    setEditingStatusId(null);
   };
 
   return (
-    <div className="mt-6 flow-root">
+    <Container style={{ maxWidth: '1200px' }} className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-          <table className="min-w-full text-gray-900">
-            <thead className="rounded-lg text-left text-sm font-normal">
-              <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  Name
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Email
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Status
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Registration Date
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Ticket Type
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Participating
-                </th>
-                <th scope="col" className="relative py-3 pl-6 pr-3">
-                  <span className="sr-only">Edit</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {attendees.map((attendee) => (
-                <tr
-                  key={attendee.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-                >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex items-center gap-3">
-                      <p>{attendee.name}</p>
-                    </div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {attendee.email}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {editingStatusId === attendee.id ? (
-                      <Select
-                        value={attendee.status}
-                        onChange={(value) =>
-                          handleStatusChange(
-                            attendee.id,
-                            value ?? attendee.status,
-                          )
-                        }
-                        data={[
-                          { value: 'Registered', label: 'Registered' },
-                          { value: 'Pending', label: 'Pending' },
-                          { value: 'Cancelled', label: 'Cancelled' },
-                        ]}
-                      />
-                    ) : (
-                      <div onClick={() => setEditingStatusId(attendee.id)}>
-                        <AttendeeStatus status={attendee.status} />
-                      </div>
-                    )}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {attendee.registrationDate}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {attendee.ticketType}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    <Checkbox
-                      checked={attendee.participating}
-                      onChange={() => onCheckboxChange(attendee.id)}
-                    />
-                  </td>
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex justify-end gap-3">
-                      <Button onClick={() => setEditingStatusId(attendee.id)}>
-                        Edit
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Card shadow="sm" p="lg" radius="md" withBorder className="mb-5">
+          <Group grow style={{ fontSize: 12 }}>
+            <Text style={{ flex: 0.01 }}></Text>
+            <Text style={{ flex: 2 }}>Name</Text>
+            <Text style={{ flex: 8 }}>Email</Text>
+            <Text style={{ flex: 2 }}>Status</Text>
+            <Text style={{ flex: 2 }}>Ticket Type</Text>
+            <Text style={{ flex: 1 }}>Participating</Text>
+          </Group>
+        </Card>
+        {attendees.map((attendee) => (
+          <Card key={attendee._id} shadow="sm" p="lg" radius="md" withBorder className="mb-4">
+            <Group grow style={{ fontSize: '0.75rem' }}>
+              <ActionIcon onClick={() => setEditingStatusId(attendee._id)} style={{ flex: 0.001, backgroundColor: '#59B6C7' }}>
+                <IconPencil size={14} />
+              </ActionIcon>
+              <Text style={{ flex: 2 }}>{attendee.name}</Text>
+              <Text style={{ flex: 8, fontSize: 14 }}>{attendee.email}</Text>
+              <Text style={{ flex: 2 }}>
+                {editingStatusId === attendee._id ? (
+                  <Select
+                    value={attendee.status}
+                    onChange={(value) =>
+                      handleStatusChange(attendee._id, value ?? attendee.status)
+                    }
+                    data={[
+                      { value: 'Registered', label: 'Registered' },
+                      { value: 'Pending', label: 'Pending' },
+                      { value: 'Cancelled', label: 'Cancelled' },
+                    ]}
+                  />
+                ) : (
+                  <div onClick={() => setEditingStatusId(attendee._id)}>
+                    <AttendeeStatus status={attendee.status} />
+                  </div>
+                )}
+              </Text>
+              <Text style={{ flex: 2 }}>{attendee.ticketType}</Text>
+              <Button
+                variant={attendee.participating === 'true' ? 'filled' : 'outline'}
+                color={attendee.participating === 'true' ? 'green' : 'blue'}
+                onClick={() => onCheckboxChange(attendee._id)}
+                style={{ flex: 1 }}
+              >
+                {attendee.participating === 'true' ? 'Checked In' : 'Check In'}
+              </Button>
+            </Group>
+          </Card>
+        ))}
       </div>
-    </div>
+    </Container>
   );
 }

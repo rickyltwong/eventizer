@@ -161,15 +161,13 @@ export default function UserManagementPage() {
 
       const addedUser = await response.json();
       setUsers((prevUsers) => [...prevUsers, addedUser]);
-      setShowAddUser(false); // Hide the AddUser form after successful addition
+      setShowAddUser(false);
     } catch (error) {
       console.error('Error adding user:', error);
     }
   };
 
   const handleCancelAddUser = () => {
-    // Reset newUser and hide the Add User section
-    //setNewUser(null);
     setShowAddUser(false);
   };
 

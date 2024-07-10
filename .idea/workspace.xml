@@ -158,7 +158,6 @@
       <change beforePath="$PROJECT_DIR$/src/components/Attendee/AttendeeStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/AttendeeStatus.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Attendee/AttendeesTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/AttendeesTable.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Attendee/DeleteAttendee.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/DeleteAttendee.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Attendee/UpdateAttendee.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/UpdateAttendee.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Attendee/buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/buttons.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/BadgeCard.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BadgeCard/BadgeCard.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/BadgeCard.tsx" beforeDir="false" />
