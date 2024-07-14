@@ -96,6 +96,8 @@ export default function UserButton() {
           Saved events
         </Menu.Item>
         <Menu.Item
+          component={NextLink}
+          href="/registration-history"
           leftSection={
             <IconHistory
               style={{ width: rem(16), height: rem(16) }}
