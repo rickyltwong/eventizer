@@ -1,44 +1,35 @@
 import { NextRequest } from 'next/server';
-
 import dbConnect from '@/lib/connectDB';
-import User from '@/models/User';
-
-export async function GET() {
-  await dbConnect();
-  const users = await User.find({});
-  return new Response(JSON.stringify(users), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-}
+import eventTicket from '@/models/EventTicket';
 
 export async function PUT(req: NextRequest) {
   await dbConnect();
   const reqBody = await req.json();
-  const { id, status, role } = reqBody;
+  const { id, status, participating } = reqBody;
+
   try {
-    const user = await User.findByIdAndUpdate(
+    const ticket = await eventTicket.findByIdAndUpdate(
       id,
-      { status, role },
-      { new: true },
+      { status: status, participating: participating },
+      { new: true }
     );
-    if (!user) {
-      console.log('User not found');
-      return new Response(JSON.stringify({ error: 'User not found' }), {
+
+    console.log("Updated ticket:", ticket);
+
+    if (!ticket) {
+      return new Response(JSON.stringify({ error: 'Ticket not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json' },
       });
     } else {
-      console.log('Updated user:', user);
-      return new Response(JSON.stringify(user), {
+      console.log("Ticket updated successfully" + ticket);
+      return new Response(JSON.stringify(ticket), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
     }
   } catch (error) {
-    console.error('Error updating user:', error);
+    console.error('Error updating ticket:', error);
     return new Response(JSON.stringify({ error }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -46,12 +37,22 @@ export async function PUT(req: NextRequest) {
   }
 }
 
+export async function GET() {
+  await dbConnect();
+  const attendees = await eventTicket.find({}).populate('user', 'name email');
+  return new Response(JSON.stringify(attendees), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
 export async function POST(req: NextRequest) {
   await dbConnect();
   const reqBody = await req.json();
-  const user = await User.create(reqBody);
-  console.log(user);
-  return new Response(JSON.stringify(user), {
+  const ticket = await eventTicket.create(reqBody);
+  return new Response(JSON.stringify(ticket), {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
@@ -63,8 +64,7 @@ export async function DELETE(req: NextRequest) {
   await dbConnect();
   const reqBody = await req.json();
   const { id } = reqBody;
-  const r = await User.findByIdAndDelete(id);
-  console.log(r);
+  const r = await eventTicket.findByIdAndDelete(id);
   return new Response(JSON.stringify(r), {
     status: 200,
     headers: {

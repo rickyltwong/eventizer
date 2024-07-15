@@ -32,7 +32,7 @@ export default function UsersTable({
     null,
   );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [deleteUser, setDeleteUser] = useState<number | null>(null); // FIXME: deleteUser is never used
+  //const [deleteUser, setDeleteUser] = useState<number | null>(null);
 
   const handleRoleChange = (id: number, newRole: string) => {
     onRoleChange(id, newRole);
@@ -46,7 +46,7 @@ export default function UsersTable({
 
   const handleDeleteUser = (id: number) => {
     onDeleteUser(id);
-    setDeleteUser(null);
+    //setDeleteUser(null);
   };
 
   const handleSaveUser = (newUser: User) => {
