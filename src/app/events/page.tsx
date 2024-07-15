@@ -6,6 +6,7 @@ import {
   Flex,
   Grid,
   GridCol,
+  Loader,
   Pagination,
   Popover,
   SimpleGrid,
@@ -16,7 +17,7 @@ import {
 import { IconFilter } from '@tabler/icons-react';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   BadgeCard,
@@ -29,9 +30,8 @@ import {
   MapIcon,
   ResponsiveContainer,
 } from '@/components';
+import { LocationState } from '@/lib/constants';
 import { IEvent, UserLocation } from '@/types';
-
-import Loading from './loading';
 
 const MapView = dynamic(() => import('@/components/MapView/MapView'), {
   ssr: false,
@@ -41,22 +41,14 @@ import { useMediaQuery } from '@mantine/hooks';
 
 const categories: string[] = ['Yoga', 'Meditation', 'Fitness'];
 
-enum LocationState {
-  SUCCESS = 'success',
-  PERMISSION_DENIED = 'permission_denied',
-  POSITION_UNAVAILABLE = 'position_unavailable',
-  TIMEOUT = 'timeout',
-  UNKNOWN_ERROR = 'unknown_error',
-  LOADING = 'loading',
-}
-
 export default function Page(): JSX.Element {
   const matches = useMediaQuery('(min-width: 48em)');
   const [activeTab, setActiveTab] = useState<string | null>('gallery');
 
+  const [isLoading, setIsLoading] = useState(true);
+
   // Gallery tab
   const [events, setEvents] = useState<IEvent[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = matches ? 6 : 3;
   const [pageCount, setPageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -98,12 +90,11 @@ export default function Page(): JSX.Element {
 
   // Fetch events
   useEffect(() => {
-    setIsLoading(true);
-
-    axios
-      .get('/api/events')
-      .then((response) => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('/api/events');
         setEvents(response.data);
+
         const filtered = response.data
           .filter((event: IEvent) => {
             if (inclCategory.length === 0) {
@@ -131,13 +122,14 @@ export default function Page(): JSX.Element {
           pageCount,
         );
         setCurrentPage(adjustedCurrentPage);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Failed to fetch events:', error);
-      })
-      .finally(() => {
+      } finally {
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchEvents();
   }, [inclCategory, itemsPerPage]);
 
   // Get user location
@@ -177,76 +169,74 @@ export default function Page(): JSX.Element {
       <HeaderSearch />
       <HeroTitle />
       <Space h="md" />
-      <ResponsiveContainer>
-        <Tabs value={activeTab} onChange={setActiveTab}>
-          <Tabs.List>
-            <Tabs.Tab value="gallery" leftSection={<GalleryIcon />}>
-              Event Gallery
-            </Tabs.Tab>
-            <Tabs.Tab value="map" leftSection={<MapIcon />}>
-              Events Near Me
-            </Tabs.Tab>
-            <Tabs.Tab value="calendar" leftSection={<CalendarIcon />}>
-              Event Calendar
-            </Tabs.Tab>
-          </Tabs.List>
-          <Space h="md" />
-          <Tabs.Panel value="gallery">
-            <Popover width={300} position="bottom-end" shadow="md">
-              <Popover.Target>
-                <Button
-                  leftSection={<IconFilter size={20} />}
-                  variant="default"
-                  styles={{
-                    root: {
-                      float: 'right',
-                    },
-                  }}
-                >
-                  Filter
-                </Button>
-              </Popover.Target>
-              <Popover.Dropdown>
-                <Text
-                  style={{
-                    marginBottom: '1rem',
-                  }}
-                  fw={700}
-                >
-                  Event Category
-                </Text>
-                <SimpleGrid cols={2}>
-                  {categories.map((category) => (
-                    <Checkbox
-                      key={category}
-                      label={category}
-                      onChange={(event) => {
-                        if (event.currentTarget.checked) {
-                          setInclCategory([...inclCategory, category]);
-                        } else {
-                          setInclCategory(
-                            inclCategory.filter((c) => c !== category),
-                          );
-                        }
-                      }}
-                    />
-                  ))}
-                </SimpleGrid>
-              </Popover.Dropdown>
-            </Popover>
+      {!isLoading ? (
+        <ResponsiveContainer>
+          <Tabs value={activeTab} onChange={setActiveTab}>
+            <Tabs.List>
+              <Tabs.Tab value="gallery" leftSection={<GalleryIcon />}>
+                Event Gallery
+              </Tabs.Tab>
+              <Tabs.Tab value="map" leftSection={<MapIcon />}>
+                Events Near Me
+              </Tabs.Tab>
+              <Tabs.Tab value="calendar" leftSection={<CalendarIcon />}>
+                Event Calendar
+              </Tabs.Tab>
+            </Tabs.List>
             <Space h="md" />
-            <Grid>
-              <Suspense fallback={<Loading />}>
+            <Tabs.Panel value="gallery">
+              <Popover width={300} position="bottom-end" shadow="md">
+                <Popover.Target>
+                  <Button
+                    leftSection={<IconFilter size={20} />}
+                    variant="default"
+                    styles={{
+                      root: {
+                        float: 'right',
+                      },
+                    }}
+                  >
+                    Filter
+                  </Button>
+                </Popover.Target>
+                <Popover.Dropdown>
+                  <Text
+                    style={{
+                      marginBottom: '1rem',
+                    }}
+                    fw={700}
+                  >
+                    Event Category
+                  </Text>
+                  <SimpleGrid cols={2}>
+                    {categories.map((category) => (
+                      <Checkbox
+                        key={category}
+                        label={category}
+                        onChange={(event) => {
+                          if (event.currentTarget.checked) {
+                            setInclCategory([...inclCategory, category]);
+                          } else {
+                            setInclCategory(
+                              inclCategory.filter((c) => c !== category),
+                            );
+                          }
+                        }}
+                      />
+                    ))}
+                  </SimpleGrid>
+                </Popover.Dropdown>
+              </Popover>
+              <Space h="md" />
+              <Grid>
                 {paginatedEvents.map((event) => (
                   <GridCol span={{ base: 12, md: 6, lg: 4 }} key={event._id}>
                     <BadgeCard event={event} />
                   </GridCol>
                 ))}
-              </Suspense>
-            </Grid>
-            <Space h="lg" />
-            <Space h="lg" />
-            {!isLoading && (
+              </Grid>
+              <Space h="lg" />
+              <Space h="lg" />
               <Flex justify="center">
                 <Pagination
                   total={pageCount}
@@ -254,27 +244,36 @@ export default function Page(): JSX.Element {
                   onChange={handlePageChange}
                 />
               </Flex>
-            )}
-          </Tabs.Panel>
-          <Tabs.Panel value="map">
-            {locationState !== LocationState.LOADING && (
-              <MapView
-                events={events}
-                center={
-                  locationState === LocationState.SUCCESS && userLocation
-                    ? [userLocation.latitude, userLocation.longitude]
-                    : [43.6532, -79.3832] // Default to Toronto
-                }
-                zoom={13}
-                isUserLocation={locationState === LocationState.SUCCESS}
-              />
-            )}
-          </Tabs.Panel>
-          <Tabs.Panel value="calendar">
-            <EventCalendar events={events} />
-          </Tabs.Panel>
-        </Tabs>
-      </ResponsiveContainer>
+            </Tabs.Panel>
+            <Tabs.Panel value="map">
+              {locationState !== LocationState.LOADING && (
+                <MapView
+                  events={events}
+                  center={
+                    locationState === LocationState.SUCCESS && userLocation
+                      ? [userLocation.latitude, userLocation.longitude]
+                      : [43.6532, -79.3832] // Default to Toronto
+                  }
+                  zoom={13}
+                  isUserLocation={locationState === LocationState.SUCCESS}
+                />
+              )}
+            </Tabs.Panel>
+            <Tabs.Panel value="calendar">
+              <EventCalendar events={events} />
+            </Tabs.Panel>
+          </Tabs>
+        </ResponsiveContainer>
+      ) : (
+        <Loader
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      )}
       <FooterSimple />
     </>
   );

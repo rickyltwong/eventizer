@@ -85,7 +85,6 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       return true;
     },
     async redirect({ url, baseUrl }) {
-      console.log('redirect callback', { url, baseUrl });
       return url.startsWith(baseUrl) ? url : baseUrl;
     },
     async jwt({ token, user, account, profile, trigger }) {
@@ -105,6 +104,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       // Add the newly created user into MongoDB
       if (account?.provider !== 'credentials' && trigger === 'signUp') {
         await dbConnect();
+        user.accountSource = account?.provider;
         const newUser = await UserModel.create(user);
         console.log('New user created:', newUser);
         token.id = newUser._id.toString(); // Update token with new user's ID
@@ -136,12 +136,16 @@ declare module '@auth/core/jwt' {
 declare module 'next-auth' {
   interface User {
     role?: string;
+    accountSource?: string;
   }
 
   interface Session {
     user: {
       id: string;
       role?: string;
+      image?: string;
+      name?: string;
+      email?: string;
     };
     author?: string;
   }
