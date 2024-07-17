@@ -45,10 +45,6 @@ function Events() {
 
   const [eventList, setEventList] = useState<EventFormValues[]>([]);
   const [notification, setNotification] = useState({ message: '', color: '' });
-  // const projectItems = eventList.map((p: any) => (
-  //   <ProjectsCard key={p.id} {...p} {...CARD_PROPS} onDelete={handleDeleteEvent} />
-  // ));
-
   const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
@@ -57,16 +53,20 @@ function Events() {
     }
   }, [events]);
 
-  const handleAddEvent = async () => {
+  const handleAddEvent = async (newEvent: EventFormValues) => {
     try {
-      const response = await axios.get('/api/events');
-      setEventList(response.data);
+      const response = await axios.post('/admin/api/events', newEvent);
+      setEventList((prevEvents) => [...prevEvents, response.data]);
       setNotification({
         message: 'Event created successfully!',
         color: 'green',
       });
     } catch (error) {
-      console.error('Failed to fetch events:', error);
+      console.error('Failed to create event:', error);
+      setNotification({
+        message: 'Failed to create event. Please try again.',
+        color: 'red',
+      });
     }
     close();
   };
@@ -74,7 +74,6 @@ function Events() {
   const handleDeleteEvent = async (id: string) => {
     try {
       await axios.delete('/admin/api/events', { data: { id } });
-
       console.log(`Deleted event with ID: ${id}`);
       setEventList((prevEvents) =>
         prevEvents.filter((event) => event._id !== id),
@@ -84,6 +83,7 @@ function Events() {
         color: 'green',
       });
     } catch (error) {
+      console.error('Failed to delete event:', error);
       setNotification({
         message: 'Failed to delete event. Please try again.',
         color: 'red',
@@ -91,14 +91,13 @@ function Events() {
     }
   };
 
-  const handleUpdateEvent = async (
-    updatedEvent: EventFormValues & { _id: string },
-  ) => {
+  const handleUpdateEvent = async (updatedEvent: EventFormValues) => {
     try {
       const { _id, ...updateData } = updatedEvent;
       await axios.put('/admin/api/events', { id: _id, ...updateData });
-      const response = await axios.get('/api/events');
-      setEventList(response.data);
+      setEventList((prevEvents) =>
+        prevEvents.map((event) => (event._id === _id ? updatedEvent : event)),
+      );
       setNotification({
         message: 'Event updated successfully!',
         color: 'green',
@@ -114,7 +113,6 @@ function Events() {
 
   return (
     <>
-      <></>
       <Container fluid>
         <Stack gap="lg">
           <Group justify="space-between" align="center">
@@ -153,15 +151,18 @@ function Events() {
                       height={300}
                     />
                   ))
-                : eventList.map((event) => (
-                    <ProjectsCard
-                      key={event._id}
-                      {...event}
-                      {...CARD_PROPS}
-                      onDelete={handleDeleteEvent}
-                      onUpdate={handleUpdateEvent}
-                    />
-                  ))}
+                : eventList.map((event) =>
+                    event._id ? (
+                      <ProjectsCard
+                        key={event._id as string}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        {...(event as any)}
+                        {...CARD_PROPS}
+                        onDelete={handleDeleteEvent}
+                        onUpdate={handleUpdateEvent}
+                      />
+                    ) : null,
+                  )}
             </SimpleGrid>
           )}
         </Stack>

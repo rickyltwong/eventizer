@@ -1,9 +1,19 @@
 'use client';
-import { Button, Select, Card, Group, Text, Container, ActionIcon } from '@mantine/core';
-import { useState } from 'react';
-import { Attendee } from '@/app/admin/attendee/page';
-import AttendeeStatus from './AttendeeStatus';
+import {
+  ActionIcon,
+  Button,
+  Card,
+  Container,
+  Group,
+  Select,
+  Text,
+} from '@mantine/core';
 import { IconPencil } from '@tabler/icons-react';
+import { useState } from 'react';
+
+import { Attendee } from '@/app/admin/attendee/page';
+
+import AttendeeStatus from './AttendeeStatus';
 
 interface AttendeesTableProps {
   attendees: Attendee[];
@@ -37,9 +47,19 @@ export default function AttendeesTable({
           </Group>
         </Card>
         {attendees.map((attendee) => (
-          <Card key={attendee._id} shadow="sm" p="lg" radius="md" withBorder className="mb-4">
+          <Card
+            key={attendee._id}
+            shadow="sm"
+            p="lg"
+            radius="md"
+            withBorder
+            className="mb-4"
+          >
             <Group grow style={{ fontSize: '0.75rem' }}>
-              <ActionIcon onClick={() => setEditingStatusId(attendee._id)} style={{ flex: 0.001, backgroundColor: '#59B6C7' }}>
+              <ActionIcon
+                onClick={() => setEditingStatusId(attendee._id)}
+                style={{ flex: 0.001, backgroundColor: '#59B6C7' }}
+              >
                 <IconPencil size={14} />
               </ActionIcon>
               <Text style={{ flex: 2 }}>{attendee.name}</Text>
@@ -65,7 +85,9 @@ export default function AttendeesTable({
               </Text>
               <Text style={{ flex: 2 }}>{attendee.ticketType}</Text>
               <Button
-                variant={attendee.participating === 'true' ? 'filled' : 'outline'}
+                variant={
+                  attendee.participating === 'true' ? 'filled' : 'outline'
+                }
                 color={attendee.participating === 'true' ? 'green' : 'blue'}
                 onClick={() => onCheckboxChange(attendee._id)}
                 style={{ flex: 1 }}

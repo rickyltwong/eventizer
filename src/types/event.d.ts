@@ -29,7 +29,7 @@ export interface IEvent {
   _id: string;
   eventName: string;
   eventDescription: string;
-  eventAddress?: IEventAddress;
+  eventAddress: IEventAddress;
   eventStartDateTime: Date;
   eventEndDateTime: Date;
   instructorName: string;
@@ -44,29 +44,51 @@ export interface IEvent {
   discounts: Discount[];
 }
 
-export interface EventFormValues {
-  _id: string;
-  eventName: string;
-  eventDescription: string;
-  eventAddress: {
-    venueName: string;
-    addressLine1: string;
-    addressLine2?: string;
-    city?: string;
-    state?: string;
-    country?: string;
-    postalCode?: string;
-    latitude?: number;
-    longitude?: number;
-  };
-  remainingSeats: number;
+// export interface EventFormValues {
+//   _id: string;
+//   eventName: string;
+//   eventDescription: string;
+//   eventAddress: {
+//     venueName: string;
+//     addressLine1: string;
+//     addressLine2?: string;
+//     city?: string;
+//     state?: string;
+//     country?: string;
+//     postalCode?: string;
+//     latitude?: number;
+//     longitude?: number;
+//   };
+//   remainingSeats: number;
+//   eventStartDateTime: Date | null;
+//   eventEndDateTime: Date | null;
+//   instructorName: string;
+//   eventType: string;
+//   capacity: number;
+//   difficulty: string;
+//   minimumAge: number;
+// }
+
+export type EventFormAddress = Required<IEventAddress>;
+
+export type FormTicketClass = Partial<TicketClass>;
+
+export type FormDiscount = Partial<Discount>;
+
+export interface EventFormValues
+  extends Omit<
+    Partial<IEvent>,
+    | 'eventAddress'
+    | 'ticketsClasses'
+    | 'discounts'
+    | 'eventStartDateTime'
+    | 'eventEndDateTime'
+  > {
+  eventAddress: EventFormAddress;
   eventStartDateTime: Date | null;
   eventEndDateTime: Date | null;
-  instructorName: string;
-  eventType: string;
-  capacity: number;
-  difficulty: string;
-  minimumAge: number;
+  ticketsClasses?: FormTicketClass[];
+  discounts?: FormDiscount[];
 }
 
 export type Status = 'Upcoming' | 'Cancelled' | 'Expired' | string;

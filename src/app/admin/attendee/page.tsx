@@ -6,10 +6,11 @@ import {
   Group,
   Input,
   Select,
-  Title,
   Text,
+  Title,
 } from '@mantine/core';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import AttendeesTable from '@/components/Attendee/AttendeesTable';
 
 export interface Attendee {
@@ -31,6 +32,7 @@ export default function AttendeeManagementPage() {
     fetch('/api/attendee')
       .then((response) => response.json())
       .then((data) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const formattedData = data.map((ticket: any) => ({
           _id: ticket._id,
           name: ticket.user.name,
@@ -58,14 +60,18 @@ export default function AttendeeManagementPage() {
     setAttendees((prevAttendees) =>
       prevAttendees.map((attendee) =>
         attendee._id === id
-          ? { ...attendee, participating: attendee.participating === 'true' ? 'false' : 'true' }
+          ? {
+              ...attendee,
+              participating:
+                attendee.participating === 'true' ? 'false' : 'true',
+            }
           : attendee,
       ),
     );
 
     const attendee = attendees.find((attendee) => attendee._id === id);
     if (attendee) {
-      fetch(`/api/attendee`, {
+      fetch('/api/attendee', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +90,7 @@ export default function AttendeeManagementPage() {
         attendee._id === id ? { ...attendee, status } : attendee,
       ),
     );
-    fetch(`/api/attendee`, {
+    fetch('/api/attendee', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +100,9 @@ export default function AttendeeManagementPage() {
   };
 
   const totalAttendees = attendees.length;
-  const checkedInAttendees = attendees.filter((attendee) => attendee.participating === 'true').length;
+  const checkedInAttendees = attendees.filter(
+    (attendee) => attendee.participating === 'true',
+  ).length;
 
   return (
     <Container size="lg" my="md">
@@ -106,15 +114,39 @@ export default function AttendeeManagementPage() {
         Check-In Attendees
       </Title>
       <Group className="mb-4">
-        <div style={{ textAlign: 'center', marginRight: '20%', marginLeft: '20%' }}>
+        <div
+          style={{ textAlign: 'center', marginRight: '20%', marginLeft: '20%' }}
+        >
           <Text style={{ fontSize: 20 }}>Total Attendees</Text>
-          <div style={{ borderRadius: '50%', width: '100px', height: '100px', backgroundColor: '#59B6C7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+          <div
+            style={{
+              borderRadius: '50%',
+              width: '100px',
+              height: '100px',
+              backgroundColor: '#59B6C7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+            }}
+          >
             <Text>{totalAttendees}</Text>
           </div>
         </div>
         <div style={{ textAlign: 'center' }}>
           <Text style={{ fontSize: 20 }}>Checked In</Text>
-          <div style={{ borderRadius: '50%', width: '100px', height: '100px', backgroundColor: '#59B6C7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+          <div
+            style={{
+              borderRadius: '50%',
+              width: '100px',
+              height: '100px',
+              backgroundColor: '#59B6C7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+            }}
+          >
             <Text>{checkedInAttendees}</Text>
           </div>
         </div>
@@ -139,7 +171,11 @@ export default function AttendeeManagementPage() {
             ]}
             style={{ marginLeft: '0.785rem' }}
           />
-          <Button variant="filled" ml="md" style={{ backgroundColor: '#59B6C7' }}>
+          <Button
+            variant="filled"
+            ml="md"
+            style={{ backgroundColor: '#59B6C7' }}
+          >
             Add Attendee
           </Button>
         </Group>

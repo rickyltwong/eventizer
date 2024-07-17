@@ -41,7 +41,7 @@ export default function EventsGallery({
       <Grid>
         {paginatedEvents.map((event) => (
           <GridCol span={{ base: 12, md: 6, lg: 4 }} key={event._id}>
-            <BadgeCard {...event} />
+            <BadgeCard event={event} />
           </GridCol>
         ))}
       </Grid>

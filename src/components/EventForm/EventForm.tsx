@@ -19,9 +19,9 @@ import { EventFormValues } from '@/types/event';
 
 interface EventFormProps {
   onAddEvent?: (event: EventFormValues) => void;
-  onUpdateEvent?: (event: EventFormValues & { _id: string }) => void;
+  onUpdateEvent?: (event: EventFormValues) => void;
   closeModal: () => void;
-  initialValues?: EventFormValues & { _id: string };
+  initialValues?: EventFormValues;
 }
 
 const difficulties = [
@@ -42,16 +42,22 @@ const EventForm = ({
   onUpdateEvent,
   initialValues,
 }: EventFormProps) => {
-  //const [isFormVisible, setFormVisible] = useState(true);
   const [notification, setNotification] = useState({ message: '', color: '' });
 
-  const form = useForm<EventFormValues>({
-    initialValues: initialValues || {
+  const form = useForm<Omit<EventFormValues, '_id' | 'remainingSeats'>>({
+    initialValues: {
       eventName: '',
       eventDescription: '',
       eventAddress: {
         venueName: '',
         addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        country: '',
+        postalCode: '',
+        latitude: 43.6532,
+        longitude: -79.3832,
       },
       eventStartDateTime: null,
       eventEndDateTime: null,
@@ -60,33 +66,47 @@ const EventForm = ({
       capacity: 1,
       difficulty: '',
       minimumAge: 18,
+      ticketsClasses: [],
+      discounts: [],
     },
   });
 
   useEffect(() => {
     if (initialValues) {
-      form.setValues(initialValues);
+      form.setValues({
+        ...initialValues,
+        eventAddress: {
+          ...form.values.eventAddress,
+          ...initialValues.eventAddress,
+        },
+      });
     }
   }, [initialValues]);
 
-  const handleSubmit = async (values: EventFormValues) => {
+  const handleSubmit = async (
+    values: Omit<EventFormValues, '_id' | 'remainingSeats'>,
+  ) => {
     console.log('Submitting values: ', values);
     try {
       if (onAddEvent) {
         const response = await axios.post('/admin/api/events', values);
         console.log('Event created: ', response.data);
         onAddEvent(response.data);
-      } else if (onUpdateEvent) {
-        const { _id, ...updateData } = values;
-        await axios.put('/admin/api/events', { id: _id, ...updateData });
-        onUpdateEvent({ ...values, _id: initialValues?._id });
+      } else if (onUpdateEvent && initialValues) {
+        const updateData = {
+          ...values,
+          _id: initialValues._id,
+          remainingSeats: initialValues.remainingSeats,
+        };
+        const response = await axios.put('/admin/api/events', updateData);
+        console.log('Event updated: ', response.data);
+        onUpdateEvent(updateData);
       }
-
       closeModal();
     } catch (error) {
       console.error('Error: ', error);
       setNotification({
-        message: 'Failed to create event. Please try again.',
+        message: 'Failed to create/update event. Please try again.',
         color: 'red',
       });
     }

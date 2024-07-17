@@ -48,8 +48,11 @@ const SetMap = ({ center }: { center: [number, number] }) => {
   return null;
 };
 
-const isValidLatLng = (lat: number, lng: number): boolean => {
-  return !isNaN(lat) && !isNaN(lng) && lat !== undefined && lng !== undefined;
+const isValidLatLng = (
+  lat: number | undefined,
+  lng: number | undefined,
+): boolean => {
+  return lat !== undefined && lng !== undefined && !isNaN(lat) && !isNaN(lng);
 };
 
 export default function MapView({
@@ -104,8 +107,8 @@ export default function MapView({
             icon={redMarker}
             key={event.eventName}
             position={[
-              event.eventAddress.latitude,
-              event.eventAddress.longitude,
+              event.eventAddress.latitude as number,
+              event.eventAddress.longitude as number,
             ]}
           >
             <Popup>

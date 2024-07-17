@@ -13,7 +13,7 @@ import HeroTitle from '@/components/HeroTitle/HeroTitle';
 import Logo from '@/components/Logo/Logo';
 import MapIcon from '@/components/MapIcon/MapIcon';
 import { NextLink } from '@/components/NextLink/NextLink';
-import OrdersTable from '@/components/OrdersTable/OrdersTable';
+// import OrdersTable from '@/components/OrdersTable/OrdersTable';
 import PageHeader from '@/components/PageHeader/PageHeader';
 import ProjectsCard from '@/components/ProjectsCard/ProjectsCard';
 import ResponsiveContainer from '@/components/ResponsiveContainer/ResponsiveContainer';
@@ -37,7 +37,7 @@ export {
   Logo,
   MapIcon,
   NextLink,
-  OrdersTable,
+  // OrdersTable,
   PageHeader,
   ProjectsCard,
   ResponsiveContainer,

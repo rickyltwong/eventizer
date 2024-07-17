@@ -46,7 +46,7 @@ type ProjectsCardProps = {
   _id: string;
   remainingSeats: number;
   onDelete: (id: string) => void;
-  onUpdate: (event: EventFormValues & { _id: string }) => void;
+  onUpdate: (event: EventFormValues) => void;
 } & EventFormValues &
   Omit<PaperProps, 'children'>;
 
@@ -78,7 +78,6 @@ const StatusBadge = ({ status }: { status: string }) => {
 };
 
 const ProjectsCard = (props: ProjectsCardProps) => {
-  // const { colorScheme } = useMantineColorScheme();
   const {
     _id,
     capacity,
@@ -86,7 +85,6 @@ const ProjectsCard = (props: ProjectsCardProps) => {
     eventAddress,
     eventStartDateTime,
     eventEndDateTime,
-    // eventDescription,
     eventName,
     onDelete,
     onUpdate,
@@ -98,9 +96,9 @@ const ProjectsCard = (props: ProjectsCardProps) => {
     deleteModalOpened,
     { open: openDeleteModal, close: closeDeleteModal },
   ] = useDisclosure(false);
-  const [eventDetails, setEventDetails] = useState<
-    (EventFormValues & { _id: string }) | null
-  >(null);
+  const [eventDetails, setEventDetails] = useState<EventFormValues | null>(
+    null,
+  );
 
   const formattedStart = eventStartDateTime
     ? format(new Date(eventStartDateTime), 'PPpp')
@@ -128,6 +126,13 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         eventAddress: {
           venueName: response.data.eventAddress.venueName,
           addressLine1: response.data.eventAddress.addressLine1,
+          addressLine2: response.data.eventAddress.addressLine2,
+          city: response.data.eventAddress.city,
+          state: response.data.eventAddress.state,
+          country: response.data.eventAddress.country,
+          postalCode: response.data.eventAddress.postalCode,
+          latitude: response.data.eventAddress.latitude,
+          longitude: response.data.eventAddress.longitude,
         },
         eventStartDateTime: new Date(response.data.eventStartDateTime),
         eventEndDateTime: new Date(response.data.eventEndDateTime),
@@ -136,6 +141,9 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         capacity: response.data.capacity,
         difficulty: response.data.difficulty,
         minimumAge: response.data.minimumAge,
+        remainingSeats: response.data.remainingSeats,
+        ticketsClasses: response.data.ticketsClasses,
+        discounts: response.data.discounts,
       });
       open();
     } catch (error) {
@@ -168,24 +176,26 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         <Text fz="sm">
           Enrollment:{' '}
           <Text span fz="sm" fw={500}>
-            {capacity - remainingSeats} / {capacity}
+            {capacity ?? 0 - remainingSeats} / {capacity}
           </Text>
         </Text>
 
         <Progress
-          value={((capacity - remainingSeats) * 100) / capacity}
+          value={((capacity ?? 0 - remainingSeats) * 100) / (capacity ?? 1)}
           mt={5}
           size="sm"
           color={
-            ((capacity - remainingSeats) * 100) / capacity < 21
+            ((capacity ?? 0 - remainingSeats) * 100) / (capacity ?? 1) < 21
               ? 'red'
-              : ((capacity - remainingSeats) * 100) / capacity < 51
+              : ((capacity ?? 0 - remainingSeats) * 100) / (capacity ?? 1) < 51
                 ? 'yellow'
-                : ((capacity - remainingSeats) * 100) / capacity < 86
+                : ((capacity ?? 0 - remainingSeats) * 100) / (capacity ?? 1) <
+                    86
                   ? 'blue'
                   : 'green'
           }
         />
+
         <Group align="center" gap="xs" wrap="nowrap">
           <IconBuilding size={14} />
           <Text fz="sm" lineClamp={1}>

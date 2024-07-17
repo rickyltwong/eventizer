@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+
 import dbConnect from '@/lib/connectDB';
 import eventTicket from '@/models/EventTicket';
 
@@ -11,10 +12,10 @@ export async function PUT(req: NextRequest) {
     const ticket = await eventTicket.findByIdAndUpdate(
       id,
       { status: status, participating: participating },
-      { new: true }
+      { new: true },
     );
 
-    console.log("Updated ticket:", ticket);
+    console.log('Updated ticket:', ticket);
 
     if (!ticket) {
       return new Response(JSON.stringify({ error: 'Ticket not found' }), {
@@ -22,7 +23,7 @@ export async function PUT(req: NextRequest) {
         headers: { 'Content-Type': 'application/json' },
       });
     } else {
-      console.log("Ticket updated successfully" + ticket);
+      console.log('Ticket updated successfully' + ticket);
       return new Response(JSON.stringify(ticket), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

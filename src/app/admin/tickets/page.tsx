@@ -10,10 +10,13 @@ import {
   Text,
 } from '@mantine/core';
 
-import { OrdersTable, PageHeader } from '@/components';
+import {
+  // OrdersTable,
+  PageHeader,
+} from '@/components';
 import { PATH_DASHBOARD } from '@/routes';
 
-import { useFetchData } from '../../../hooks';
+// import { useFetchData } from '../../../hooks';
 
 const items = [
   { title: 'Dashboard', href: PATH_DASHBOARD.default },
@@ -31,11 +34,11 @@ const PAPER_PROPS: PaperProps = {
 };
 
 function Page() {
-  const {
-    data: ordersData,
-    loading: ordersLoading,
-    error: ordersError,
-  } = useFetchData('/mocks/Orders.json');
+  // const {
+  //   data: ordersData,
+  //   loading: ordersLoading,
+  //   error: ordersError,
+  // } = useFetchData('/mocks/Orders.json');
 
   return (
     <>
@@ -58,11 +61,11 @@ function Page() {
                 <IconDotsVertical size={18} />
               </ActionIcon> */}
             </Group>
-            <OrdersTable
+            {/* <OrdersTable
               data={ordersData}
               error={ordersError}
               loading={ordersLoading}
-            />
+            /> */}
           </Paper>
         </Stack>
       </Container>
