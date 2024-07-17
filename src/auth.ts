@@ -1,5 +1,4 @@
 import { AdapterUser } from '@auth/core/adapters';
-import { CredentialsSignin } from '@auth/core/errors';
 import { FirestoreAdapter } from '@auth/firebase-adapter';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
@@ -31,29 +30,37 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        try {
-          await dbConnect();
-          const user = await UserModel.findOne({ email: credentials.username });
-          if (user && user.password === credentials.password) {
-            return {
-              id: user._id.toString(),
-              sub: user._id.toString(),
-              name: user.name,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email,
-              image: user.image,
-              emailVerified: null,
-            } as AdapterUser;
-          } else {
-            throw new CredentialsSignin();
+        await dbConnect();
+        const user = await UserModel.findOne({ email: credentials.username });
+
+        // Custom error not possible, see:
+        // https://github.com/nextauthjs/next-auth/issues/6512#issuecomment-1404902257
+        if (!user) {
+          // throw new CredentialsSignin('Invalid credentials. User not found.');
+          // return null;
+          return null;
+        } else {
+          if (user.accountSource !== 'credentials') {
+            // throw new CredentialsSignin(
+            //   'This email is registered with another login method. Please use that method to sign in.',
+            // );
+            return null;
           }
-        } catch (error) {
-          if (error instanceof CredentialsSignin) {
-            throw new CredentialsSignin('Invalid credentials');
-          }
-          throw new Error('Unexpected error during authorization');
+
+          if (user.password !== credentials.password) return null;
+          // throw new CredentialsSignin('Invalid credentials.');
         }
+
+        return {
+          id: user._id.toString(),
+          sub: user._id.toString(),
+          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          image: user.image,
+          emailVerified: null,
+        } as AdapterUser;
       },
     }),
   ],
@@ -71,16 +78,6 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         email,
         credentials,
       });
-
-      if (account?.provider !== 'credentials') {
-        await dbConnect();
-        const existingUser = await UserModel.findOne({ email: user.email });
-        if (existingUser) {
-          throw new CredentialsSignin(
-            'Email already registered. Please sign in with credentials',
-          );
-        }
-      }
 
       return true;
     },
@@ -130,6 +127,12 @@ declare module '@auth/core/jwt' {
   interface JWT {
     id: string;
     role?: string;
+  }
+}
+
+declare module '@auth/core' {
+  interface AdapterUser {
+    source?: string;
   }
 }
 

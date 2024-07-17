@@ -24,13 +24,17 @@ function AppsLayout({ children }: Props) {
   const router = useRouter();
 
   useEffect(() => {
-    if (session?.user?.email && !session.user.email.endsWith('@admin.com')) {
+    if (
+      !session ||
+      (session?.user?.email && !session.user.email.endsWith('@admin.com'))
+    ) {
       router.push('/');
     }
   }, [session, router]);
 
-  return session?.user?.email &&
-    !session.user.email.endsWith('@admin.com') ? null : (
+  return !session ||
+    (session?.user?.email &&
+      !session.user.email.endsWith('@admin.com')) ? null : (
     <AppShell
       layout="alt"
       header={{ height: 60 }}

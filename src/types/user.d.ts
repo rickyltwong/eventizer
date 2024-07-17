@@ -12,9 +12,5 @@ export interface IUser {
   status: string;
   eventHistory?: mongoose.Types.ObjectId[];
   favourites?: mongoose.Types.ObjectId[];
-  authentication: {
-    provider: string;
-    providerId?: string;
-    googleId?: string;
-  };
+  accountSource?: string;
 }
