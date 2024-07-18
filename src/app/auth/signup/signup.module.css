@@ -8,11 +8,11 @@
   border-right: rem(1px) solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-7));
   min-height: rem(900px);
-  max-width: rem(500px);
+  width: 40%;
   /* margin: auto; */
   position: absolute;
   right: 0;
-  padding-top: rem(80px);
+
 
   @media (max-width: 48em) {
     max-width: 100%;

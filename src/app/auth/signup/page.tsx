@@ -59,7 +59,7 @@ const Page = () => {
 
       if (response.status === 200) {
         // Redirect to the new page
-        await router.replace('/home');
+        await router.replace('/events');
       } else {
         const data = await response.json();
         console.error('Error:', data.message);
@@ -71,8 +71,8 @@ const Page = () => {
 
   return (
     <div className={classes.wrapper}>
-      <Paper className={classes.form} radius={0} p={30}>
-        <Title ta="center" order={3}>
+      <Paper className={classes.form} radius={0} p={30} pt={100}>
+        <Title ta="center" order={1}>
           Eventizer
         </Title>
         <Text c="dimmed" size="sm" ta="center" mt="md">
@@ -82,7 +82,7 @@ const Page = () => {
         <form onSubmit={handleSubmit}>
           <TextInput
             label="Username"
-            size="xs"
+            size="sm"
             placeholder=""
             mt="md"
             key={form.key('username')}
@@ -92,14 +92,14 @@ const Page = () => {
 
           <Group justify="space-between" gap="xs" grow mt="md">
             <TextInput
-              size="xs"
+              size="sm"
               label="First name"
               required
               key={form.key('firstName')}
               {...form.getInputProps('firstName')}
             />
             <TextInput
-              size="xs"
+              size="sm"
               label="Last name"
               key={form.key('lastName')}
               {...form.getInputProps('lastName')}
@@ -108,7 +108,7 @@ const Page = () => {
           </Group>
           <Group justify="space-between" gap="xs" grow mt="md">
             <TextInput
-              size="xs"
+              size="sm"
               label="Email"
               placeholder=""
               key={form.key('email')}
@@ -116,7 +116,7 @@ const Page = () => {
               required
             />
             <NumberInput
-              size="xs"
+              size="sm"
               label="Phone number"
               key={form.key('phoneNumber')}
               {...form.getInputProps('phoneNumber')}
@@ -125,7 +125,7 @@ const Page = () => {
           </Group>
           <Group justify="space-between" gap="xs" grow>
             <PasswordInput
-              size="xs"
+              size="sm"
               label="Password"
               placeholder=""
               required
@@ -134,7 +134,7 @@ const Page = () => {
               mt="md"
             />
             <PasswordInput
-              size="xs"
+              size="sm"
               label="Confirm Password"
               placeholder="Your password"
               required
@@ -144,7 +144,7 @@ const Page = () => {
             />
           </Group>
           <Select
-            size="xs"
+            size="sm"
             mt="md"
             required
             comboboxProps={{ withinPortal: true }}
@@ -160,12 +160,12 @@ const Page = () => {
             key={form.key('role')}
             {...form.getInputProps('role')}
           />
-          <Text c="red" ta="center" size="xs" mt={8}>
+          <Text c="red" ta="center" size="sm" mt={8}>
             By clicking ‘Create account’, I fully acknowledge Eventizer Terms of
             Service and Privacy Policy
           </Text>
           <Button
-            size="xs"
+            size="sm"
             bg="#1A2970"
             fullWidth
             mt="15"
@@ -175,11 +175,11 @@ const Page = () => {
             Create Account
           </Button>
           <Group justify="space-between" gap="xs" grow>
-            <Text ta="center" size="xs" mt={8}>
+            <Text ta="center" size="sm" mt={8}>
               Already have an account?
             </Text>
-            <Text c="blue" ta="center" size="xs" mt={8}>
-              <Link href="../signin">Sign in</Link>
+            <Text c="blue" ta="center" size="sm" mt={8}>
+              <Link href="/auth/signin">Sign in</Link>
             </Text>
           </Group>
         </form>
