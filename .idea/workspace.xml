@@ -5,214 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27ef98f7-4e39-438d-8258-24c7796ced36" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.husky/pre-commit" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/0/0048916aa79d1608de8254b127c247b7db828cb3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/1/0184f2a12ec91f79370d2c1ab29e16e2b3db62c6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/5/054883d2d380d7d2653866ae157a597d0126fe16" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/8/187d04baf51a7199a66d8096f07620c32f2629cd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/f/1fa30fea3e9ae270a3c38a6113a3689d8987d108" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2adcc5dd6780475459cc75e25c252c8c78285bd6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/8/38523df4b09cd796d65072fc3198a1e8550001bb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/0/508f938826f02ca4640fed6f113204126e70ba4b" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/0/7030d0b2f71b999ff89a343de08c414af32fc93a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/a/7a4503792f50092690f33a2b02754ce9a2cabd7c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/b/7b79417867283fb7bd444145e464c642a00389db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/c/7c719cdcad5e70e0b79971a337ce12bed78aa7c5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/d/7de1e783751f08539e214c67ae17cbd34fd53457" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/5/85022a33a6bfb1a6b1935889eb57f0a68c6aee36" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/4/94b37376f65429b0bd732701d4d3b5f36a7e8985" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/6/96b6ab981c24493368ea603ccb8c759a57ad40f9" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/c/9cbbe05623bdff816b3a535a6d1c2a77620f656f" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/1/a106c47b78fd5a7e1381d4795c5f8482945c75f6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/9/a979b7890a61a928d8ec2d170907d30214e48bf5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/c/acca3b7e5984d6f6db40adc76f528a84e388385e" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/1/b1267011e652a174facf2c4925e956d9d0bd8f07" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/d/cd7a0a5ed00515f0d0cd32a8badd4ed5ef962af8" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/f/cfb47de6ae0cae626eed46461300112ef521d977" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/7/d78451238d7a536c0823d051a5ddaaef223759dd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/8/d8e37c4c9bd8525a3feeab3b759f2bc807d38319" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/a/da1d6f21d01d0f36b5501dffcf7fd160ffcb290d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/d/dd0b22c08baf9ec33188ab52c7e6533ca62303a4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/7/e78a41e45e9c3fd4d4d6a319d906e58b842e1b55" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/9/e9bf216a20e84ee797b9402193000e41dad21aa6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/d/ed26e2646688e0a981c198a290099b79f8835ef9" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/3/f3df0435691c8a3aa5346710000ae675cebe1fc2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/0/0048916aa79d1608de8254b127c247b7db828cb3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/1/0184f2a12ec91f79370d2c1ab29e16e2b3db62c6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/5/054883d2d380d7d2653866ae157a597d0126fe16" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/5/054cd65536996add0daf94e76c3561e12b418237" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/8/08ffae0639832c0d97d87036288e227004785a49" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/b/0b1c4105b7145ce4f9e5d21dfe3f33c3a5921a58" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/8/187d04baf51a7199a66d8096f07620c32f2629cd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/f/1fa30fea3e9ae270a3c38a6113a3689d8987d108" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/2/a/2adcc5dd6780475459cc75e25c252c8c78285bd6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/3/8/38523df4b09cd796d65072fc3198a1e8550001bb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/5/0/508f938826f02ca4640fed6f113204126e70ba4b" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/0/7030d0b2f71b999ff89a343de08c414af32fc93a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/a/7a4503792f50092690f33a2b02754ce9a2cabd7c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/b/7b79417867283fb7bd444145e464c642a00389db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/c/7c719cdcad5e70e0b79971a337ce12bed78aa7c5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/d/7de1e783751f08539e214c67ae17cbd34fd53457" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/5/85022a33a6bfb1a6b1935889eb57f0a68c6aee36" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/4/94b37376f65429b0bd732701d4d3b5f36a7e8985" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/6/96b6ab981c24493368ea603ccb8c759a57ad40f9" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/c/9cbbe05623bdff816b3a535a6d1c2a77620f656f" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/1/a106c47b78fd5a7e1381d4795c5f8482945c75f6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/9/a979b7890a61a928d8ec2d170907d30214e48bf5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/c/acca3b7e5984d6f6db40adc76f528a84e388385e" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/1/b1267011e652a174facf2c4925e956d9d0bd8f07" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/c/d/cd7a0a5ed00515f0d0cd32a8badd4ed5ef962af8" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/c/f/cfb47de6ae0cae626eed46461300112ef521d977" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/7/d78451238d7a536c0823d051a5ddaaef223759dd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/8/d8e37c4c9bd8525a3feeab3b759f2bc807d38319" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/a/da1d6f21d01d0f36b5501dffcf7fd160ffcb290d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/d/dd0b22c08baf9ec33188ab52c7e6533ca62303a4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/7/e78a41e45e9c3fd4d4d6a319d906e58b842e1b55" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/9/e9bf216a20e84ee797b9402193000e41dad21aa6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/d/ed26e2646688e0a981c198a290099b79f8835ef9" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/3/f3df0435691c8a3aa5346710000ae675cebe1fc2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.lintstagedrc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vscode/extensions.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/actions/authActions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/actions/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/about-us/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/admin/analytics_Visitors/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/admin/analytics_Visitors/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/events/[eventid]/register/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/auth.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/AuthUserButton/AuthUserButton.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/AuthUserButton/AuthUserButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/BadgeCard/BadgeCard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/SignInButton/SignInButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/context/AuthProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/firebase-admin.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/firebase.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/testFirestore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postcss.config.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.cjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/Navbar.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/analytics/layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/analytics/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/analytics/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/analytics/page_.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/analytics/page_.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/attendee/layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/attendee/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/attendee/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/events/[eventid]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/events/[eventid]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/events/layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/events/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/events/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/fonts.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/globals.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/navbar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/tickets/[ticketid]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/tickets/[ticketid]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/tickets/layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/tickets/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/tickets/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/usermanagement/layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/usermanagement/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/usermanagement/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/users/[userid]/events/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/users/[userid]/events/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/users/[userid]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/users/[userid]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/auth/signin/route.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/legacy/signin/route.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/auth/signup/route.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/signup/route.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/events/[eventid]/register/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/events/[eventid]/register/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/events/[eventid]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/events/[eventid]/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/eventizer.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/0/0042d5d435d536f3564ebacedce2bdd5e5d04b32" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/0/00e90f63ffd38f1de3b273234fe9e4c9ca92d5ac" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/4/04d6e3bb2c1aaab5d1c2172467b7d0a68776bc97" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/7/0725ed0b0547694b7bb60affdd95417c9df97701" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/c/0cd3ff0b4d4e74df062da68036873a3fdbcb4bde" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/c/2c8bb7e4c38fd158b6c1a7485290fce752a25b61" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/3/3393394e21dbac7686e91ad17c5283fb052d67f3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/f/4f07cc51589446838509555a40ec3c5913389c6b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/f/5f2dab62b5203aa2062a82c806c47590f6c8e3a6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/c/7c1a7ae4e3059f9e5a6bd2be8ae85e2c27fd8d4d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/d/7d7c6f68a815dd7b1afef1a809e69e3ac62952fa" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/a/8a145bd2ff397f06b713f6124995f080def3ab70" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/3/a38e3c96ee180d445d200296f6b642009374c3ff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/8/c877023f10ac16a1ece2899a03aec3e05df9896c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/d/cd6a78dcab1b629cd91bc8e74fff0b836299306f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/9/d9582db42d0ee6ae5bee9d3acce053416c8ff956" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/9/d9a7300dfd5f676b4fcb3f47fbd80c2a9f648073" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/0/0042d5d435d536f3564ebacedce2bdd5e5d04b32" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/0/00e90f63ffd38f1de3b273234fe9e4c9ca92d5ac" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/4/04d6e3bb2c1aaab5d1c2172467b7d0a68776bc97" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/7/0725ed0b0547694b7bb60affdd95417c9df97701" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/c/0cd3ff0b4d4e74df062da68036873a3fdbcb4bde" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/2/c/2c8bb7e4c38fd158b6c1a7485290fce752a25b61" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/3/3/3393394e21dbac7686e91ad17c5283fb052d67f3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/4/f/4f07cc51589446838509555a40ec3c5913389c6b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/5/f/5f2dab62b5203aa2062a82c806c47590f6c8e3a6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/c/7c1a7ae4e3059f9e5a6bd2be8ae85e2c27fd8d4d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/d/7d7c6f68a815dd7b1afef1a809e69e3ac62952fa" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/a/8a145bd2ff397f06b713f6124995f080def3ab70" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/3/a38e3c96ee180d445d200296f6b642009374c3ff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/c/8/c877023f10ac16a1ece2899a03aec3e05df9896c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/c/d/cd6a78dcab1b629cd91bc8e74fff0b836299306f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/9/d9582db42d0ee6ae5bee9d3acce053416c8ff956" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/9/d9a7300dfd5f676b4fcb3f47fbd80c2a9f648073" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/events/[eventid]/ticket/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/events/[eventid]/ticket/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/events/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/events/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/payment/checkout/notifications/payment-confirmation/route.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/5/054cd65536996add0daf94e76c3561e12b418237" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/payment/checkout/notifications/payment-confirmation/tickets/[ticketid]/qr-code/route.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/8/08ffae0639832c0d97d87036288e227004785a49" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/payment/checkout/route.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/b/0b1c4105b7145ce4f9e5d21dfe3f33c3a5921a58" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/test/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/test/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/events/[eventid]/EventRegistrationModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/events/[eventid]/EventRegistrationModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/events/[eventid]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/events/[eventid]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/events/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/events/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/models/user.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signin/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/signup.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/signup.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/users/[userid]/history/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/users/[userid]/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/utils/dbconfig.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Analytics/AnalyticsDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Analytics/AnalyticsDashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Analytics/analytics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Analytics/analytics.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Analytics/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Analytics/redis.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Analytics/redis.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppMain/AppMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppMain/AppMain.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Attendee/AttendeeStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/AttendeeStatus.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Attendee/AttendeesTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/AttendeesTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Attendee/DeleteAttendee.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/DeleteAttendee.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Attendee/buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Attendee/buttons.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/BadgeCard.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BadgeCard/BadgeCard.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/BadgeCard.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/ActionButton.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/ActionButtonGroup.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/ActionButtonGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Buttons/ActionButtonGroup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/Buttons.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/ButtonsGroup.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ColorSchemeToggle.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ErrorAlert/ErrorAlert.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ErrorAlert/ErrorAlert.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ErrorAlert/ErrorAlert.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/EventCalendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EventCalendar/EventCalendar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/EventForm/EventForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EventForm/EventForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FooterSimple.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FooterSimple/FooterSimple.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FooterSimple.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FooterSimple/FooterSimple.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/HeaderNav/HeaderNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderNav/HeaderNav.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/HeaderSearch.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderSearch/HeaderSearch.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/HeaderSearch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderSearch/HeaderSearch.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/HeroTitle.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeroTitle.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Logo/Logo.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Logo/Logo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Logo/Logo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MapView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MapView/MapView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navigation/Links/Links.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation/Links/Links.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navigation/Links/Links.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation/Links/Links.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navigation/Navigation.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation/Navigation.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navigation/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation/Navigation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/OrdersTable/OrdersTable.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/OrdersTable/OrdersTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrdersTable/OrdersTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PageHeader/PageHeader.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PageHeader/PageHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageHeader/PageHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProjectsCard/ProjectsCard.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProjectsCard/ProjectsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProjectsCard/ProjectsCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ResponsiveContainer.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ResponsiveContainer/ResponsiveContainer.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ResponsiveContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ResponsiveContainer/ResponsiveContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Surface/Surface.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Surface/Surface.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Surface/Surface.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserButton/UserButton.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserButton/UserButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserButton/UserButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserManagement/AddUser.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserManagement/AddUser.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserManagement/UserStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserManagement/UserStatus.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserManagement/UserTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserManagement/UserTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/connectDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/connectDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useFetchData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useFetchData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Event.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/EventTicket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/EventTicket.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theme/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/event.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/users.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,7 +85,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging event-registration",
+    "git-widget-placeholder": "EventAttendance",
     "last_opened_file_path": "C:/SEM 4/WebProject/eventizer/src/app/api/events/[eventid]",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -259,7 +94,8 @@
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\SEM 4\\WebProject\\eventizer\\node_modules\\typescript\\lib"
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "C:\\SEM 4\\WebDev II\\Project\\eventizer\\node_modules\\typescript\\lib"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -269,6 +105,23 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\SEM 4\WebProject\eventizer\src\app\api\events\[eventid]" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -292,6 +145,7 @@
       <workItem from="1719692104313" duration="3830000" />
       <workItem from="1719714083124" duration="11368000" />
       <workItem from="1719796753515" duration="2636000" />
+      <workItem from="1721493084846" duration="18898000" />
     </task>
     <servers />
   </component>
@@ -317,5 +171,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="js.build_tools.npm">
+        <watch expression="request" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

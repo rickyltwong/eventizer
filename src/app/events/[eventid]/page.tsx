@@ -3,7 +3,8 @@
 import { Badge, Button, Card, Divider, Group, Text } from '@mantine/core';
 import axios from 'axios';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -13,20 +14,28 @@ import { IEvent } from '@/types';
 
 const Page = () => {
   const { eventid } = useParams();
+  const router = useRouter();
   const [event, setEvent] = useState<IEvent>();
   const [registrationModalOpen, setModalOpen] = useState(false);
-  // const [userRegisteredEvent, setRegisteredEvent] = useState(false);
   const [qrData, setQrData] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
+    if (!session?.user?.email) {
+      router.push(
+        '/api/auth/signin?callbackUrl=' +
+          encodeURIComponent(window.location.pathname),
+      );
+      return;
+    }
+
+    setIsAuthenticated(true);
     axios
-      .get(
-        '/api/events/' + eventid + '/ticket?user=' + '666933bf8757909f1d0dbb47',
-      )
+      .get('/api/events/' + eventid + '/ticket?user=' + session?.user?.email)
       .then((response) => {
         setQrData(response.data.qr);
-        // setRegisteredEvent(true);
         setLoading(false);
       })
       .catch((error) => {
@@ -72,6 +81,17 @@ const Page = () => {
 
   const registrationModalClose = () => {
     setModalOpen(false);
+  };
+
+  const handleRegisterClick = () => {
+    if (!isAuthenticated) {
+      router.push(
+        '/api/auth/signin?callbackUrl=' +
+          encodeURIComponent(window.location.pathname),
+      );
+    } else {
+      setModalOpen(true);
+    }
   };
 
   const override: React.CSSProperties = {
@@ -151,7 +171,7 @@ const Page = () => {
                 }
               </Text>
               <Button
-                onClick={() => setModalOpen(true)}
+                onClick={handleRegisterClick}
                 variant="light"
                 color="blue"
                 fullWidth

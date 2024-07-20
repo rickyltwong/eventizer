@@ -15,7 +15,8 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -29,7 +30,7 @@ type EventRegistrationModalProps = {
 
 type Ticket = {
   eventId: string;
-  userId: string;
+  userId: string | undefined;
   ticketType: string;
   noOfTickets: number;
   price: number;
@@ -37,8 +38,7 @@ type Ticket = {
 };
 
 type TicketForm = {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   ticketType: string;
   noOfTicket: number;
@@ -50,28 +50,36 @@ const EventRegistrationModal = function ({
   onCloseModal,
 }: EventRegistrationModalProps) {
   const { eventid } = useParams();
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session?.user?.email) {
+      router.push(
+        '/api/auth/signin?callbackUrl=' +
+          encodeURIComponent(window.location.pathname),
+      );
+      return;
+    }
+  }, []);
 
   const form = useForm({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      ticketType: event.ticketsClasses[0].ticketType,
+      name: session?.user?.name || '', // Provide default values to avoid undefined errors
+      email: session?.user?.email || '',
+      ticketType: '',
       noOfTicket: 1,
     },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      firstName: (value) =>
-        value.length > 0 ? null : 'First name is required',
-      lastName: (value) => (value.length > 0 ? null : 'Last name is required'),
+      name: (value) => (value.length > 0 ? null : 'Name is required'),
       noOfTicket: (value) =>
-        value >= 1 && value <= event.capacity
+        value >= 1 && value <= (event?.capacity || 1)
           ? null
-          : `Number of tickets must be between 1 and ${event.capacity}`,
+          : `Number of tickets must be between 1 and ${event?.capacity || 1}`,
     },
   });
-
   const [price, setPrice] = useState(event.ticketsClasses[0].price);
   const [maxCapacity, setMaxCapacity] = useState(1);
 
@@ -91,8 +99,8 @@ const EventRegistrationModal = function ({
 
   const handleEventRegister = (register: TicketForm) => {
     const ticketRegistration: Ticket = {
-      eventId: eventid.toString(),
-      userId: '666933bf8757909f1d0dbb47',
+      eventId: eventid ? eventid.toString() : event._id,
+      userId: register.email,
       noOfTickets: register.noOfTicket,
       ticketType: register.ticketType,
       price: price,
@@ -101,7 +109,7 @@ const EventRegistrationModal = function ({
 
     axios
       .post(
-        `/api/events/${eventid.toString()}/register`,
+        `/api/events/${eventid ? eventid.toString() : event._id}/register`,
         JSON.stringify(ticketRegistration),
         {
           headers: {
@@ -138,19 +146,10 @@ const EventRegistrationModal = function ({
           <Text className="mb-4">{`Date: ${new Date(event.eventStartDateTime).toLocaleString()}`}</Text>
           <TextInput
             withAsterisk
-            label="First Name"
-            placeholder="First name"
-            {...form.getInputProps('firstName')}
-            classNames={{
-              input: 'p-2 border border-gray-300 rounded-lg',
-              label: 'font-semibold mb-2',
-            }}
-          />
-          <TextInput
-            withAsterisk
-            label="Last Name"
-            placeholder="Last name"
-            {...form.getInputProps('lastName')}
+            label="Full Name"
+            disabled
+            placeholder="Full name"
+            {...form.getInputProps('name')}
             classNames={{
               input: 'p-2 border border-gray-300 rounded-lg',
               label: 'font-semibold mb-2',
@@ -159,6 +158,7 @@ const EventRegistrationModal = function ({
           <TextInput
             withAsterisk
             label="Email"
+            disabled
             placeholder="your@email.com"
             {...form.getInputProps('email')}
             classNames={{

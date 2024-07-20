@@ -2,8 +2,6 @@
 M
 src/app/admin/events/page.tsx,f\3\f3df0435691c8a3aa5346710000ae675cebe1fc2
 Q
-!src/app/api/auth/signin/route.tsx,a\1\a106c47b78fd5a7e1381d4795c5f8482945c75f6
-Q
 !src/app/events/[eventid]/page.tsx,7\d\7de1e783751f08539e214c67ae17cbd34fd53457
 W
 'src/app/admin/events/[eventid]/page.tsx,d\7\d78451238d7a536c0823d051a5ddaaef223759dd
@@ -31,9 +29,6 @@ B
 src/types/index.ts,c\d\cd7a0a5ed00515f0d0cd32a8badd4ed5ef962af8
 [
 +src/components/UserManagement/UserTable.tsx,d\d\dd0b22c08baf9ec33188ab52c7e6533ca62303a4
-:
-
-.env.local,1\f\1fa30fea3e9ae270a3c38a6113a3689d8987d108
 c
 3src/app/events/[eventid]/EventRegistrationModal.tsx,9\c\9cbbe05623bdff816b3a535a6d1c2a77620f656f
 C
@@ -44,8 +39,6 @@ I
 src/models/EventTicket.ts,a\9\a979b7890a61a928d8ec2d170907d30214e48bf5
 ^
 .src/app/api/events/[eventid]/register/route.ts,e\d\ed26e2646688e0a981c198a290099b79f8835ef9
-I
-src/app/api/test/route.ts,9\4\94b37376f65429b0bd732701d4d3b5f36a7e8985
 G
 src/app/signup/page.tsx,8\5\85022a33a6bfb1a6b1935889eb57f0a68c6aee36
 \
@@ -68,3 +61,41 @@ _
 /src/components/Navigation/Navigation.module.css,0\8\08ffae0639832c0d97d87036288e227004785a49
 L
 src/components/Logo/Logo.tsx,3\8\38523df4b09cd796d65072fc3198a1e8550001bb
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+D
+src/types/event.d.ts,8\a\8a145bd2ff397f06b713f6124995f080def3ab70
+M
+src/app/api/attendee/route.ts,0\0\0042d5d435d536f3564ebacedce2bdd5e5d04b32
+A
+src/middleware.ts,c\8\c877023f10ac16a1ece2899a03aec3e05df9896c
+;
+src/auth.ts,0\4\04d6e3bb2c1aaab5d1c2172467b7d0a68776bc97
+B
+src/app/u/page.tsx,4\f\4f07cc51589446838509555a40ec3c5913389c6b
+N
+src/app/signin/page.module.css,0\7\0725ed0b0547694b7bb60affdd95417c9df97701
+L
+src/context/AuthProvider.tsx,c\d\cd6a78dcab1b629cd91bc8e74fff0b836299306f
+I
+src/app/about-us/page.tsx,7\c\7c1a7ae4e3059f9e5a6bd2be8ae85e2c27fd8d4d
+B
+src/hooks/index.ts,5\f\5f2dab62b5203aa2062a82c806c47590f6c8e3a6
+I
+src/hooks/useFetchData.ts,0\0\00e90f63ffd38f1de3b273234fe9e4c9ca92d5ac
+U
+%src/app/registration-history/page.tsx,0\c\0cd3ff0b4d4e74df062da68036873a3fdbcb4bde
+@
+src/app/page.tsx,3\3\3393394e21dbac7686e91ad17c5283fb052d67f3
+E
+src/firebase-admin.ts,2\c\2c8bb7e4c38fd158b6c1a7485290fce752a25b61
+D
+src/lib/connectDB.ts,a\3\a38e3c96ee180d445d200296f6b642009374c3ff
+4
+.env,3\c\3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
+K
+src/app/api/admin2/route.ts,7\d\7d7c6f68a815dd7b1afef1a809e69e3ac62952fa
+j
+:src/components/ResponsiveContainer/ResponsiveContainer.tsx,d\9\d9582db42d0ee6ae5bee9d3acce053416c8ff956
+V
+&src/components/BadgeCard/BadgeCard.tsx,d\9\d9a7300dfd5f676b4fcb3f47fbd80c2a9f648073

@@ -8,7 +8,11 @@ const EventTicketSchema = new Schema({
   price: { type: Number, required: true },
   purchaseDate: { type: Date, default: Date.now },
   participating: { type: String, default: 'false' },
-  status: { type: String, default: 'Registered' },
+  status: {
+    type: String,
+    default: 'Registered',
+    enum: ['Attended', 'Registered', 'Cancelled', 'Pending'],
+  },
 });
 
 export default models.eventTicket || model('eventTicket', EventTicketSchema);
