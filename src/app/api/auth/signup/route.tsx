@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
       lastName,
       phoneNumber,
       role,
+      accountSource,
     } = reqBody;
     // Parses the request body to extract username, email, and password.
 
@@ -43,6 +44,7 @@ export async function POST(request: NextRequest) {
       lastName,
       phoneNumber,
       role,
+      accountSource,
     });
 
     // Saves the new user to the database.
@@ -57,6 +59,7 @@ export async function POST(request: NextRequest) {
       savedUser,
     });
   } catch (error) {
+    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     } else {

@@ -11,17 +11,18 @@ import {
 } from '@mantine/core';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import axios from 'axios';
-// import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
-import { HeaderSearch, ResponsiveContainer } from '@/components';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HeaderSearch, ProfileNav, ResponsiveContainer } from '@/components';
+
+import classes from './page.module.css';
 
 type EventDetails = {
   _id: 1;
   eventName: 1;
   eventStartDateTime: 1;
-  // Add other event details if needed
 };
 type UserTicket = {
   _id: string;
@@ -36,7 +37,7 @@ type UserTicket = {
   eventDetails: EventDetails;
 };
 
-export default function UsersTable() {
+export default function Page() {
   const { data: session, status } = useSession();
   const [tickets, setTickets] = useState<UserTicket[]>([]);
 
@@ -107,25 +108,29 @@ export default function UsersTable() {
   return (
     <>
       <HeaderSearch />
-      {/* <ProfileNav /> */}
-      <ResponsiveContainer>
-        <Title order={1}>Registration History</Title>
+      <Group>
+        <ProfileNav />
+        <div className={classes.mainContent}>
+          {/* <ResponsiveContainer> */}
+          <Title order={1}>Registration History</Title>
 
-        <Table.ScrollContainer minWidth={800} mt={25}>
-          <Table verticalSpacing="sm">
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Event Name</Table.Th>
-                <Table.Th>Ticket Id</Table.Th>
-                <Table.Th>Venue</Table.Th>
-                <Table.Th>Date</Table.Th>
-                <Table.Th />
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
-          </Table>
-        </Table.ScrollContainer>
-      </ResponsiveContainer>
+          <Table.ScrollContainer minWidth={800} mt={25}>
+            <Table verticalSpacing="sm">
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Event Name</Table.Th>
+                  <Table.Th>Ticket Id</Table.Th>
+                  <Table.Th>Venue</Table.Th>
+                  <Table.Th>Date</Table.Th>
+                  <Table.Th />
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>{rows}</Table.Tbody>
+            </Table>
+          </Table.ScrollContainer>
+          {/* </ResponsiveContainer> */}
+        </div>
+      </Group>
     </>
   );
 }

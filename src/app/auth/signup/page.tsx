@@ -5,12 +5,14 @@ import {
   NumberInput,
   Paper,
   PasswordInput,
-  Select,
+  Stack,
+  // Select,
   Text,
   TextInput,
   Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { IconBrandGoogleFilled } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -30,7 +32,7 @@ const Page = () => {
       phoneNumber: '',
       password: '',
       confirmPassword: '',
-      role: '',
+      // role: '',
     },
 
     validate: {
@@ -50,11 +52,16 @@ const Page = () => {
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
+    const submitBody = {
+      ...values,
+      role: 'attendee',
+      accountSource: 'credentials',
+    };
     try {
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        body: JSON.stringify(submitBody),
       });
 
       if (response.status === 200) {
@@ -143,7 +150,7 @@ const Page = () => {
               mt="md"
             />
           </Group>
-          <Select
+          {/* <Select
             size="sm"
             mt="md"
             required
@@ -159,7 +166,7 @@ const Page = () => {
             label="Role"
             key={form.key('role')}
             {...form.getInputProps('role')}
-          />
+          /> */}
           <Text c="red" ta="center" size="sm" mt={8}>
             By clicking ‘Create account’, I fully acknowledge Eventizer Terms of
             Service and Privacy Policy
@@ -174,15 +181,31 @@ const Page = () => {
           >
             Create Account
           </Button>
-          <Group justify="space-between" gap="xs" grow>
-            <Text ta="center" size="sm" mt={8}>
+          <Group justify="center" gap="xs" mt={18}>
+            <Text ta="center" size="sm">
               Already have an account?
             </Text>
-            <Text c="blue" ta="center" size="sm" mt={8}>
-              <Link href="/auth/signin">Sign in</Link>
+            <Text c="blue" ta="center" size="sm">
+              <Link href="/auth/signin">Log in</Link>
             </Text>
           </Group>
         </form>
+        <Stack mt={20}>
+          <Group gap={0} grow>
+            <hr />
+            <Text ta="center" size="md">
+              OR
+            </Text>
+            <hr />
+          </Group>
+
+          <Button
+            leftSection={<IconBrandGoogleFilled size={14} />}
+            variant="default"
+          >
+            Continue with Google
+          </Button>
+        </Stack>
       </Paper>
     </div>
   );

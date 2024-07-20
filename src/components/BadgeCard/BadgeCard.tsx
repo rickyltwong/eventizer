@@ -10,7 +10,9 @@ import {
   Text,
 } from '@mantine/core';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
+import { LikeButton } from '@/components';
 import { IEvent, Status } from '@/types';
 
 import classes from './BadgeCard.module.css';
@@ -46,7 +48,7 @@ const StatusBadge = ({ status }: { status: Status }) => {
 
 export default function BadgeCard({ event }: { event: IEvent }) {
   const router = useRouter();
-
+  const { data: session } = useSession();
   const handleShowDetails = (id: string) => {
     router.push(`/events/${id}`);
   };
@@ -127,6 +129,7 @@ export default function BadgeCard({ event }: { event: IEvent }) {
       </Card.Section>
 
       <Group mt="xs">
+        {session?.user && <LikeButton eventId={_id}></LikeButton>}
         <Button
           radius="md"
           variant="light"
