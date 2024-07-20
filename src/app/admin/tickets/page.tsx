@@ -35,7 +35,7 @@ function Page() {
     data: ordersData,
     loading: ordersLoading,
     error: ordersError,
-  } = useFetchData('/mocks/Orders.json');
+  } = useFetchData('/admin/api/tickets');
 
   return (
     <>
@@ -71,3 +71,4 @@ function Page() {
 }
 
 export default Page;
+

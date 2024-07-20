@@ -19,7 +19,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import { BadgeCard } from '@/components';
-import EventCalendar from '@/components';
+import {EventCalendar} from '@/components';
 import { FooterSimple } from '@/components';
 import { HeaderSearch } from '@/components';
 import HeroClasses from '@/components/HeroTitle.module.css';
@@ -27,10 +27,10 @@ import ResponsiveContainer from '@/components/ResponsiveContainer/ResponsiveCont
 import { IEvent } from '@/types';
 
 // import MapView from '@/components/MapView';
-const MapView = dynamic(
-  () => import('@/components/MapView'),
-  // , { ssr: false }
-);
+// const MapView = dynamic(
+//   () => import('@/components/MapView'),
+//   // , { ssr: false }
+// );
 
 import { useMediaQuery } from '@mantine/hooks';
 

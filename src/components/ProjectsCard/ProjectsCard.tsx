@@ -19,8 +19,8 @@ import { IconBuilding, IconEdit, IconTrash } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { format } from 'date-fns';
 import { EventFormValues } from '@/types/event';
-import { EventForm} from '@/components'
-import { useState } from 'react';
+import { EventForm } from '@/components';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const determineEventStatus = (eventStartDateTime: Date, eventEndDateTime: Date): Status => {
@@ -41,7 +41,6 @@ type Status = 'upcoming' | 'cancelled' | 'expired' | 'ongoing';
 
 type ProjectsCardProps = {
   _id: string;
-  remainingSeats: number;
   onDelete: (id: string) => void;
   onUpdate: (event: EventFormValues & { _id: string }) => void;
 } & EventFormValues & Omit<PaperProps, 'children'>;
@@ -78,7 +77,6 @@ const ProjectsCard = (props: ProjectsCardProps) => {
   const {
     _id,
     capacity,
-    remainingSeats,
     eventAddress,
     eventStartDateTime,
     eventEndDateTime,
@@ -92,11 +90,27 @@ const ProjectsCard = (props: ProjectsCardProps) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
   const [eventDetails, setEventDetails] = useState<EventFormValues | null>(null);
+  const [totalSold, setTotalSold] = useState(0);
 
   const formattedStart = eventStartDateTime ? format(new Date(eventStartDateTime), 'PPpp') : 'Invalid date';
   const formattedEnd = eventEndDateTime ? format(new Date(eventEndDateTime), 'PPpp') : 'Invalid date';
   const status = determineEventStatus(eventStartDateTime, eventEndDateTime);
   const venueName = eventAddress?.venueName || 'Unknown venue';
+
+  const fetchTicketsSold = async () => {
+    try {
+      const response = await axios.get(`/admin/api/tickets?event=${_id}`);
+      const tickets = response.data;
+      const total = tickets.reduce((sum, ticket) => sum + ticket.sold, 0);
+      setTotalSold(total);
+    } catch (error) {
+      console.error("Failed to fetch tickets sold:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTicketsSold();
+  }, []);
 
   const handleEdit = async () => {
     try {
@@ -122,13 +136,12 @@ const ProjectsCard = (props: ProjectsCardProps) => {
     } catch (error) {
       console.error("Failed to fetch event details:", error);
     }
-  }
+  };
 
   const handleDelete = () => {
     onDelete(_id);
     closeDeleteModal();
   };
-
 
   return (
     <Paper {...others}>
@@ -150,20 +163,20 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         <Text fz="sm">
           Enrollment:{' '}
           <Text span fz="sm" fw={500}>
-            {capacity - remainingSeats} / {capacity}
+            {totalSold} / {capacity}
           </Text>
         </Text>
 
         <Progress
-          value={((capacity - remainingSeats) * 100) / capacity}
+          value={(totalSold * 100) / capacity}
           mt={5}
           size="sm"
           color={
-            ((capacity - remainingSeats) * 100) / capacity < 21
+            (totalSold * 100) / capacity < 21
               ? 'red'
-              : ((capacity - remainingSeats) * 100) / capacity < 51
+              : (totalSold * 100) / capacity < 51
               ? 'yellow'
-              : ((capacity - remainingSeats) * 100) / capacity < 86
+              : (totalSold * 100) / capacity < 86
               ? 'blue'
               : 'green'
           }
@@ -178,7 +191,7 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         <Group gap="sm">
           <StatusBadge status={status} />
           <Modal opened={opened} onClose={close} title="Event Detail" centered size="lg">
-          {eventDetails && (
+            {eventDetails && (
               <EventForm onUpdateEvent={onUpdate} closeModal={close} initialValues={eventDetails} />
             )}
           </Modal>
@@ -215,3 +228,4 @@ const ProjectsCard = (props: ProjectsCardProps) => {
 };
 
 export default ProjectsCard;
+

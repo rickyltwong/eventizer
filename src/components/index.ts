@@ -11,6 +11,7 @@ import ProjectsCard from '@/components/ProjectsCard/ProjectsCard';
 import ResponsiveContainer from '@/components/ResponsiveContainer/ResponsiveContainer';
 import Surface from '@/components/Surface';
 import UserProfileButton from '@/components/UserButton/UserButton';
+import DropzoneButton from '@/components/DropzoneButton/DropzoneButton'
 
 export {
   BadgeCard,
@@ -26,4 +27,5 @@ export {
   ResponsiveContainer,
   Surface,
   UserProfileButton,
+  DropzoneButton
 };

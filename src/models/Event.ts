@@ -26,13 +26,13 @@ const EventSchema = new Schema<IEvent>(
     instructorName: { type: String, required: true },
     eventType: { type: String, required: true },
     capacity: { type: Number, required: true },
-    remainingSeats: { type: Number },
     difficulty: { type: String, required: true },
     minimumAge: { type: Number },
+    image: { type: String, required: false }, 
   },
   { timestamps: true },
 );
 
-export default models.events || model('events', EventSchema);
+export default models.Event || model('Event', EventSchema);
 
 // Ref: https://github.com/vercel/next.js/blob/canary/examples/with-mongodb-mongoose/models/Pet.ts

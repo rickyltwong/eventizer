@@ -1,59 +1,71 @@
 'use client';
 
-import { AppShell, Container, rem, useMantineTheme } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { ReactNode } from 'react';
-
-import AppMain from '@/components/AppMain';
-import HeaderNav from '@/components/HeaderNav';
-import Navigation from '@/components/Navigation';
-
-type Props = {
-  children: ReactNode;
-};
-
-function AppsLayout({ children }: Props) {
-  const theme = useMantineTheme();
-  const tablet_match = useMediaQuery('(max-width: 768px)');
-  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
-  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import { Open_Sans } from 'next/font/google';
+import { myTheme } from '@/theme';
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/tiptap/styles.css';
+import '@mantine/carousel/styles.css';
+import '@mantine/notifications/styles.css';
+import 'mantine-datatable/styles.layer.css';
+import './globals.css';
+import Head from 'next/head';
+// If loading a variable font, you don't need to specify the font weight
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+});
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <AppShell
-      layout="alt"
-      header={{ height: 60 }}
-      footer={{ height: 60 }}
-      navbar={{
-        width: 300,
-        breakpoint: 'md',
-        collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
-      }}
-      padding={0}
-    >
-      <AppShell.Header
-        style={{
-          height: rem(60),
-          border: 'none',
-          boxShadow: tablet_match ? theme.shadows.md : theme.shadows.sm,
-        }}
-      >
-        <Container fluid py="sm" px="lg">
-          <HeaderNav
-            desktopOpened={desktopOpened}
-            mobileOpened={mobileOpened}
-            toggleDesktop={toggleDesktop}
-            toggleMobile={toggleMobile}
-          />
-        </Container>
-      </AppShell.Header>
-      <AppShell.Navbar>
-        <Navigation onClose={toggleMobile} />
-      </AppShell.Navbar>
-      <AppShell.Main>
-        <AppMain>{children}</AppMain>
-      </AppShell.Main>
-    </AppShell>
+    <>
+      <Head>
+        <title>DesignSparx - Nextjs Mantine Admin Dashboard Template</title>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+        <meta
+          name="description"
+          content="Explore our versatile dashboard website template featuring a stunning array of themes and meticulously crafted components. Elevate your web project with seamless integration, customizable themes, and a rich variety of components for a dynamic user experience. Effortlessly bring your data to life with our intuitive dashboard template, designed to streamline development and captivate users. Discover endless possibilities in design and functionality today!"
+        />
+
+        <script
+          src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+          defer
+        ></script>
+        <ColorSchemeScript defaultColorScheme="auto" />
+      </Head>
+      
+        <MantineProvider theme={myTheme} defaultColorScheme="light">
+          <Notifications position="bottom-right" zIndex={1000} />
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
+      
+    </>
   );
 }
-
-export default AppsLayout;

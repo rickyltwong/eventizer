@@ -36,13 +36,13 @@ export interface IEvent {
   instructorName: string;
   eventType: 'Yoga' | 'Meditation' | 'Fitness' | string;
   capacity: number;
-  remainingSeats?: number;
   markedPrice: number;
   currency: 'CAD' | string;
   difficulty: string;
   minimumAge?: number;
   ticketsClasses: TicketClass[];
   discounts: Discount[];
+  image: string;
 }
 
 export type Id = string | number;
@@ -62,15 +62,18 @@ export type KanbanTask = {
   users?: number;
 };
 
-export type OrderStatus = 'shipped' | 'processing' | 'cancelled' | string;
+export type TicketStatus = 'Pending' | 'Pre-Sale' | 'Available' | 'Sold' | 'Cancelled' | string;
 
-export type Orders = {
-  id: string;
-  product: string;
-  date: string;
-  total: number;
-  status: OrderStatus;
-  payment_method: string;
+export type Ticket = {
+  event: string;
+  type: string;
+  markedPrice?: number;
+  price?: number;
+  discount?: number;
+  discountExpiry?: string;
+  status: TicketStatus;
+  sold: number;
+  
 };
 
 export type InvoiceStatus =

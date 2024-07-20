@@ -58,6 +58,8 @@ interface EventFormValues {
   capacity: number;
   difficulty: string;
   minimumAge: number;
+  ticketTypes: string[];
+  image: string;
 }
 
 
