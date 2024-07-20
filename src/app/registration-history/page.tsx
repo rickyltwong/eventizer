@@ -108,7 +108,7 @@ export default function Page() {
   return (
     <>
       <HeaderSearch />
-      <Group>
+      <div className={classes.container}>
         <ProfileNav />
         <div className={classes.mainContent}>
           {/* <ResponsiveContainer> */}
@@ -130,7 +130,7 @@ export default function Page() {
           </Table.ScrollContainer>
           {/* </ResponsiveContainer> */}
         </div>
-      </Group>
+      </div>
     </>
   );
 }

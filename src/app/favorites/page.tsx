@@ -3,7 +3,7 @@ import {
   Flex,
   Grid,
   GridCol,
-  Group,
+  // Group,
   Pagination,
   Space,
   Title,
@@ -14,7 +14,12 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { BadgeCard, HeaderSearch, ProfileNav } from '@/components';
+import {
+  BadgeCard,
+  HeaderSearch,
+  ProfileNav,
+  // ResponsiveContainer,
+} from '@/components';
 import { IEvent } from '@/types';
 
 import classes from './page.module.css';
@@ -80,12 +85,12 @@ export default function Page() {
   return (
     <>
       <HeaderSearch />
-      <Group>
+      <div className={classes.container}>
         <ProfileNav />
         <div className={classes.mainContent}>
           {/* <ResponsiveContainer> */}
           <Title order={1}>My Saved Events </Title>
-          <Grid>
+          <Grid mt={22}>
             {paginatedEvents.map((event) => (
               <GridCol span={{ base: 12, md: 6, lg: 4 }} key={event._id}>
                 <BadgeCard event={event} />
@@ -103,7 +108,7 @@ export default function Page() {
           </Flex>
           {/* </ResponsiveContainer> */}
         </div>
-      </Group>
+      </div>
     </>
   );
 }
