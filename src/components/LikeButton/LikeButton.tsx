@@ -19,15 +19,16 @@ const LikeButton = ({ eventId }: LikeButtonProps) => {
           // Unlike the event
           setLiked(!liked);
 
-          await axios.delete(`/api/user/${session.user.id}/favorites`, {
-            params: { eventId },
+          await axios.delete(`/api/user/${session.user.id}/favourites`, {
+            params: { eventId, email: session.user.email },
           });
         } else {
           // Like the event
           setLiked(!liked);
 
-          await axios.post(`/api/user/${session.user.id}/favorites`, {
+          await axios.post(`/api/user/${session.user.id}/favourites`, {
             eventId,
+            email: session.user.email,
           });
         }
       }

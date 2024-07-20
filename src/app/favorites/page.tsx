@@ -39,7 +39,10 @@ export default function Page() {
       if (session) {
         try {
           const response = await axios.get(
-            `/api/user/${session.user.id}/favorites`,
+            `/api/user/${session.user.id}/favourites`,
+            {
+              params: { email: session.user.email },
+            },
           );
           const favoriteEvents = response.data;
           // setLiked(favoriteEvents.some((event: any) => event._id === eventId));

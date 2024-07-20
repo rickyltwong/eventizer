@@ -1,4 +1,4 @@
-import { model, models, Schema } from 'mongoose';
+import mongoose, { model, models, Schema } from 'mongoose';
 
 const UserFavoriteSchema = new Schema(
   {
@@ -8,7 +8,7 @@ const UserFavoriteSchema = new Schema(
       required: true,
       unique: true,
     },
-    events: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
+    events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'events' }],
   },
   {
     timestamps: true,
