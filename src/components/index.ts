@@ -1,6 +1,7 @@
 import AuthUserButton from '@/components/AuthUserButton/AuthUserButton';
 import BadgeCard from '@/components/BadgeCard/BadgeCard';
 import CalendarIcon from '@/components/CalendarIcon/CalendarIcon';
+import DropzoneButton from '@/components/DropzoneButton/DropzoneButton';
 import ErrorAlert from '@/components/ErrorAlert';
 import EventCalendar from '@/components/EventCalendar/EventCalendar';
 import EventFilterPopover from '@/components/EventFilterPopover/EventFilterPopover';
@@ -14,7 +15,7 @@ import LikeButton from '@/components/LikeButton/LikeButton';
 import Logo from '@/components/Logo/Logo';
 import MapIcon from '@/components/MapIcon/MapIcon';
 import { NextLink } from '@/components/NextLink/NextLink';
-// import OrdersTable from '@/components/OrdersTable/OrdersTable';
+import OrdersTable from '@/components/OrdersTable/OrdersTable';
 import PageHeader from '@/components/PageHeader/PageHeader';
 import ProfileNav from '@/components/ProfileNav/ProfileNav';
 import ProjectsCard from '@/components/ProjectsCard/ProjectsCard';
@@ -27,6 +28,7 @@ export {
   AuthUserButton,
   BadgeCard,
   CalendarIcon,
+  DropzoneButton,
   ErrorAlert,
   EventCalendar,
   EventFilterPopover,
@@ -40,7 +42,7 @@ export {
   Logo,
   MapIcon,
   NextLink,
-  // OrdersTable,
+  OrdersTable,
   PageHeader,
   ProfileNav,
   ProjectsCard,

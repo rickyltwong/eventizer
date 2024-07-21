@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
       capacity,
       difficulty,
       minimumAge,
+      image,
     } = reqBody;
 
     const newEvent = await Event.create({
@@ -47,6 +48,7 @@ export async function POST(request: NextRequest) {
       capacity,
       difficulty,
       minimumAge,
+      image,
     });
     return NextResponse.json({
       message: 'Event created successful',

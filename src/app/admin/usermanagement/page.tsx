@@ -36,7 +36,7 @@ export default function UserManagementPage() {
     async function fetchUsers() {
       try {
         const response = await fetch('/api/admin');
-        console.log(response);
+        // console.log(response);
         const data = await response.json();
         setUsers(data);
       } catch (error) {
@@ -49,11 +49,11 @@ export default function UserManagementPage() {
   // Filter users based on search term and filter status
   const filteredUsers = users.filter((user) => {
     const matchesSearchTerm = user.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+      ? user.name.toLowerCase().includes(searchTerm.toLowerCase())
+      : false;
     const matchesStatus =
       filterStatus === 'all' ||
-      user.status.toLowerCase() === filterStatus.toLowerCase();
+      (user.status && user.status.toLowerCase() === filterStatus.toLowerCase());
     return matchesSearchTerm && matchesStatus;
   });
 

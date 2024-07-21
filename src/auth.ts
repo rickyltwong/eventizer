@@ -70,14 +70,15 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
   secret: process.env.JWT_SECRET!,
   adapter: FirestoreAdapter(adminDb),
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      console.log('signIn callback START-------', {
-        user,
-        account,
-        profile,
-        email,
-        credentials,
-      });
+    async signIn() {
+      // { user, account, profile, email, credentials }
+      //console.log('signIn callback START-------', {
+      //   user,
+      //   account,
+      //   profile,
+      //   email,
+      //   credentials,
+      // });
 
       return true;
     },
@@ -103,7 +104,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         await dbConnect();
         user.accountSource = account?.provider;
         const newUser = await UserModel.create(user);
-        console.log('New user created:', newUser);
+        //  console.log('New user created:', newUser);
         token.id = newUser._id.toString(); // Update token with new user's ID
       }
 

@@ -1,6 +1,6 @@
-'use client';
 import {
   Button,
+  Checkbox,
   Container,
   Group,
   Notification,
@@ -15,6 +15,7 @@ import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+import { DropzoneButton } from '@/components';
 import { EventFormValues } from '@/types/event';
 
 interface EventFormProps {
@@ -36,6 +37,11 @@ const types = [
   { value: 'course', label: 'Course' },
 ];
 
+// const ticketTypes = [
+//   { value: 'general', label: 'General' },
+//   { value: 'vip', label: 'VIP' },
+// ];
+
 const EventForm = ({
   onAddEvent,
   closeModal,
@@ -43,9 +49,10 @@ const EventForm = ({
   initialValues,
 }: EventFormProps) => {
   const [notification, setNotification] = useState({ message: '', color: '' });
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const form = useForm<Omit<EventFormValues, '_id' | 'remainingSeats'>>({
-    initialValues: {
+  const form = useForm<EventFormValues>({
+    initialValues: initialValues || {
       eventName: '',
       eventDescription: '',
       eventAddress: {
@@ -66,8 +73,8 @@ const EventForm = ({
       capacity: 1,
       difficulty: '',
       minimumAge: 18,
-      ticketsClasses: [],
-      discounts: [],
+      ticketTypes: [],
+      image: '',
     },
   });
 
@@ -83,30 +90,71 @@ const EventForm = ({
     }
   }, [initialValues]);
 
-  const handleSubmit = async (
-    values: Omit<EventFormValues, '_id' | 'remainingSeats'>,
-  ) => {
-    console.log('Submitting values: ', values);
+  useEffect(() => {
+    if (initialValues) {
+      form.setValues({
+        ...initialValues,
+        eventAddress: {
+          ...form.values.eventAddress,
+          ...initialValues.eventAddress,
+        },
+      });
+    }
+  }, [initialValues]);
+
+  const handleFileUpload = (file: File) => {
+    setImageFile(file);
+  };
+
+  const handleSubmit = async (values: EventFormValues) => {
     try {
-      if (onAddEvent) {
-        const response = await axios.post('/admin/api/events', values);
-        console.log('Event created: ', response.data);
-        onAddEvent(response.data);
-      } else if (onUpdateEvent && initialValues) {
-        const updateData = {
-          ...values,
-          _id: initialValues._id,
-          remainingSeats: initialValues.remainingSeats,
-        };
-        const response = await axios.put('/admin/api/events', updateData);
-        console.log('Event updated: ', response.data);
-        onUpdateEvent(updateData);
+      let imageUrl = '';
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        const uploadResponse = await axios.post('/admin/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        imageUrl = uploadResponse.data.imageUrl;
       }
+
+      const eventResponse = await axios.post('/admin/api/events', {
+        ...values,
+        image: imageUrl,
+      });
+
+      if (onAddEvent) {
+        onAddEvent(eventResponse.data);
+
+        if (eventResponse.data) {
+          const eventId = eventResponse.data.event._id;
+          const ticketCreationPromises = values.ticketTypes.map((ticketType) =>
+            axios.post('/admin/api/tickets', {
+              event: eventId,
+              type: ticketType,
+              markedPrice: 50,
+              price: 50,
+              discount: 0,
+              status: 'Pending',
+              sold: 0,
+            }),
+          );
+
+          await Promise.all(ticketCreationPromises);
+        }
+      } else if (onUpdateEvent) {
+        const { _id, ...updateData } = values;
+        await axios.put('/admin/api/events', { id: _id, ...updateData });
+        onUpdateEvent({ ...values, _id: initialValues?._id });
+      }
+
       closeModal();
     } catch (error) {
-      console.error('Error: ', error);
+      console.error('Error:', error);
       setNotification({
-        message: 'Failed to create/update event. Please try again.',
+        message: 'Failed to create event. Please try again.',
         color: 'red',
       });
     }
@@ -125,7 +173,6 @@ const EventForm = ({
           {notification.message}
         </Notification>
       )}
-
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           label="Event Name"
@@ -140,6 +187,7 @@ const EventForm = ({
           {...form.getInputProps('eventDescription')}
           mb="sm"
         />
+        <DropzoneButton onFileUpload={handleFileUpload} />
         <TextInput
           label="Venue"
           placeholder="Enter event venue"
@@ -196,6 +244,17 @@ const EventForm = ({
           {...form.getInputProps('minimumAge')}
           mb="sm"
         />
+        <Checkbox.Group
+          label="Ticket Type"
+          {...form.getInputProps('ticketTypes', { type: 'checkbox' })}
+          mb="sm"
+        >
+          <Group>
+            <Checkbox value="general" label="General" />
+            <Checkbox value="vip" label="VIP" />
+          </Group>
+        </Checkbox.Group>
+
         <Group align="right" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
