@@ -2,15 +2,16 @@ import { Button, TextInput, Textarea, NumberInput, Select, Group, Container, Tit
 import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { EventFormValues } from '@/types/event';
 import { DropzoneButton } from '@/components';
 
 interface EventFormProps {
   onAddEvent?: (event: EventFormValues) => void;
-  onUpdateEvent?: (event: EventFormValues & { _id: string }) => void;
+  onUpdateEvent?: (event: EventFormValues) => void;
   closeModal: () => void;
-  initialValues?: EventFormValues & { _id: string };
+  initialValues?: EventFormValues;
 }
 
 const difficulties = [
@@ -56,7 +57,13 @@ const EventForm = ({ onAddEvent, closeModal, onUpdateEvent, initialValues }: Eve
 
   useEffect(() => {
     if (initialValues) {
-      form.setValues(initialValues);
+      form.setValues({
+        ...initialValues,
+        eventAddress: {
+          ...form.values.eventAddress,
+          ...initialValues.eventAddress,
+        },
+      });
     }
   }, [initialValues]);
 
@@ -117,6 +124,9 @@ const EventForm = ({ onAddEvent, closeModal, onUpdateEvent, initialValues }: Eve
 
   return (
     <Container size="xxl" px={50} py={30}>
+      <Title order={2} ta="center">
+        Event Details
+      </Title>
       <Title order={2} ta="center">
         Event Details
       </Title>
@@ -214,6 +224,7 @@ const EventForm = ({ onAddEvent, closeModal, onUpdateEvent, initialValues }: Eve
     </Container>
   );
 };
+
 
 export default EventForm;
 

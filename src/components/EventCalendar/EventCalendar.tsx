@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer, View } from 'react-big-calendar';
 
-import { Event as EventType } from '@/types';
+import { IEvent as EventType } from '@/types';
 
 const localizer = momentLocalizer(moment);
 

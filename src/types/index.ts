@@ -40,8 +40,7 @@ export interface IEvent {
   currency: 'CAD' | string;
   difficulty: string;
   minimumAge?: number;
-  ticketsClasses: TicketClass[];
-  discounts: Discount[];
+  ticketTypes: string[];
   image: string;
 }
 

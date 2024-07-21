@@ -4,9 +4,9 @@ function path(root: string, sublink: string) {
 
 const ROOTS_DASHBOARD = '/admin';
 
-const ROOT_APPS = '/apps';
-const ROOTS_PAGES = '/pages';
-const ROOTS_PROJECTS = '/projects';
+// const ROOT_APPS = '/apps';
+// const ROOTS_PAGES = '/pages';
+// const ROOTS_PROJECTS = '/projects';
 const ROOTS_ORDERS = '/orders';
 const ROOTS_INVOICES = '/invoices';
 const ROOTS_TASKS = '/tasks';
@@ -17,7 +17,6 @@ const ROOTS_CHANGELOG = '/changelog';
 const ROOTS_AUTH_PROVIDERS = '/authProviders';
 const ROOTS_ABOUT = '/pages/about';
 
-
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   default: path(ROOTS_DASHBOARD, '/analytics'),
@@ -26,8 +25,6 @@ export const PATH_DASHBOARD = {
   users: path(ROOTS_DASHBOARD, '/usermanagement'),
   attendees: path(ROOTS_DASHBOARD, '/attendee'),
 };
-
-
 
 export const PATH_ORDERS = {
   root: ROOTS_ORDERS,
@@ -86,4 +83,3 @@ export const PATH_AUTH_PROVIDERS = {
 export const PATH_ABOUT = {
   root: ROOTS_ABOUT,
 };
-

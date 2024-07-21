@@ -1,2 +1,1 @@
-npx prettier --write .
-npm run lint
+npx lint-staged

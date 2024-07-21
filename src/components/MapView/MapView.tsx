@@ -48,13 +48,21 @@ const SetMap = ({ center }: { center: [number, number] }) => {
   return null;
 };
 
+const isValidLatLng = (
+  lat: number | undefined,
+  lng: number | undefined,
+): boolean => {
+  return lat !== undefined && lng !== undefined && !isNaN(lat) && !isNaN(lng);
+};
+
 export default function MapView({
   events,
   center,
   zoom,
   isUserLocation,
-}: MapViewProps): JSX.Element {
-  const [leafletLatLng, setLeafletLatLng] = useState<LatLng | null>(null);
+}: MapViewProps) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [leafletLatLng, setLeafletLatLng] = useState<any>(null);
 
   useEffect(() => {
     const loadLeaflet = async () => {
@@ -87,21 +95,33 @@ export default function MapView({
         </Marker>
       )}
 
-      {events.map((event) => (
-        <Marker
-          icon={redMarker}
-          key={event.eventName}
-          position={[event.eventAddress.latitude, event.eventAddress.longitude]}
-        >
-          <Popup>
-            <strong>{event.eventName}</strong>
-            <p>{event.eventDescription}</p>
-            <p>{`${event.eventAddress.venueName}, ${event.eventAddress.addressLine1}, ${event.eventAddress.city}, ${event.eventAddress.state}`}</p>
-            <p>Starts: {new Date(event.eventStartDateTime).toLocaleString()}</p>
-            <p>Ends: {new Date(event.eventEndDateTime).toLocaleString()}</p>
-          </Popup>
-        </Marker>
-      ))}
+      {events
+        .filter((event) =>
+          isValidLatLng(
+            event.eventAddress.latitude,
+            event.eventAddress.longitude,
+          ),
+        )
+        .map((event) => (
+          <Marker
+            icon={redMarker}
+            key={event.eventName}
+            position={[
+              event.eventAddress.latitude as number,
+              event.eventAddress.longitude as number,
+            ]}
+          >
+            <Popup>
+              <strong>{event.eventName}</strong>
+              <p>{event.eventDescription}</p>
+              <p>{`${event.eventAddress.venueName}, ${event.eventAddress.addressLine1}, ${event.eventAddress.city}, ${event.eventAddress.state}`}</p>
+              <p>
+                Starts: {new Date(event.eventStartDateTime).toLocaleString()}
+              </p>
+              <p>Ends: {new Date(event.eventEndDateTime).toLocaleString()}</p>
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 }

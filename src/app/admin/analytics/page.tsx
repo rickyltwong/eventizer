@@ -24,44 +24,60 @@ ChartJS.register(
 );
 
 interface Event {
+  _id: string;
   eventType: string;
   capacity: number;
-  remainingSeats: number;
   ticketsClasses: {
     ticketType: string;
     availability: number;
   }[];
 }
 
+interface EventTicket {
+  event: string;
+  noOfTickets: number;
+}
+
+interface User {
+  name: string;
+  role: string;
+}
+
 const Dashboard = () => {
-  const [pieData, setPieData] = useState({
+  const [totalSales, setTotalSales] = useState<number>(0);
+  const [userCount, setUserCount] = useState<number>(0);
+  const [pieData, setPieData] = useState<{
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      backgroundColor: string[];
+      borderColor: string[];
+      borderWidth: number;
+    }[];
+  }>({
     labels: [],
     datasets: [
       {
         label: 'Events',
         data: [],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: [],
+        borderColor: [],
         borderWidth: 1,
       },
     ],
   });
 
-  const [barData, setBarData] = useState({
+  const [barData, setBarData] = useState<{
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      backgroundColor: string;
+      borderColor: string;
+      borderWidth: number;
+    }[];
+  }>({
     labels: [],
     datasets: [
       {
@@ -84,35 +100,60 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchEvents() {
       try {
+        // Fetch event data
         const response = await fetch('/api/events');
-        const data: Event[] = await response.json();
-        console.log(data);
+        const eventData: Event[] = await response.json();
+        console.log('Events:', eventData);
 
-        // Unique event types for labels
+        // Fetch ticket sales data
+        const response2 = await fetch('/api/admin2');
+        const ticketData: EventTicket[] = await response2.json();
+        console.log('Ticket Sales:', ticketData);
+
+        // Calculate total sales
+        const totalSales = eventData.reduce((acc, event) => {
+          const soldTickets = ticketData
+            .filter((ticket) => ticket.event === event._id)
+            .reduce((total, ticket) => total + ticket.noOfTickets, 0);
+          return acc + soldTickets;
+        }, 0);
+        setTotalSales(totalSales);
+
+        // Calculate event counts
         const eventTypes = Array.from(
-          new Set(data.map((event: Event) => event.eventType)),
+          new Set(eventData.map((event) => event.eventType)),
         );
-
-        // Count each event type for pie chart
         const eventCounts = eventTypes.map(
-          (type: string) =>
-            data.filter((event: Event) => event.eventType === type).length,
+          (type) =>
+            eventData.filter((event) => event.eventType === type).length,
         );
 
-        // Calculate total remaining seats and capacity for each event type for bar chart
-        const remainingSeats = eventTypes.map((type: string) =>
-          data
-            .filter((event: Event) => event.eventType === type)
-            .reduce((acc, event) => acc + event.remainingSeats, 0),
+        // Calculate remaining seats and total capacity
+        const remainingSeats = eventTypes.map((type) =>
+          eventData
+            .filter((event) => event.eventType === type)
+            .reduce(
+              (acc, event) =>
+                acc + event.capacity - calculateSoldTickets(event, ticketData),
+              0,
+            ),
         );
-
-        const totalCapacity = eventTypes.map((type: string) =>
-          data
-            .filter((event: Event) => event.eventType === type)
+        const totalCapacity = eventTypes.map((type) =>
+          eventData
+            .filter((event) => event.eventType === type)
             .reduce((acc, event) => acc + event.capacity, 0),
         );
 
-        // Pie chart data
+        // Fetch user data
+        const response3 = await fetch('/api/admin');
+        const user: User[] = await response3.json();
+        console.log('Users:', user);
+
+        //Calculate Users numbers
+        const userCount = user.length;
+        setUserCount(userCount);
+
+        // Update state with pie chart data
         setPieData({
           labels: eventTypes,
           datasets: [
@@ -146,7 +187,7 @@ const Dashboard = () => {
           ],
         });
 
-        // Bar chart data
+        // Update state with bar chart data
         setBarData({
           labels: eventTypes,
           datasets: [
@@ -174,32 +215,42 @@ const Dashboard = () => {
     fetchEvents();
   }, []);
 
+  function calculateSoldTickets(event: Event, tickets: EventTicket[]): number {
+    return tickets
+      .filter((ticket) => ticket.event === event._id)
+      .reduce((total, ticket) => total + ticket.noOfTickets, 0);
+  }
+
   return (
     <Container>
-      <Title
-        order={2}
-        my="lg"
-        style={{ color: '#64c1ff', fontWeight: 'bold', padding: 20 }}
-      >
+      {/* <Title order={2} my="lg" style={{ color: '#64c1ff', fontWeight: 'bold', padding: 2 }}>
         Dashboard
-      </Title>
+      </Title> */}
       <SimpleGrid cols={2} spacing="lg">
-        <Card shadow="sm" p="lg">
-          <Text size="lg">Total Sales</Text>
-          <Text size="sm">10,000</Text>
+        <Card
+          shadow="sm"
+          p="lg"
+          style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}
+        >
+          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+            Total Sales
+          </Text>
+          <Text size="xl">{totalSales}</Text>
         </Card>
-        {/* <Card shadow="sm" p="lg">
-          <Text size="lg">New Users</Text>
-          <Text size="sm">50</Text>
-        </Card> */}
-        <Card shadow="sm" p="lg">
-          <Text size="lg">Active Subscriptions</Text>
-          <Text size="sm">300</Text>
+        <Card
+          shadow="sm"
+          p="lg"
+          style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}
+        >
+          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+            Active Subscriptions
+          </Text>
+          <Text size="xl">{userCount}</Text>
         </Card>
       </SimpleGrid>
       <SimpleGrid cols={2} spacing="lg" mt="xl">
-        <Card shadow="sm" p="lg" style={{ height: '380px' }}>
-          <Title order={3}>Sales Over Time</Title>
+        <Card shadow="sm" p="lg" style={{ height: '450px' }}>
+          <Title order={3}>Events Sales Trends</Title>
           <Bar
             data={barData}
             options={{
@@ -244,7 +295,7 @@ const Dashboard = () => {
             }}
           />
         </Card>
-        <Card shadow="sm" p="lg" style={{ height: '380px' }}>
+        <Card shadow="sm" p="lg" style={{ height: '450px' }}>
           <Title order={3}>Events Distribution</Title>
           <Pie
             data={pieData}

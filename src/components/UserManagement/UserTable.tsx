@@ -9,12 +9,13 @@ import UserStatus from './UserStatus';
 
 interface UsersTableProps {
   users: User[];
-  onStatusChange: (id: number, status: string) => void;
-  onRoleChange: (id: number, role: string) => void;
-  onDeleteUser: (id: number) => void;
-  onSaveUser: (newUser: User) => void;
-  onCancelUser: () => void;
+  onStatusChange: (id: number, status: string) => Promise<void>;
+  onRoleChange: (id: number, role: string) => Promise<void>;
+  onDeleteUser: (id: number) => Promise<void>;
   showAddUser: boolean;
+  newUser: User | null;
+  onSaveUser: (newUser: User) => Promise<void>;
+  onCancelUser: () => void;
 }
 
 export default function UsersTable({
@@ -31,7 +32,7 @@ export default function UsersTable({
     null,
   );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [deleteUser, setDeleteUser] = useState<number | null>(null); // FIXME: deleteUser is never used
+  //const [deleteUser, setDeleteUser] = useState<number | null>(null);
 
   const handleRoleChange = (id: number, newRole: string) => {
     onRoleChange(id, newRole);
@@ -45,7 +46,7 @@ export default function UsersTable({
 
   const handleDeleteUser = (id: number) => {
     onDeleteUser(id);
-    setDeleteUser(null);
+    //setDeleteUser(null);
   };
 
   const handleSaveUser = (newUser: User) => {
@@ -72,6 +73,9 @@ export default function UsersTable({
                   Date Created
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
+                  Email
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
                   Phone
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
@@ -87,7 +91,7 @@ export default function UsersTable({
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
-                      <p>{user.username}</p>
+                      <p>{user.name}</p>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
@@ -99,8 +103,7 @@ export default function UsersTable({
                         }
                         data={[
                           { value: 'Admin', label: 'Admin' },
-                          { value: 'User', label: 'User' },
-                          { value: 'Organizer', label: 'Organizer' },
+                          { value: 'Attendee', label: 'User' },
                         ]}
                       />
                     ) : (
@@ -139,8 +142,9 @@ export default function UsersTable({
                       second: 'numeric',
                     })}
                   </td>
+                  <td className="whitespace-nowrap px-3 py-3">{user.email}</td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {user.profile.phone}
+                    {user.phoneNumber}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     <button onClick={() => handleDeleteUser(user._id)}>

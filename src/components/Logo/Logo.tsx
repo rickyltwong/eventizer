@@ -1,4 +1,9 @@
-import { Group, UnstyledButton, UnstyledButtonProps,Text } from '@mantine/core';
+import {
+  Group,
+  Text,
+  UnstyledButton,
+  UnstyledButtonProps,
+} from '@mantine/core';
 import Image from 'next/image';
 import Link from 'next/link';
 

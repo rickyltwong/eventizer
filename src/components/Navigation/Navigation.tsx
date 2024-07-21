@@ -13,7 +13,6 @@ import { Logo, UserProfileButton } from '@/components';
 import { LinksGroup } from '@/components/Navigation/Links/Links';
 import { PATH_DASHBOARD } from '@/routes';
 
-import UserProfileData from '../../../public/mocks/UserProfile.json';
 import classes from './Navigation.module.css';
 
 const mockdata = [
@@ -106,11 +105,7 @@ const Navigation = ({ onClose }: NavigationProps) => {
       </ScrollArea>
 
       <div className={classes.footer}>
-        <UserProfileButton
-          email={UserProfileData.email}
-          image={UserProfileData.avatar}
-          name={UserProfileData.name}
-        />
+        <UserProfileButton />
       </div>
     </nav>
   );

@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 const DATABASE_CONN = process.env.DATABASE_CONN!;
 
 if (!DATABASE_CONN) {

@@ -1,63 +1,28 @@
-import mongoose, { Document, Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 
-export interface IUser extends Document {
-  username: string;
-  email?: string;
-  password?: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  role: string;
-  createdAt: Date;
-  updatedAt: Date;
-  status: string;
-  profile?: {
-    dateOfBirth?: Date;
-    avatarUrl?: string;
-    bio?: string;
-  };
-  preferences?: {
-    language?: string;
-    notificationSettings?: {
-      emailNotifications?: boolean;
-    };
-  };
-  eventsAttending?: mongoose.Types.ObjectId[];
-  eventsHosting?: mongoose.Types.ObjectId[];
-}
+import type { IUser } from '@/types';
 
 const userSchema: Schema<IUser> = new mongoose.Schema(
   {
-    username: { type: String, required: true, unique: true },
     email: { type: String, unique: true },
     password: { type: String },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    firstName: { type: String },
+    lastName: { type: String },
+    phoneNumber: { type: String },
     role: {
       type: String,
-      required: true,
-      enum: ['attendee', 'organizer', 'admin'],
+      enum: ['attendee', 'admin'],
       default: 'attendee',
     },
-    profile: {
-      dateOfBirth: { type: Date },
-      avatarUrl: { type: String },
-      bio: { type: String },
-    },
-    preferences: {
-      language: { type: String },
-      notificationSettings: {
-        emailNotifications: { type: Boolean },
-      },
-    },
-    eventsAttending: [
+    name: { type: String },
+    image: { type: String },
+    eventHistory: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'events',
       },
     ],
-    eventsHosting: [
+    favourites: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'events',
@@ -66,6 +31,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     status: { type: String, default: 'active' },
+    accountSource: { type: String },
   },
   {
     timestamps: true,

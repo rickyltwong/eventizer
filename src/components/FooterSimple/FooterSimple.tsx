@@ -11,7 +11,7 @@ const links = [
   { link: '#', label: 'Careers' },
 ];
 
-export function FooterSimple() {
+export default function FooterSimple() {
   const items = links.map((link) => (
     <Anchor<'a'>
       c="dimmed"
@@ -28,10 +28,10 @@ export function FooterSimple() {
     <div className={classes.footer}>
       <Container className={classes.inner}>
         <Image
-          src="/logo.png"
+          src="/logo.svg"
           alt="Balance Studio logo"
           height={100}
-          width={200}
+          width={100}
         />
         <Group className={classes.links}>{items}</Group>
       </Container>

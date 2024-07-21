@@ -3,14 +3,9 @@ import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/connectDB';
 import User from '@/models/User';
 
-// src/app/api/admin/route.js
-//let r=dbConnect();
-//console.log('db connected! '+JSON.stringify(r));
-
 export async function GET() {
   await dbConnect();
   const users = await User.find({});
-  console.log(users);
   return new Response(JSON.stringify(users), {
     status: 200,
     headers: {
@@ -36,7 +31,7 @@ export async function PUT(req: NextRequest) {
         headers: { 'Content-Type': 'application/json' },
       });
     } else {
-      console.log('Updated user:', user); // Log updated user
+      console.log('Updated user:', user);
       return new Response(JSON.stringify(user), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

@@ -35,3 +35,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+eventizer-dev-firebase-adminsdk-vtf85-39579781a7.json

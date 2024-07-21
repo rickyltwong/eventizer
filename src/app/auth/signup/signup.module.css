@@ -1,0 +1,33 @@
+.wrapper {
+  min-height: rem(900px);
+  background-size: cover;
+  background-image: url(https://cdn.pixabay.com/photo/2018/05/10/11/34/concert-3387324_1280.jpg);
+}
+
+.form {
+  border-right: rem(1px) solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-7));
+  min-height: rem(900px);
+  width: 40%;
+  /* margin: auto; */
+  position: absolute;
+  right: 0;
+
+
+  @media (max-width: 48em) {
+    max-width: 100%;
+  }
+}
+
+.title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+}
+
+.rectangle {
+  border: 1px solid black;
+  padding: 0.5rem;
+  border-radius: 5px;
+}

@@ -6,67 +6,46 @@ import {
   Group,
   Input,
   Select,
+  Text,
   Title,
 } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AttendeesTable from '@/components/Attendee/AttendeesTable';
-// import { PATH_DASHBOARD } from '@/routes';
 
 export interface Attendee {
-  id: number;
+  _id: string;
   name: string;
   email: string;
   status: string;
-  participating: boolean;
-  registrationDate: string; // Date of registration
-  ticketType: string; // Type of ticket (VIP, Regular, etc.)
+  participating: string;
+  registrationDate: string;
+  ticketType: string;
 }
 
 export default function AttendeeManagementPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
-  // const [currentPage, setCurrentPage] = useState<number>(1);
-  const [attendees, setAttendees] = useState<Attendee[]>([
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
-      status: 'Registered',
-      participating: false,
-      registrationDate: '2024-06-10',
-      ticketType: 'VIP',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      status: 'Pending',
-      participating: true,
-      registrationDate: '2024-06-12',
-      ticketType: 'Regular',
-    },
-    {
-      id: 3,
-      name: 'Bob Johnson',
-      email: 'bob@example.com',
-      status: 'Registered',
-      participating: false,
-      registrationDate: '2024-06-15',
-      ticketType: 'VIP',
-    },
-    {
-      id: 4,
-      name: 'Alice Williams',
-      email: 'alice@example.com',
-      status: 'Cancelled',
-      participating: true,
-      registrationDate: '2024-06-18',
-      ticketType: 'Regular',
-    },
-  ]);
+  const [attendees, setAttendees] = useState<Attendee[]>([]);
 
-  // Filter attendees based on search term and filter status
+  useEffect(() => {
+    fetch('/api/attendee')
+      .then((response) => response.json())
+      .then((data) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const formattedData = data.map((ticket: any) => ({
+          _id: ticket._id,
+          name: ticket.user.name,
+          email: ticket.user.email,
+          status: ticket.status,
+          participating: ticket.participating,
+          registrationDate: ticket.purchaseDate,
+          ticketType: ticket.ticketType,
+        }));
+        setAttendees(formattedData);
+      });
+  }, []);
+
   const filteredAttendees = attendees.filter((attendee) => {
     const matchesSearchTerm =
       attendee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -77,43 +56,109 @@ export default function AttendeeManagementPage() {
     return matchesSearchTerm && matchesStatus;
   });
 
-  // Handle checkbox change for participating status
-  const handleCheckboxChange = (id: number) => {
+  const handleCheckboxChange = (id: string) => {
     setAttendees((prevAttendees) =>
       prevAttendees.map((attendee) =>
-        attendee.id === id
-          ? { ...attendee, participating: !attendee.participating }
+        attendee._id === id
+          ? {
+              ...attendee,
+              participating:
+                attendee.participating === 'true' ? 'false' : 'true',
+            }
           : attendee,
       ),
     );
+
+    const attendee = attendees.find((attendee) => attendee._id === id);
+    if (attendee) {
+      fetch('/api/attendee', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id,
+          participating: attendee.participating === 'true' ? 'false' : 'true',
+        }),
+      });
+    }
   };
 
-  // Handle status change
-  const handleStatusChange = (id: number, status: string) => {
+  const handleStatusChange = (id: string, status: string) => {
     setAttendees((prevAttendees) =>
       prevAttendees.map((attendee) =>
-        attendee.id === id ? { ...attendee, status } : attendee,
+        attendee._id === id ? { ...attendee, status } : attendee,
       ),
     );
+    fetch('/api/attendee', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, status }),
+    });
   };
+
+  const totalAttendees = attendees.length;
+  const checkedInAttendees = attendees.filter(
+    (attendee) => attendee.participating === 'true',
+  ).length;
 
   return (
     <Container size="lg" my="md">
-      <Box mb="xl">
-        <Title
-          order={2}
-          mb="lg"
-          style={{ color: '#64c1ff', fontWeight: 'bold', padding: 20 }}
+      <Title
+        order={2}
+        mb="lg"
+        style={{ color: '#59B6C7', fontWeight: 'bold', padding: 20 }}
+      >
+        Check-In Attendees
+      </Title>
+      <Group className="mb-4">
+        <div
+          style={{ textAlign: 'center', marginRight: '20%', marginLeft: '20%' }}
         >
-          Attendee Management
-        </Title>
+          <Text style={{ fontSize: 20 }}>Total Attendees</Text>
+          <div
+            style={{
+              borderRadius: '50%',
+              width: '100px',
+              height: '100px',
+              backgroundColor: '#59B6C7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+            }}
+          >
+            <Text>{totalAttendees}</Text>
+          </div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <Text style={{ fontSize: 20 }}>Checked In</Text>
+          <div
+            style={{
+              borderRadius: '50%',
+              width: '100px',
+              height: '100px',
+              backgroundColor: '#59B6C7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+            }}
+          >
+            <Text>{checkedInAttendees}</Text>
+          </div>
+        </div>
+      </Group>
+      <Box mb="xl">
         <Group align="center">
           <Input
             type="text"
-            placeholder="Search attendees..."
+            placeholder="Search attendee..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ flex: 1 }}
+            style={{ flex: 0.9, marginLeft: '5%' }}
           />
           <Select
             value={filterStatus}
@@ -124,9 +169,13 @@ export default function AttendeeManagementPage() {
               { value: 'pending', label: 'Pending' },
               { value: 'cancelled', label: 'Cancelled' },
             ]}
-            style={{ marginLeft: '1rem' }}
+            style={{ marginLeft: '0.785rem' }}
           />
-          <Button variant="filled" ml="md">
+          <Button
+            variant="filled"
+            ml="md"
+            style={{ backgroundColor: '#59B6C7' }}
+          >
             Add Attendee
           </Button>
         </Group>

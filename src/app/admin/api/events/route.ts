@@ -1,21 +1,20 @@
-import connectDB from '@/lib/connectDB';
-import Event from '@/models/Event';
 import { NextRequest, NextResponse } from 'next/server';
 
+import connectDB from '@/lib/connectDB';
+import Event from '@/models/Event';
 
-let r=connectDB();
-console.log('db connected! '+JSON.stringify(r));
+const r = connectDB();
+console.log('db connected! ' + JSON.stringify(r));
 
-
-export async function GET(req: NextRequest, res: NextResponse) {
-    const events = await Event.find({});
-     console.log(events);
-    return new Response(JSON.stringify(events), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+export async function GET() {
+  const events = await Event.find({});
+  console.log(events);
+  return new Response(JSON.stringify(events), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }
 
 export async function POST(request: NextRequest) {
@@ -54,12 +53,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: 'Event created successful',
       success: true,
-      event: newEvent
+      event: newEvent,
     });
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    console.error(error.message)
-    return NextResponse.json({ error: error.message}, {status: 500});
+    console.error(error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
@@ -83,36 +82,54 @@ export async function PUT(req: NextRequest) {
   const { id, ...updateData } = reqBody;
 
   if (!id) {
-    return new Response(JSON.stringify({ success: false, message: 'Event ID is required' }), {
-      status: 400,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
-
-  try {
-    const updatedEvent = await Event.findByIdAndUpdate(id, updateData, { new: true });
-    if (!updatedEvent) {
-      return new Response(JSON.stringify({ success: false, message: 'Event not found' }), {
-        status: 404,
+    return new Response(
+      JSON.stringify({ success: false, message: 'Event ID is required' }),
+      {
+        status: 400,
         headers: {
           'Content-Type': 'application/json',
         },
-      });
+      },
+    );
+  }
+
+  try {
+    const updatedEvent = await Event.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+    if (!updatedEvent) {
+      return new Response(
+        JSON.stringify({ success: false, message: 'Event not found' }),
+        {
+          status: 404,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
     }
-    return new Response(JSON.stringify({ success: true, message: 'Event updated successfully', event: updatedEvent }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: 'Event updated successfully',
+        event: updatedEvent,
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
   } catch (error) {
-    return new Response(JSON.stringify({ success: false, message: 'Failed to update event' }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
+    return new Response(
+      JSON.stringify({ success: false, message: 'Failed to update event' }),
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
   }
 }
