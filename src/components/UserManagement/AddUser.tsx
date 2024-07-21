@@ -1,10 +1,10 @@
-import { Button } from '@mantine/core';
+import { Button, TextInput, Box, Group, Text, Select } from '@mantine/core';
 import { useState } from 'react';
 
 import { User } from '@/app/admin/usermanagement/page';
 
 interface AddUserProps {
-  onSubmit: (newUserData: User) => void;
+  onSubmit: (newUserData: User) => Promise<void>;
   onCancel: () => void;
 }
 
@@ -14,12 +14,25 @@ export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
   const [status, setStatus] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [image, setImage] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const provider = 'credential';
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRoleChange = (value: string | null) => {
+    if (value) {
+      setRole(value);
+    }
+  };
+
+  const handleStatusChange = (value: string | null) => {
+    if (value) {
+      setStatus(value);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newUser: User = {
-      _id: Math.random(),
       name: name,
       role: role,
       status: status,
@@ -29,60 +42,84 @@ export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
       authentication: {
         provider: provider,
       },
+      image: image,
+      // _id: ,
     };
-    console.log(newUser);
-    onSubmit(newUser);
-    setName('');
-    setRole('');
-    setStatus('');
-    setEmail('');
-    setPhone('');
+
+    try {
+      await onSubmit(newUser);
+      setName('');
+      setRole('');
+      setStatus('');
+      setEmail('');
+      setPhone('');
+      setImage('');
+      setError(null);
+    } catch (error) {
+      console.error('Error adding user:', error);
+      setError('Failed to add user. Please check the input data and try again.');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
+    <Box component="form" onSubmit={handleSubmit} style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
+      {error && <Text color="red" mb="sm">{error}</Text>}
+      <TextInput
+        label="Username"
         placeholder="Username"
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
+        mb="sm"
       />
-      <input
-        type="text"
-        placeholder="Role"
+      <Select
+        label="Role"
+        placeholder="Select role"
         value={role}
-        onChange={(e) => setRole(e.target.value)}
+        onChange={handleRoleChange}
+        data={[
+          { value: 'attendee', label: 'Attendee' },
+          { value: 'admin', label: 'Admin' },
+        ]}
         required
+        mb="sm"
       />
-      <input
-        type="text"
-        placeholder="Status"
+      <Select
+        label="Status"
+        placeholder="Select status"
         value={status}
-        onChange={(e) => setStatus(e.target.value)}
+        onChange={handleStatusChange}
+        data={[
+          { value: 'active', label: 'Active' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'pending', label: 'Pending' },
+        ]}
         required
+        mb="sm"
       />
-      <input
-        type="text"
+      <TextInput
+        label="Email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
+        mb="sm"
       />
-      <input
-        type="text"
+      <TextInput
+        label="Phone"
         placeholder="Phone"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        required
+        mb="sm"
       />
-      <Button variant="filled" ml="md" type="submit">
-        Save
-      </Button>
-      &nbsp;
-      <Button variant="filled" ml="md" onClick={onCancel}>
-        Cancel
-      </Button>
-    </form>
+      <Group mt="md">
+        <Button variant="filled" type="submit" style={{ backgroundColor: '#59B6C7', color: 'white' }}>
+          Save
+        </Button>
+        <Button variant="outline" onClick={onCancel}>
+          Cancel
+        </Button>
+      </Group>
+    </Box>
   );
 }

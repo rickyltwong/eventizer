@@ -1,5 +1,5 @@
 'use client';
-import { Button, Select, Card, Group, Text, Container, ActionIcon } from '@mantine/core';
+import { Button, Select, Card, Group, Text, Container, ActionIcon, Box } from '@mantine/core';
 import { useState } from 'react';
 import { Attendee } from '@/app/admin/attendee/page';
 import AttendeeStatus from './AttendeeStatus';
@@ -24,27 +24,43 @@ export default function AttendeesTable({
   };
 
   return (
-    <Container style={{ maxWidth: '1200px' }} className="mt-6 flow-root">
+    <Container style={{ maxWidth: '120%' }} className="mt-7 flow-root">
       <div className="inline-block min-w-full align-middle">
         <Card shadow="sm" p="lg" radius="md" withBorder className="mb-5">
           <Group grow style={{ fontSize: 12 }}>
-            <Text style={{ flex: 0.01 }}></Text>
-            <Text style={{ flex: 2 }}>Name</Text>
-            <Text style={{ flex: 8 }}>Email</Text>
-            <Text style={{ flex: 2 }}>Status</Text>
-            <Text style={{ flex: 2 }}>Ticket Type</Text>
-            <Text style={{ flex: 1 }}>Participating</Text>
+            <Box style={{ flex: 0.5 }}></Box>
+            <Box style={{ flex: 1 }}>
+              <Text>Name</Text>
+            </Box>
+            <Box style={{ flex: 4 }}>
+              <Text>Email</Text>
+            </Box>
+            <Box style={{ flex: 1 }}>
+              <Text>Status</Text>
+            </Box>
+            <Box style={{ flex: 1 }}>
+              <Text>Ticket Type</Text>
+            </Box>
+            <Box style={{ flex: 1 }}>
+              <Text>Participating</Text>
+            </Box>
           </Group>
         </Card>
         {attendees.map((attendee) => (
           <Card key={attendee._id} shadow="sm" p="lg" radius="md" withBorder className="mb-4">
             <Group grow style={{ fontSize: '0.75rem' }}>
-              <ActionIcon onClick={() => setEditingStatusId(attendee._id)} style={{ flex: 0.001, backgroundColor: '#59B6C7' }}>
-                <IconPencil size={14} />
-              </ActionIcon>
-              <Text style={{ flex: 2 }}>{attendee.name}</Text>
-              <Text style={{ flex: 8, fontSize: 14 }}>{attendee.email}</Text>
-              <Text style={{ flex: 2 }}>
+              <Box style={{ flex: 0.5 }}>
+                <ActionIcon onClick={() => setEditingStatusId(attendee._id)} style={{ backgroundColor: '#59B6C7' }}>
+                  <IconPencil size={14} />
+                </ActionIcon>
+              </Box>
+              <Box style={{ flex: 1 }}>
+                <Text>{attendee.name}</Text>
+              </Box>
+              <Box style={{ flex: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <Text>{attendee.email}</Text>
+              </Box>
+              <Box style={{ flex: 1 }}>
                 {editingStatusId === attendee._id ? (
                   <Select
                     value={attendee.status}
@@ -62,16 +78,19 @@ export default function AttendeesTable({
                     <AttendeeStatus status={attendee.status} />
                   </div>
                 )}
-              </Text>
-              <Text style={{ flex: 2 }}>{attendee.ticketType}</Text>
-              <Button
-                variant={attendee.participating === 'true' ? 'filled' : 'outline'}
-                color={attendee.participating === 'true' ? 'green' : 'blue'}
-                onClick={() => onCheckboxChange(attendee._id)}
-                style={{ flex: 1 }}
-              >
-                {attendee.participating === 'true' ? 'Checked In' : 'Check In'}
-              </Button>
+              </Box>
+              <Box style={{ flex: 1 }}>
+                <Text>{attendee.ticketType}</Text>
+              </Box>
+              <Box style={{ flex: 1 }}>
+                <Button
+                  variant={attendee.participating === 'true' ? 'filled' : 'outline'}
+                  color={attendee.participating === 'true' ? 'green' : 'blue'}
+                  onClick={() => onCheckboxChange(attendee._id)}
+                >
+                  {attendee.participating === 'true' ? 'Checked In' : 'Check In'}
+                </Button>
+              </Box>
             </Group>
           </Card>
         ))}

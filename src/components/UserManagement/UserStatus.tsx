@@ -6,7 +6,7 @@ interface UserStatusProps {
 }
 
 const UserStatus: React.FC<UserStatusProps> = ({ status }) => {
-  const color = status === 'Active' ? 'green' : 'red';
+  const color = status.toLowerCase() === 'active' ? 'green' : 'red';
 
   return (
     <Badge color={color} variant="light">

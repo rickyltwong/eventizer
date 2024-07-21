@@ -7,9 +7,10 @@ import {
   Input,
   Select,
   Title,
+  Text,
+  Tooltip,
 } from '@mantine/core';
-import { useEffect, useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import UserTable from '@/components/UserManagement/UserTable';
 
 export interface User {
@@ -23,6 +24,7 @@ export interface User {
   authentication: {
     provider: string;
   };
+  image: any,
 }
 
 export default function UserManagementPage() {
@@ -47,13 +49,12 @@ export default function UserManagementPage() {
   }, []);
 
   // Filter users based on search term and filter status
+  console.log(users);
   const filteredUsers = users.filter((user) => {
-    const matchesSearchTerm = user.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesStatus =
-      filterStatus === 'all' ||
-      user.status.toLowerCase() === filterStatus.toLowerCase();
+    const matchesSearchTerm =
+      user.name &&
+      user.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = filterStatus === 'all' || user.status.toLowerCase() === filterStatus.toLowerCase();
     return matchesSearchTerm && matchesStatus;
   });
 
@@ -130,7 +131,7 @@ export default function UserManagementPage() {
 
   const handleAddUser = async () => {
     setNewUser({
-      _id: Math.random(),
+      _id: 0,
       name: '',
       role: '',
       status: '',
@@ -140,6 +141,7 @@ export default function UserManagementPage() {
       authentication: {
         provider: 'credential',
       },
+      image: ''
     });
 
     setShowAddUser(!showAddUser);
@@ -177,7 +179,7 @@ export default function UserManagementPage() {
         <Title
           order={2}
           mb="lg"
-          style={{ color: '#64c1ff', fontWeight: 'bold', padding: 20 }}
+          style={{ color: '#59B6C7', fontWeight: 'bold', padding: 20, textAlign: 'center' }}
         >
           User Management
         </Title>
@@ -200,7 +202,12 @@ export default function UserManagementPage() {
             ]}
             style={{ marginLeft: '1rem' }}
           />
-          <Button variant="filled" ml="md" onClick={handleAddUser}>
+          <Button
+            variant="filled"
+            ml="md"
+            onClick={handleAddUser}
+            style={{ backgroundColor: '#59B6C7', color: 'white' }}
+          >
             Add User
           </Button>
         </Group>

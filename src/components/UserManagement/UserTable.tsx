@@ -31,8 +31,6 @@ export default function UsersTable({
   const [editingUserStatus, setEditingUserStatus] = useState<number | null>(
     null,
   );
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //const [deleteUser, setDeleteUser] = useState<number | null>(null);
 
   const handleRoleChange = (id: number, newRole: string) => {
     onRoleChange(id, newRole);
@@ -46,7 +44,6 @@ export default function UsersTable({
 
   const handleDeleteUser = (id: number) => {
     onDeleteUser(id);
-    //setDeleteUser(null);
   };
 
   const handleSaveUser = (newUser: User) => {
@@ -57,8 +54,13 @@ export default function UsersTable({
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+          <div style={{ marginBottom: '20px' }}>
+            {showAddUser && (
+              <AddUser onSubmit={handleSaveUser} onCancel={onCancelUser} />
+            )}
+          </div>
           <table className="min-w-full text-gray-900">
-            <thead className="rounded-lg text-left text-sm font-normal">
+            <thead className="rounded-lg text-left text-sm font-normal bg-[#59B6C7] text-white">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Name
@@ -91,6 +93,11 @@ export default function UsersTable({
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
+                      <img
+                        src={user.image || 'https://via.placeholder.com/40?text=Unknown'}
+                        alt={user.name}
+                        className="h-10 w-10 rounded-full object-cover"
+                      />
                       <p>{user.name}</p>
                     </div>
                   </td>
@@ -103,7 +110,7 @@ export default function UsersTable({
                         }
                         data={[
                           { value: 'Admin', label: 'Admin' },
-                          { value: 'Attendee', label: 'User' },
+                          { value: 'attendee', label: 'Attendee' },
                         ]}
                       />
                     ) : (
@@ -120,9 +127,9 @@ export default function UsersTable({
                           handleStatusChange(user._id, value ?? user.status)
                         }
                         data={[
-                          { value: 'Active', label: 'Active' },
-                          { value: 'Disabled', label: 'Disabled' },
-                          { value: 'Pending', label: 'Pending' },
+                          { value: 'active', label: 'Active' },
+                          { value: 'disabled', label: 'Disabled' },
+                          { value: 'pending', label: 'Pending' },
                         ]}
                       />
                     ) : (
@@ -148,26 +155,14 @@ export default function UsersTable({
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     <button onClick={() => handleDeleteUser(user._id)}>
-                      <IconTrash className="h-5 w-5 text-red-500" />{' '}
-                      {/* Adjust size and color as needed */}
+                      <IconTrash className="h-5 w-5 text-red-500" />
                     </button>
-                  </td>
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex justify-end gap-3">
-                      {/* <Button onClick={() => setEditingUserRole(user.id)}>Edit Role</Button>
-                      <Button onClick={() => setEditingUserStatus(user.id)}>Edit Status</Button> */}
-                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
-      <div style={{ marginBottom: '20px' }}>
-        {showAddUser && (
-          <AddUser onSubmit={handleSaveUser} onCancel={onCancelUser} />
-        )}
       </div>
     </div>
   );
