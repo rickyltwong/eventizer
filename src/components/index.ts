@@ -10,11 +10,13 @@ import FooterSimple from '@/components/FooterSimple/FooterSimple';
 import GalleryIcon from '@/components/GalleryIcon/GalleryIcon';
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch';
 import HeroTitle from '@/components/HeroTitle/HeroTitle';
+import LikeButton from '@/components/LikeButton/LikeButton';
 import Logo from '@/components/Logo/Logo';
 import MapIcon from '@/components/MapIcon/MapIcon';
 import { NextLink } from '@/components/NextLink/NextLink';
 // import OrdersTable from '@/components/OrdersTable/OrdersTable';
 import PageHeader from '@/components/PageHeader/PageHeader';
+import ProfileNav from '@/components/ProfileNav/ProfileNav';
 import ProjectsCard from '@/components/ProjectsCard/ProjectsCard';
 import ResponsiveContainer from '@/components/ResponsiveContainer/ResponsiveContainer';
 import SignInButton from '@/components/SignInButton/SignInButton';
@@ -34,11 +36,13 @@ export {
   GalleryIcon,
   HeaderSearch,
   HeroTitle,
+  LikeButton,
   Logo,
   MapIcon,
   NextLink,
   // OrdersTable,
   PageHeader,
+  ProfileNav,
   ProjectsCard,
   ResponsiveContainer,
   SignInButton,

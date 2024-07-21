@@ -1,0 +1,13 @@
+.mainContent {
+  /* margin-top: -29rem; */
+  padding: 2rem;
+  width: 75%;
+  position: relative;
+  left:  25%;
+}
+
+.container {
+  display: flex;
+  margin-top: -3rem;
+
+}

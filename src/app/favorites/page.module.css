@@ -1,0 +1,17 @@
+.mainContent {
+  /* margin-top: -29rem; */
+  padding: 2rem;
+  /* position: absolute; */
+ /* top: 35rem; */
+  /* background-color: red; */
+  width: 75%;
+  position: relative;
+  left:  25%;
+
+}
+
+.container {
+  display: flex;
+  margin-top: -3rem;
+
+}

@@ -21,12 +21,12 @@ import {
 } from '@mantine/core';
 import {
   IconChevronDown,
-  IconHistory,
   IconLogout,
   IconSettings,
-  IconStar,
+  IconUser,
 } from '@tabler/icons-react';
 import cx from 'clsx';
+import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -40,6 +40,7 @@ import classes from './AuthUserButton.module.css';
 export default function UserButton() {
   const theme = useMantineTheme();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const router = useRouter();
 
   const { data: session } = useSession();
 
@@ -85,28 +86,17 @@ export default function UserButton() {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item
-          leftSection={
-            <IconStar
-              style={{ width: rem(16), height: rem(16) }}
-              color={theme.colors.yellow[6]}
-              stroke={1.5}
-            />
-          }
-        >
-          Saved events
-        </Menu.Item>
-        <Menu.Item
           component={NextLink}
           href="/registration-history"
           leftSection={
-            <IconHistory
+            <IconUser
               style={{ width: rem(16), height: rem(16) }}
               color={theme.colors.yellow[6]}
               stroke={1.5}
             />
           }
         >
-          Registration History
+          Profile
         </Menu.Item>
 
         <Menu.Label>Settings</Menu.Label>
@@ -130,7 +120,10 @@ export default function UserButton() {
               stroke={1.5}
             />
           }
-          onClick={() => signOut()}
+          onClick={() => {
+            signOut();
+            router.push('/events');
+          }}
         >
           Logout
         </Menu.Item>

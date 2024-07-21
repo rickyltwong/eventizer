@@ -10,9 +10,11 @@ import {
   Text,
 } from '@mantine/core';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 import EventRegistrationModal from '@/app/events/[eventid]/EventRegistrationModal';
+import { LikeButton } from '@/components';
 import { IEvent, Status } from '@/types';
 
 import classes from './BadgeCard.module.css';
@@ -51,6 +53,7 @@ export default function BadgeCard({ event }: { event: IEvent }) {
   const [isBookModalOpen, setBookModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<IEvent>();
 
+  const { data: session } = useSession();
   const handleShowDetails = (id: string) => {
     router.push(`/events/${id}`);
   };
@@ -134,8 +137,8 @@ export default function BadgeCard({ event }: { event: IEvent }) {
             {features}
           </Group>
         </Card.Section>
-
         <Group mt="xs">
+          {session?.user && <LikeButton eventId={_id}></LikeButton>}
           <Button
             radius="md"
             variant="light"
