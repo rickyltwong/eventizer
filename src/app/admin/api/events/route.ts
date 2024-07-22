@@ -3,10 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/connectDB';
 import Event from '@/models/Event';
 
-const r = connectDB();
-console.log('db connected! ' + JSON.stringify(r));
-
 export async function GET() {
+  await connectDB();
   const events = await Event.find({});
   console.log(events);
   return new Response(JSON.stringify(events), {
@@ -18,6 +16,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  await connectDB();
   try {
     const reqBody = await request.json();
     const {
