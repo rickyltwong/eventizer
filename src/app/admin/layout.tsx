@@ -14,7 +14,7 @@ type Props = {
   children: ReactNode;
 };
 
-function AppsLayout({ children }: Props) {
+export default function AppsLayout({ children }: Props) {
   const theme = useMantineTheme();
   const tablet_match = useMediaQuery('(max-width: 768px)');
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -71,5 +71,3 @@ function AppsLayout({ children }: Props) {
     </AppShell>
   );
 }
-
-export default AppsLayout;

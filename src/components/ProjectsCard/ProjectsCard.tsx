@@ -18,9 +18,10 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconBuilding, IconEdit, IconTrash } from '@tabler/icons-react';
 import axios from 'axios';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { EventForm } from '@/components';
+import { Ticket } from '@/types';
 import { EventFormValues } from '@/types/event';
 
 const determineEventStatus = (
@@ -44,7 +45,6 @@ type Status = 'upcoming' | 'cancelled' | 'expired' | 'ongoing';
 
 type ProjectsCardProps = {
   _id: string;
-  remainingSeats: number;
   onDelete: (id: string) => void;
   onUpdate: (event: EventFormValues) => void;
 } & EventFormValues &
@@ -81,7 +81,6 @@ const ProjectsCard = (props: ProjectsCardProps) => {
   const {
     _id,
     capacity,
-    remainingSeats,
     eventAddress,
     eventStartDateTime,
     eventEndDateTime,
@@ -99,6 +98,7 @@ const ProjectsCard = (props: ProjectsCardProps) => {
   const [eventDetails, setEventDetails] = useState<EventFormValues | null>(
     null,
   );
+  const [totalSold, setTotalSold] = useState(0);
 
   const formattedStart = eventStartDateTime
     ? format(new Date(eventStartDateTime), 'PPpp')
@@ -114,6 +114,25 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         )
       : 'unknown';
   const venueName = eventAddress?.venueName || 'Unknown venue';
+
+  const fetchTicketsSold = async () => {
+    try {
+      const response = await axios.get(`/admin/api/tickets?event=${_id}`);
+      const tickets = response.data;
+
+      const total = tickets.reduce(
+        (sum: number, ticket: Ticket) => sum + ticket.sold,
+        0,
+      );
+      setTotalSold(total);
+    } catch (error) {
+      console.error('Failed to fetch tickets sold:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTicketsSold();
+  }, []);
 
   const handleEdit = async () => {
     try {
@@ -144,6 +163,8 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         remainingSeats: response.data.remainingSeats,
         ticketsClasses: response.data.ticketsClasses,
         discounts: response.data.discounts,
+        ticketTypes: response.data.ticketTypes,
+        image: response.data.image,
       });
       open();
     } catch (error) {
@@ -176,21 +197,20 @@ const ProjectsCard = (props: ProjectsCardProps) => {
         <Text fz="sm">
           Enrollment:{' '}
           <Text span fz="sm" fw={500}>
-            {capacity ?? 0 - remainingSeats} / {capacity}
+            {totalSold} / {capacity ?? 0}
           </Text>
         </Text>
 
         <Progress
-          value={((capacity ?? 0 - remainingSeats) * 100) / (capacity ?? 1)}
+          value={(totalSold * 100) / (capacity ?? 1)}
           mt={5}
           size="sm"
           color={
-            ((capacity ?? 0 - remainingSeats) * 100) / (capacity ?? 1) < 21
+            (totalSold * 100) / (capacity ?? 1) < 21
               ? 'red'
-              : ((capacity ?? 0 - remainingSeats) * 100) / (capacity ?? 1) < 51
+              : (totalSold * 100) / (capacity ?? 1) < 51
                 ? 'yellow'
-                : ((capacity ?? 0 - remainingSeats) * 100) / (capacity ?? 1) <
-                    86
+                : (totalSold * 100) / (capacity ?? 1) < 86
                   ? 'blue'
                   : 'green'
           }

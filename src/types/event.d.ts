@@ -42,6 +42,7 @@ export interface IEvent {
   minimumAge?: number;
   ticketsClasses: TicketClass[];
   discounts: Discount[];
+  image: string;
 }
 
 // export interface EventFormValues {
@@ -89,6 +90,8 @@ export interface EventFormValues
   eventEndDateTime: Date | null;
   ticketsClasses?: FormTicketClass[];
   discounts?: FormDiscount[];
+  ticketTypes: string[];
+  image: string;
 }
 
 export type Status = 'Upcoming' | 'Cancelled' | 'Expired' | string;

@@ -8,7 +8,7 @@ const UserFavoriteSchema = new Schema(
       required: true,
       unique: true,
     },
-    events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'events' }],
+    events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
   },
   {
     timestamps: true,

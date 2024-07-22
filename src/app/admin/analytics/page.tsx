@@ -1,5 +1,16 @@
 'use client';
-import { Card, Container, SimpleGrid, Text, Title } from '@mantine/core';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Group,
+  SimpleGrid,
+  Text,
+  Title,
+} from '@mantine/core';
 import {
   ArcElement,
   BarElement,
@@ -12,6 +23,7 @@ import {
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useEffect, useState } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
+import DatePicker from 'react-datepicker';
 
 ChartJS.register(
   BarElement,
@@ -26,7 +38,12 @@ ChartJS.register(
 interface Event {
   _id: string;
   eventType: string;
+  eventName: string;
   capacity: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  eventStartDateTime: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  eventFinishDateTime: any;
   ticketsClasses: {
     ticketType: string;
     availability: number;
@@ -46,6 +63,13 @@ interface User {
 const Dashboard = () => {
   const [totalSales, setTotalSales] = useState<number>(0);
   const [userCount, setUserCount] = useState<number>(0);
+  const [eventTypes, setEventTypes] = useState<string[]>([]);
+  const [selectedEventType, setSelectedEventType] = useState<string | null>(
+    null,
+  );
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+
   const [pieData, setPieData] = useState<{
     labels: string[];
     datasets: {
@@ -76,17 +100,12 @@ const Dashboard = () => {
       backgroundColor: string;
       borderColor: string;
       borderWidth: number;
+      barThickness?: number;
+      maxBarThickness?: number;
     }[];
   }>({
     labels: [],
     datasets: [
-      {
-        label: 'Remaining Seats',
-        data: [],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-      },
       {
         label: 'Total Capacity',
         data: [],
@@ -94,126 +113,189 @@ const Dashboard = () => {
         borderColor: 'rgba(153, 102, 255, 1)',
         borderWidth: 1,
       },
+      {
+        label: 'Remaining Seats',
+        data: [],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        barThickness: 15,
+        maxBarThickness: 15,
+      },
     ],
   });
 
   useEffect(() => {
-    async function fetchEvents() {
-      try {
-        // Fetch event data
-        const response = await fetch('/api/events');
-        const eventData: Event[] = await response.json();
-        console.log('Events:', eventData);
+    fetchBarData();
+  }, [selectedEventType, startDate, endDate]);
 
-        // Fetch ticket sales data
-        const response2 = await fetch('/api/admin2');
-        const ticketData: EventTicket[] = await response2.json();
-        console.log('Ticket Sales:', ticketData);
+  useEffect(() => {
+    fetchPieData();
+  }, [startDate, endDate]);
 
-        // Calculate total sales
-        const totalSales = eventData.reduce((acc, event) => {
-          const soldTickets = ticketData
-            .filter((ticket) => ticket.event === event._id)
-            .reduce((total, ticket) => total + ticket.noOfTickets, 0);
-          return acc + soldTickets;
-        }, 0);
-        setTotalSales(totalSales);
+  async function fetchBarData() {
+    try {
+      // Fetch event data
+      const response = await fetch('/api/events');
+      const eventData: Event[] = await response.json();
+      console.log('Events:', eventData);
 
-        // Calculate event counts
-        const eventTypes = Array.from(
-          new Set(eventData.map((event) => event.eventType)),
-        );
-        const eventCounts = eventTypes.map(
-          (type) =>
-            eventData.filter((event) => event.eventType === type).length,
-        );
+      // Fetch ticket sales data
+      const response2 = await fetch('/api/admin2');
+      const ticketData: EventTicket[] = await response2.json();
+      console.log('Ticket Sales:', ticketData);
 
-        // Calculate remaining seats and total capacity
-        const remainingSeats = eventTypes.map((type) =>
-          eventData
-            .filter((event) => event.eventType === type)
-            .reduce(
-              (acc, event) =>
-                acc + event.capacity - calculateSoldTickets(event, ticketData),
-              0,
+      // Filter events by selected type and date range
+      const filteredEvents = eventData.filter((event) => {
+        const eventDate = new Date(event.eventStartDateTime);
+        const isInDateRange =
+          (!startDate || eventDate >= startDate) &&
+          (!endDate || eventDate <= endDate);
+        const isTypeMatch =
+          !selectedEventType || event.eventType === selectedEventType;
+        return isInDateRange && isTypeMatch;
+      });
+
+      // Calculate total sales
+      const totalSales = filteredEvents.reduce((acc, event) => {
+        const soldTickets = ticketData
+          .filter((ticket) => ticket.event === event._id)
+          .reduce((total, ticket) => total + ticket.noOfTickets, 0);
+        return acc + soldTickets;
+      }, 0);
+      setTotalSales(totalSales);
+
+      // Calculate remaining seats and total capacity
+      // const eventTypes = Array.from(
+      //   new Set(eventData.map((event) => event.eventType)),
+      // );
+      // const remainingSeats = eventTypes.map((type) =>
+      //   eventData
+      //     .filter((event) => event.eventType === type)
+      //     .reduce(
+      //       (acc, event) =>
+      //         acc +
+      //         Math.max(
+      //           0,
+      //           event.capacity - calculateSoldTickets(event, ticketData),
+      //         ),
+      //       0,
+      //     ),
+      // );
+      // const totalCapacity = eventTypes.map((type) =>
+      //   eventData
+      //     .filter((event) => event.eventType === type)
+      //     .reduce((acc, event) => acc + event.capacity, 0),
+      // );
+
+      // Fetch user data
+      const response3 = await fetch('/api/admin');
+      const user: User[] = await response3.json();
+      console.log('Users:', user);
+
+      //Calculate Users numbers
+      const userCount = user.length;
+      setUserCount(userCount);
+
+      // Update state with bar chart data
+      setBarData({
+        labels: filteredEvents.map((event) => {
+          const words = event.eventName.split(' ');
+          return words.length > 3 ? `${words[2]} ${words[3]}` : event.eventName;
+        }),
+        datasets: [
+          {
+            label: 'Total Capacity',
+            data: filteredEvents.map((event) => event.capacity),
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1,
+          },
+          {
+            label: 'Remaining Seats',
+            data: filteredEvents.map((event) =>
+              Math.max(
+                0,
+                event.capacity - calculateSoldTickets(event, ticketData),
+              ),
             ),
-        );
-        const totalCapacity = eventTypes.map((type) =>
-          eventData
-            .filter((event) => event.eventType === type)
-            .reduce((acc, event) => acc + event.capacity, 0),
-        );
-
-        // Fetch user data
-        const response3 = await fetch('/api/admin');
-        const user: User[] = await response3.json();
-        console.log('Users:', user);
-
-        //Calculate Users numbers
-        const userCount = user.length;
-        setUserCount(userCount);
-
-        // Update state with pie chart data
-        setPieData({
-          labels: eventTypes,
-          datasets: [
-            {
-              label: 'Events',
-              data: eventCounts,
-              backgroundColor: eventTypes.map((_, index) => {
-                const colors = [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                ];
-                return colors[index % colors.length];
-              }),
-              borderColor: eventTypes.map((_, index) => {
-                const borderColors = [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)',
-                ];
-                return borderColors[index % borderColors.length];
-              }),
-              borderWidth: 1,
-            },
-          ],
-        });
-
-        // Update state with bar chart data
-        setBarData({
-          labels: eventTypes,
-          datasets: [
-            {
-              label: 'Remaining Seats',
-              data: remainingSeats,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-            },
-            {
-              label: 'Total Capacity',
-              data: totalCapacity,
-              backgroundColor: 'rgba(153, 102, 255, 0.2)',
-              borderColor: 'rgba(153, 102, 255, 1)',
-              borderWidth: 1,
-            },
-          ],
-        });
-      } catch (error) {
-        console.error('Error fetching events:', error);
-      }
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            barThickness: 15,
+            maxBarThickness: 15,
+          },
+        ],
+      });
+    } catch (error) {
+      console.error('Error fetching events:', error);
     }
+  }
 
-    fetchEvents();
-  }, []);
+  async function fetchPieData() {
+    try {
+      // Fetch event data
+      const response = await fetch('/api/events');
+      const eventData: Event[] = await response.json();
+      console.log('Events:', eventData);
+
+      // Filter events by date range
+      const filteredEvents = eventData.filter((event) => {
+        const eventDate = new Date(event.eventStartDateTime);
+        return (
+          (!startDate || eventDate >= startDate) &&
+          (!endDate || eventDate <= endDate)
+        );
+      });
+
+      // Calculate event counts
+      const eventTypes = Array.from(
+        new Set(eventData.map((event) => event.eventType)),
+      );
+      setEventTypes(eventTypes);
+
+      const eventCounts = eventTypes.map(
+        (type) =>
+          filteredEvents.filter((event) => event.eventType === type).length,
+      );
+
+      // Update state with pie chart data
+      setPieData({
+        labels: eventTypes,
+        datasets: [
+          {
+            label: 'Events',
+            data: eventCounts,
+            backgroundColor: eventTypes.map((_, index) => {
+              const colors = [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+              ];
+              return colors[index % colors.length];
+            }),
+            borderColor: eventTypes.map((_, index) => {
+              const borderColors = [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ];
+              return borderColors[index % borderColors.length];
+            }),
+            borderWidth: 1,
+          },
+        ],
+      });
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  }
 
   function calculateSoldTickets(event: Event, tickets: EventTicket[]): number {
     return tickets
@@ -223,34 +305,116 @@ const Dashboard = () => {
 
   return (
     <Container>
-      {/* <Title order={2} my="lg" style={{ color: '#64c1ff', fontWeight: 'bold', padding: 2 }}>
-        Dashboard
-      </Title> */}
+      {/* Event Type Cards */}
+      <Group my="lg">
+        {eventTypes.map((type) => (
+          <Button
+            key={type}
+            onClick={() => setSelectedEventType(type)}
+            style={{
+              backgroundColor: '#59B6C7',
+              minWidth: '100px',
+              height: '80px',
+              fontSize: '18px',
+              margin: '0 10px',
+            }}
+          >
+            {type}
+          </Button>
+        ))}
+        <Button
+          onClick={() => setSelectedEventType(null)}
+          style={{
+            backgroundColor: '#59B6C7',
+            minWidth: '100px',
+            height: '80px',
+            fontSize: '18px',
+            margin: '0 10px',
+          }}
+        >
+          All
+        </Button>
+      </Group>
+
+      {/* Date Range Pickers */}
+      <Group my="lg" style={{ color: '#59B6C7', alignContent: 'center' }}>
+        <Box style={{ margin: '0 10px' }}>
+          <Text style={{ color: 'black' }}>Select Start Date:</Text>
+          <DatePicker
+            selected={startDate}
+            onChange={(date: Date) => setStartDate(date)}
+          />
+        </Box>
+        <Box style={{ margin: '0 10px' }}>
+          <Text style={{ color: 'black' }}>Select End Date:</Text>
+          <DatePicker
+            selected={endDate}
+            onChange={(date: Date) => setEndDate(date)}
+          />
+        </Box>
+      </Group>
+
       <SimpleGrid cols={2} spacing="lg">
         <Card
           shadow="sm"
           p="lg"
-          style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}
+          style={{
+            backgroundColor: '#f0f4f8',
+            borderRadius: '12px',
+            minHeight: '100px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
-          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>
-            Total Sales
-          </Text>
-          <Text size="xl">{totalSales}</Text>
+          <div>
+            <Text
+              size="lg"
+              style={{
+                marginBottom: '8px',
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}
+            >
+              Total Sales
+            </Text>
+            <Text size="xl" style={{ textAlign: 'center' }}>
+              {totalSales}
+            </Text>
+          </div>
         </Card>
         <Card
           shadow="sm"
           p="lg"
-          style={{ backgroundColor: '#f0f4f8', borderRadius: '12px' }}
+          style={{
+            backgroundColor: '#f0f4f8',
+            borderRadius: '12px',
+            minHeight: '100px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
-          <Text size="lg" style={{ marginBottom: '8px', fontWeight: 'bold' }}>
-            Active Subscriptions
-          </Text>
-          <Text size="xl">{userCount}</Text>
+          <div>
+            <Text
+              size="lg"
+              style={{
+                marginBottom: '8px',
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}
+            >
+              Active Subscriptions
+            </Text>
+            <Text size="xl" style={{ textAlign: 'center' }}>
+              {userCount}
+            </Text>
+          </div>
         </Card>
       </SimpleGrid>
       <SimpleGrid cols={2} spacing="lg" mt="xl">
         <Card shadow="sm" p="lg" style={{ height: '450px' }}>
-          <Title order={3}>Events Sales Trends</Title>
+          <Title order={3}>Event Capacity Trends</Title>
           <Bar
             data={barData}
             options={{
@@ -279,6 +443,11 @@ const Dashboard = () => {
                       size: 14,
                     },
                     color: '#000',
+                    callback: function (value) {
+                      return typeof value === 'number' && value >= 0
+                        ? value
+                        : '';
+                    },
                   },
                 },
               },

@@ -3,6 +3,8 @@ import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/connectDB';
 import eventTicket from '@/models/EventTicket';
 
+export const revalidate = 0;
+
 export async function PUT(req: NextRequest) {
   await dbConnect();
   const reqBody = await req.json();
@@ -38,15 +40,35 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   await dbConnect();
-  const attendees = await eventTicket.find({}).populate('user', 'name email');
-  return new Response(JSON.stringify(attendees), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const { searchParams } = new URL(req.url);
+  const eventId = searchParams.get('eventId');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filter: { [key: string]: any } = {};
+  if (eventId) {
+    filter.event = eventId;
+  }
+  try {
+    const attendees = await eventTicket
+      .find(filter)
+      .populate('user', 'name email');
+    console.log(attendees);
+    return new Response(JSON.stringify(attendees), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching attendees:', error);
+    return new Response(JSON.stringify({ error: 'Error fetching attendees' }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
 
 export async function POST(req: NextRequest) {

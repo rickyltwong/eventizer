@@ -10,13 +10,9 @@ import {
   Text,
 } from '@mantine/core';
 
-import {
-  // OrdersTable,
-  PageHeader,
-} from '@/components';
+import { OrdersTable, PageHeader } from '@/components';
+import { useFetchData } from '@/hooks';
 import { PATH_DASHBOARD } from '@/routes';
-
-// import { useFetchData } from '../../../hooks';
 
 const items = [
   { title: 'Dashboard', href: PATH_DASHBOARD.default },
@@ -34,23 +30,16 @@ const PAPER_PROPS: PaperProps = {
 };
 
 function Page() {
-  // const {
-  //   data: ordersData,
-  //   loading: ordersLoading,
-  //   error: ordersError,
-  // } = useFetchData('/mocks/Orders.json');
+  const {
+    data: ordersData,
+    loading: ordersLoading,
+    error: ordersError,
+  } = useFetchData('/admin/api/tickets');
 
   return (
     <>
-      <>
-        {/* <title>Tickets | DesignSparx</title> */}
-        {/* <meta
-          name="description"
-          content="Explore our versatile dashboard website template featuring a stunning array of themes and meticulously crafted components. Elevate your web project with seamless integration, customizable themes, and a rich variety of components for a dynamic user experience. Effortlessly bring your data to life with our intuitive dashboard template, designed to streamline development and captivate users. Discover endless possibilities in design and functionality today!"
-        /> */}
-      </>
-      <Container fluid>
-        <Stack gap="lg">
+      <Container>
+        <Stack>
           <PageHeader title="Tickets" breadcrumbItems={items} />
           <Paper {...PAPER_PROPS}>
             <Group justify="space-between" mb="md">
@@ -61,11 +50,11 @@ function Page() {
                 <IconDotsVertical size={18} />
               </ActionIcon> */}
             </Group>
-            {/* <OrdersTable
+            <OrdersTable
               data={ordersData}
               error={ordersError}
               loading={ordersLoading}
-            /> */}
+            />
           </Paper>
         </Stack>
       </Container>

@@ -28,7 +28,7 @@ const Logo = ({ href, ...others }: LogoProps) => {
           width={24}
           alt="design sparx logo"
         />
-        <Text fw={700}>Mantine admin</Text>
+        <Text fw={700}>Eventizer admin</Text>
       </Group>
     </UnstyledButton>
   );

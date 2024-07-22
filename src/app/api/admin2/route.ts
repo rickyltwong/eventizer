@@ -1,6 +1,8 @@
 import dbConnect from '@/lib/connectDB';
 import EventTicket from '@/models/EventTicket';
 
+export const revalidate = 0;
+
 export async function GET() {
   await dbConnect();
   const eventTickets = await EventTicket.find({});
