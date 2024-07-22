@@ -1,4 +1,4 @@
-import { Button, TextInput, Box, Group, Text, Select } from '@mantine/core';
+import { Box, Button, Group, Select, Text, TextInput } from '@mantine/core';
 import { useState } from 'react';
 
 import { User } from '@/app/admin/usermanagement/page';
@@ -57,13 +57,27 @@ export default function AddUser({ onSubmit, onCancel }: AddUserProps) {
       setError(null);
     } catch (error) {
       console.error('Error adding user:', error);
-      setError('Failed to add user. Please check the input data and try again.');
+      setError(
+        'Failed to add user. Please check the input data and try again.',
+      );
     }
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
-      {error && <Text color="red" mb="sm">{error}</Text>}
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      style={{
+        padding: '20px',
+        backgroundColor: '#f9f9f9',
+        borderRadius: '8px',
+      }}
+    >
+      {error && (
+        <Text color="red" mb="sm">
+          {error}
+        </Text>
+      )}
       <TextInput
         label="Username"
         placeholder="Username"

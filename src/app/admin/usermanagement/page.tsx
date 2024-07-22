@@ -131,7 +131,7 @@ export default function UserManagementPage() {
 
   const handleAddUser = () => {
     setNewUser({
-      _id: 0,
+      _id: Math.random(),
       name: '',
       role: '',
       status: '',
@@ -165,7 +165,7 @@ export default function UserManagementPage() {
       setUsers((prevUsers) => [...prevUsers, addedUser]);
       setShowAddUser(false);
     } catch (error) {
-      console.error('Error adding user:', error);
+      setShowAddUser(false);
     }
   };
 
