@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import UserTable from '@/components/UserManagement/UserTable';
 
 export interface User {
-  _id: number;
+  _id?: number;
   name: string;
   role: string;
   status: string;
@@ -23,6 +23,8 @@ export interface User {
   authentication: {
     provider: string;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  image: any;
 }
 
 export default function UserManagementPage() {
@@ -47,6 +49,7 @@ export default function UserManagementPage() {
   }, []);
 
   // Filter users based on search term and filter status
+  console.log(users);
   const filteredUsers = users.filter((user) => {
     const matchesSearchTerm = user.name
       ? user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -140,6 +143,7 @@ export default function UserManagementPage() {
       authentication: {
         provider: 'credential',
       },
+      image: '',
     });
 
     setShowAddUser(!showAddUser);
@@ -163,7 +167,7 @@ export default function UserManagementPage() {
       setUsers((prevUsers) => [...prevUsers, addedUser]);
       setShowAddUser(false);
     } catch (error) {
-      console.error('Error adding user:', error);
+      setShowAddUser(false);
     }
   };
 
@@ -177,7 +181,12 @@ export default function UserManagementPage() {
         <Title
           order={2}
           mb="lg"
-          style={{ color: '#64c1ff', fontWeight: 'bold', padding: 20 }}
+          style={{
+            color: '#59B6C7',
+            fontWeight: 'bold',
+            padding: 20,
+            textAlign: 'center',
+          }}
         >
           User Management
         </Title>
@@ -200,7 +209,12 @@ export default function UserManagementPage() {
             ]}
             style={{ marginLeft: '1rem' }}
           />
-          <Button variant="filled" ml="md" onClick={handleAddUser}>
+          <Button
+            variant="filled"
+            ml="md"
+            onClick={handleAddUser}
+            style={{ backgroundColor: '#59B6C7', color: 'white' }}
+          >
             Add User
           </Button>
         </Group>
