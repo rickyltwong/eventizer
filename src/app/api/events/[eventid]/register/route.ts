@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       ticketType,
       price,
       purchaseDate: new Date(),
-      participating: 'true',
+      participating: 'false',
       status: 'Registered',
     });
 
