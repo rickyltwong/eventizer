@@ -3,10 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/connectDB';
 import Ticket from '@/models/Ticket';
 
-const r = connectDB();
-console.log('db connected! ' + JSON.stringify(r));
-
 export async function GET(req: NextRequest): Promise<NextResponse | undefined> {
+  await connectDB();
   try {
     const { searchParams } = new URL(req.url);
     const eventId = searchParams.get('event');
@@ -41,6 +39,7 @@ export async function GET(req: NextRequest): Promise<NextResponse | undefined> {
 export async function POST(
   request: NextRequest,
 ): Promise<NextResponse | undefined> {
+  await connectDB();
   try {
     const reqBody = await request.json();
     const {
@@ -95,6 +94,7 @@ export async function POST(
 export async function DELETE(
   req: NextRequest,
 ): Promise<NextResponse | undefined> {
+  await connectDB();
   try {
     const reqBody = await req.json();
     const { id } = reqBody;
@@ -120,6 +120,7 @@ export async function DELETE(
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse | undefined> {
+  await connectDB();
   try {
     const reqBody = await req.json();
     const { id, ...updateData } = reqBody;

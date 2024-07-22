@@ -1,4 +1,4 @@
-import { model, models, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 import { IEvent, IEventAddress } from '@/types';
 
@@ -33,6 +33,6 @@ const EventSchema = new Schema<IEvent>(
   { timestamps: true },
 );
 
-export default models.Event || model('Event', EventSchema);
+export default mongoose.models.Event || mongoose.model('Event', EventSchema);
 
 // Ref: https://github.com/vercel/next.js/blob/canary/examples/with-mongodb-mongoose/models/Pet.ts
