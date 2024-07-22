@@ -33,6 +33,7 @@ export async function GET(request: NextRequest) {
 
     const userId = user._id;
     // const userId = '669c27ac08ed9ab87f2080d0';
+    console.log(`user: ${userId}`);
 
     const userTickets = await EventTicket.aggregate([
       {
