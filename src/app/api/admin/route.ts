@@ -3,6 +3,8 @@ import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/connectDB';
 import User from '@/models/User';
 
+export const revalidate = 0;
+
 export async function GET() {
   await dbConnect();
   const users = await User.find({});

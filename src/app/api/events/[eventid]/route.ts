@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/connectDB';
 import Events from '@/models/Event';
 
+export const revalidate = 0;
+
 type Params = {
   eventid: string;
 };

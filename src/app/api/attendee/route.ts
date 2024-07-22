@@ -3,6 +3,8 @@ import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/connectDB';
 import eventTicket from '@/models/EventTicket';
 
+export const revalidate = 0;
+
 export async function PUT(req: NextRequest) {
   await dbConnect();
   const reqBody = await req.json();

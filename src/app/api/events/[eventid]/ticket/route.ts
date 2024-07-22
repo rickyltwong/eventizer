@@ -7,6 +7,8 @@ import dbConnect from '@/lib/connectDB';
 import EventTicket from '@/models/EventTicket';
 import User from '@/models/User';
 
+export const revalidate = 0;
+
 type Params = {
   eventid: string;
 };

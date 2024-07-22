@@ -4,6 +4,8 @@ import dbConnect from '@/lib/connectDB';
 import Events from '@/models/Event';
 import { IEvent } from '@/types';
 
+export const revalidate = 0;
+
 export async function GET() {
   await dbConnect();
 
