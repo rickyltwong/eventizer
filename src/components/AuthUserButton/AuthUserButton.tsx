@@ -22,7 +22,7 @@ import {
 import {
   IconChevronDown,
   IconLogout,
-  IconSettings,
+  // IconSettings,
   IconUser,
 } from '@tabler/icons-react';
 import cx from 'clsx';
@@ -99,7 +99,7 @@ export default function UserButton() {
           Profile
         </Menu.Item>
 
-        <Menu.Label>Settings</Menu.Label>
+        {/* <Menu.Label>Settings</Menu.Label>
         <Menu.Item
           component={NextLink}
           href="/u"
@@ -111,7 +111,7 @@ export default function UserButton() {
           }
         >
           Account settings
-        </Menu.Item>
+        </Menu.Item> */}
 
         <Menu.Item
           leftSection={
