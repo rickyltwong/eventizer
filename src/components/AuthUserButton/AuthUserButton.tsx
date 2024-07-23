@@ -87,7 +87,7 @@ export default function UserButton() {
       <Menu.Dropdown>
         <Menu.Item
           component={NextLink}
-          href="/registration-history"
+          href="/user/registration-history"
           leftSection={
             <IconUser
               style={{ width: rem(16), height: rem(16) }}

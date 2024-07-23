@@ -50,8 +50,10 @@ export default function Page() {
             },
           );
           const favoriteEvents = response.data;
-          // setLiked(favoriteEvents.some((event: any) => event._id === eventId));
-          setEvents(favoriteEvents);
+
+          if (favoriteEvents.length > 0) {
+            setEvents(favoriteEvents);
+          }
           const pageCount = Math.ceil(favoriteEvents.length / itemsPerPage);
           setPageCount(pageCount);
 
@@ -66,7 +68,7 @@ export default function Page() {
       }
     };
     fetchFavorites();
-  }, [session?.user, itemsPerPage]);
+  }, []);
 
   const paginatedEvents = events.slice(
     (currentPage - 1) * itemsPerPage,

@@ -15,7 +15,6 @@ type Params = {
 export async function GET(req: NextRequest) {
   await dbConnect();
 
-  console.log('getCalled');
   const { searchParams } = new URL(req.url);
   const email = searchParams.get('email');
 
@@ -39,7 +38,7 @@ export async function GET(req: NextRequest) {
       'events',
     );
     if (!userFavorites) {
-      return NextResponse.json({ events: [] }, { status: 200 });
+      return NextResponse.json([], { status: 200 });
     }
     return NextResponse.json(userFavorites.events, { status: 200 });
   } catch (error) {

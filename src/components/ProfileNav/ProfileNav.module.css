@@ -1,9 +1,9 @@
 .navbar {
   height: 200vh;
-  /* width: rem(300px); */
+
   width: 25%;
   padding: var(--mantine-spacing-md);
-  /* margin-top: -3.5rem; */
+
   position: fixed;
   display: flex;
   flex-direction: column;
