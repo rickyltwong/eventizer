@@ -74,6 +74,7 @@ export async function GET(request: NextRequest) {
 
     userData.eventHistory.push(eventData._id);
 
+    ticketData.participating = 'true';
     ticketData.status = 'Attended';
 
     await userData.save();
