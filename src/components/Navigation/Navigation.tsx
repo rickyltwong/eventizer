@@ -19,7 +19,7 @@ const mockdata = [
   {
     title: 'Dashboard',
     links: [
-      { label: 'Home', icon: IconChartBar, link: PATH_DASHBOARD.default },
+      { label: 'Analytics', icon: IconChartBar, link: PATH_DASHBOARD.default },
       {
         label: 'Events',
         icon: IconCalendarEvent,
@@ -93,7 +93,11 @@ const Navigation = ({ onClose }: NavigationProps) => {
             <Logo className={classes.logo} />
           </Group>
           {tablet_match && (
-            <ActionIcon onClick={onClose} variant="transparent">
+            <ActionIcon
+              onClick={onClose}
+              // variant="transparent"
+              variant="subtle"
+            >
               <IconX color="white" />
             </ActionIcon>
           )}

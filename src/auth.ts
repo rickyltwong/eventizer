@@ -85,14 +85,20 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     async redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? url : baseUrl;
     },
-    async jwt({ token, user, account, profile, trigger }) {
-      console.log('jwt callback START ---------', {
-        token,
-        user,
-        account,
-        profile,
-        trigger,
-      });
+    async jwt({
+      token,
+      user,
+      account,
+      // profile,
+      trigger,
+    }) {
+      // console.log('jwt callback START ---------', {
+      //   token,
+      //   user,
+      //   account,
+      //   profile,
+      //   trigger,
+      // });
 
       if (user) {
         token.id = user.id as string;

@@ -97,6 +97,7 @@ export default function AttendeesTable({
                       handleStatusChange(attendee._id, value ?? attendee.status)
                     }
                     data={[
+                      { value: 'Attended', label: 'Attended' },
                       { value: 'Registered', label: 'Registered' },
                       { value: 'Pending', label: 'Pending' },
                       { value: 'Cancelled', label: 'Cancelled' },

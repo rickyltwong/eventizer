@@ -1,50 +1,60 @@
 import '@mantine/core/styles.css';
-// import { Libre_Franklin } from 'next/font/google';
-// import { Chivo } from 'next/font/google';
-// const libre_franklin = Libre_Franklin({
-//   subsets: ['latin'],
-//   display: 'swap',
-//   variable: '--font-libre_franklin',
-// });
-// const chivo = Chivo({
-//   subsets: ['latin'],
-//   display: 'swap',
-//   variable: '--font-chivo',
-// });
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/tiptap/styles.css';
+import '@mantine/carousel/styles.css';
+import '@mantine/notifications/styles.css';
+import 'mantine-datatable/styles.layer.css';
 import '@/app/globals.css';
 
 import {
   ColorSchemeScript,
-  MantineColorsTuple,
+  // MantineColorsTuple,
   MantineProvider,
 } from '@mantine/core';
-// const inter = Inter({ subsets: ["latin"] });
 import { createTheme } from '@mantine/core';
 import type { Metadata } from 'next';
 
+// const myColor: MantineColorsTuple = [
+//   '#e1f9ff',
+//   '#ccedff',
+//   '#9ad7ff',
+//   '#64c1ff',
+//   '#3baefe',
+//   '#20a2fe',
+//   '#099cff',
+//   '#0088e4',
+//   '#0078cd',
+//   '#0069b6',
+// ];
+// const theme = createTheme({
+//   colors: {
+//     myColor,
+//   },
+// });
+// import { ActionIcon, Loader } from '@mantine/core';
+// import Head from 'next/head';
 import { auth } from '@/auth';
 import { AuthProvider } from '@/context/AuthProvider';
-// import type { Session } from 'next-auth';
-
-// import { auth } from '@/auth';
-
-const myColor: MantineColorsTuple = [
-  '#e1f9ff',
-  '#ccedff',
-  '#9ad7ff',
-  '#64c1ff',
-  '#3baefe',
-  '#20a2fe',
-  '#099cff',
-  '#0088e4',
-  '#0078cd',
-  '#0069b6',
-];
 
 const theme = createTheme({
-  colors: {
-    myColor,
-  },
+  // primaryColor: 'indigo',
+  defaultRadius: 'md',
+  focusRing: 'always',
+  // fontFamily: 'Open Sans, sans-serif',
+  headings: { fontFamily: 'Open Sans, sans-serif' },
+  // components: {
+  //   ActionIcon: ActionIcon.extend({
+  //     defaultProps: {
+  //       variant: 'subtle',
+  //     },
+  //   }),
+  //   Loader: Loader.extend({
+  //     defaultProps: {
+  //       type: 'bars',
+  //     },
+  //   }),
+  // },
 });
 
 export const metadata: Metadata = {
@@ -65,11 +75,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript />
+        {/* <title>Eventizer</title>
+        <link rel="image/png" href="/logo-wbg.png" sizes="1000x1000" />
+        <meta
+          name="description"
+          content="Events and Tickets Management System"
+        /> */}
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
+        <ColorSchemeScript />
       </head>
       <body>
         <MantineProvider theme={theme}>

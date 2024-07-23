@@ -45,7 +45,7 @@ const HeaderNav = (props: HeaderNavProps) => {
     <Group justify="space-between">
       <Group gap={0}>
         <Tooltip label="Toggle side navigation">
-          <ActionIcon visibleFrom="md" onClick={toggleDesktop}>
+          <ActionIcon visibleFrom="md" onClick={toggleDesktop} variant="subtle">
             {desktopOpened ? (
               <IconLayoutSidebarLeftCollapse />
             ) : (
@@ -77,7 +77,7 @@ const HeaderNav = (props: HeaderNavProps) => {
         )}
 
         <Tooltip label="Logout">
-          <ActionIcon>
+          <ActionIcon variant="subtle">
             <IconPower size={ICON_SIZE} />
           </ActionIcon>
         </Tooltip>

@@ -138,12 +138,12 @@ const Dashboard = () => {
       // Fetch event data
       const response = await fetch('/api/events');
       const eventData: Event[] = await response.json();
-      console.log('Events:', eventData);
+      // console.log('Events:', eventData);
 
       // Fetch ticket sales data
       const response2 = await fetch('/api/admin2');
       const ticketData: EventTicket[] = await response2.json();
-      console.log('Ticket Sales:', ticketData);
+      // console.log('Ticket Sales:', ticketData);
 
       // Filter events by selected type and date range
       const filteredEvents = eventData.filter((event) => {
@@ -191,7 +191,7 @@ const Dashboard = () => {
       // Fetch user data
       const response3 = await fetch('/api/admin');
       const user: User[] = await response3.json();
-      console.log('Users:', user);
+      // console.log('Users:', user);
 
       //Calculate Users numbers
       const userCount = user.length;
@@ -237,7 +237,7 @@ const Dashboard = () => {
       // Fetch event data
       const response = await fetch('/api/events');
       const eventData: Event[] = await response.json();
-      console.log('Events:', eventData);
+      // console.log('Events:', eventData);
 
       // Filter events by date range
       const filteredEvents = eventData.filter((event) => {

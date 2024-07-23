@@ -46,7 +46,7 @@ type Status = 'upcoming' | 'cancelled' | 'expired' | 'ongoing';
 type ProjectsCardProps = {
   _id: string;
   onDelete: (id: string) => void;
-  onUpdate: (event: EventFormValues) => void;
+  onUpdate: (event: EventFormValues) => Promise<void>;
 } & EventFormValues &
   Omit<PaperProps, 'children'>;
 

@@ -5,6 +5,8 @@ import Events from '@/models/Event';
 import EventTicket from '@/models/EventTicket';
 import User from '@/models/User';
 
+export const revalidate = 0;
+
 export async function GET(request: NextRequest) {
   await dbConnect();
   try {

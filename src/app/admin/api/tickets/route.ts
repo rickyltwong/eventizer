@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/connectDB';
 import Ticket from '@/models/Ticket';
 
+export const revalidate = 0;
+
 export async function GET(req: NextRequest): Promise<NextResponse | undefined> {
   await connectDB();
   try {
@@ -99,7 +101,7 @@ export async function DELETE(
     const reqBody = await req.json();
     const { id } = reqBody;
     const r = await Ticket.findByIdAndDelete(id);
-    console.log(r);
+    // console.log(r);
     return new NextResponse(JSON.stringify(r), {
       status: 200,
       headers: {

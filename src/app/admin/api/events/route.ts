@@ -3,10 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/connectDB';
 import Event from '@/models/Event';
 
+export const revalidate = 0;
+
 export async function GET() {
   await connectDB();
   const events = await Event.find({});
-  console.log(events);
+  // console.log(events);
   return new Response(JSON.stringify(events), {
     status: 200,
     headers: {

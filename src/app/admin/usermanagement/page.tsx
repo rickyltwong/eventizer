@@ -49,7 +49,7 @@ export default function UserManagementPage() {
   }, []);
 
   // Filter users based on search term and filter status
-  console.log(users);
+  // console.log(users);
   const filteredUsers = users.filter((user) => {
     const matchesSearchTerm = user.name
       ? user.name.toLowerCase().includes(searchTerm.toLowerCase())

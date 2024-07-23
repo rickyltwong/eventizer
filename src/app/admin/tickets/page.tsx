@@ -29,7 +29,7 @@ const PAPER_PROPS: PaperProps = {
   radius: 'md',
 };
 
-function Page() {
+export default function Page() {
   const {
     data: ordersData,
     loading: ordersLoading,
@@ -38,8 +38,8 @@ function Page() {
 
   return (
     <>
-      <Container>
-        <Stack>
+      <Container fluid>
+        <Stack gap="lg">
           <PageHeader title="Tickets" breadcrumbItems={items} />
           <Paper {...PAPER_PROPS}>
             <Group justify="space-between" mb="md">
@@ -61,5 +61,3 @@ function Page() {
     </>
   );
 }
-
-export default Page;

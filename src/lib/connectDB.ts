@@ -1,3 +1,9 @@
+import '../models/Event';
+import '../models/EventTicket';
+// import '../models/Ticket';
+import '../models/User';
+import '../models/UserFavorite';
+
 import mongoose from 'mongoose';
 
 const DATABASE_CONN = process.env.DATABASE_CONN!;
@@ -21,6 +27,7 @@ const connectDB = async (): Promise<void> => {
 
     connection.on('connected', () => {
       console.log('MongoDB connected successfully');
+      require('../models');
     });
 
     connection.on('error', (err) => {

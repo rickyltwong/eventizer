@@ -1,48 +1,24 @@
 'use client';
 
-import './globals.css';
-
 import { AppShell, Container, rem, useMantineTheme } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-// import { Open_Sans } from 'next/font/google';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 
 import AppMain from '@/components/AppMain';
 import HeaderNav from '@/components/HeaderNav';
 import Navigation from '@/components/Navigation';
 
-// const openSans = Open_Sans({
-//   subsets: ['latin'],
-//   display: 'swap',
-// });
-
 type Props = {
   children: ReactNode;
 };
 
-export default function AppsLayout({ children }: Props) {
+function AppsLayout({ children }: Props) {
   const theme = useMantineTheme();
   const tablet_match = useMediaQuery('(max-width: 768px)');
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (
-      !session ||
-      (session?.user?.email && !session.user.email.endsWith('@admin.com'))
-    ) {
-      router.push('/');
-    }
-  }, [session, router]);
-
-  return !session ||
-    (session?.user?.email &&
-      !session.user.email.endsWith('@admin.com')) ? null : (
+  return (
     <AppShell
       layout="alt"
       header={{ height: 60 }}
@@ -79,3 +55,5 @@ export default function AppsLayout({ children }: Props) {
     </AppShell>
   );
 }
+
+export default AppsLayout;
