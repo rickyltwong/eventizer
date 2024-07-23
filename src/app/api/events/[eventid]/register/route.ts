@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import QRCode from 'qrcode';
 
+import { transporter } from '@/app/api/events/[eventid]/register/MailService';
 import dbConnect from '@/lib/connectDB';
+import Events from '@/models/Event';
 import EventTicket from '@/models/EventTicket';
 import User from '@/models/User';
 
@@ -14,6 +17,13 @@ export async function POST(request: NextRequest) {
       email: userId,
     });
 
+    const opts: QRCode.QRCodeToDataURLOptions = {
+      errorCorrectionLevel: 'H',
+      type: 'image/jpeg',
+      width: 800,
+      margin: 1,
+    };
+
     if (!userData) {
       console.log('User data not found from DB');
       return NextResponse.json(
@@ -26,6 +36,8 @@ export async function POST(request: NextRequest) {
       user: userData._id,
       event: eventId,
     });
+
+    const eventData = await Events.findById(eventId);
 
     if (ticketInDb) {
       console.log('You have already registered for the event');
@@ -46,7 +58,28 @@ export async function POST(request: NextRequest) {
       status: 'Registered',
     });
 
-    await ticket.save();
+    const hostUrl = process.env.AUTH_URL;
+
+    const ticketData = await ticket.save();
+
+    const qrCodeImage = await QRCode.toDataURL(
+      hostUrl +
+        'api/events/' +
+        ticketData.event +
+        '/attendance?userId=' +
+        ticketData.user +
+        '&ticketId=' +
+        ticketData._id,
+      opts,
+    );
+
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: `${userData.email}`,
+      subject: `${eventData.eventName} Ticket`,
+      text: 'Thank you for registering for the event',
+      html: `<p>Thank you for registering for the event. Please find your QR Code below:</p><img src='${qrCodeImage}' alt='QR Code' />`,
+    });
 
     return NextResponse.json({
       message: 'Event registered successfully',
