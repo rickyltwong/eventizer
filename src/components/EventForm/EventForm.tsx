@@ -15,7 +15,7 @@ import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { DropzoneButton } from '@/components';
+// import { DropzoneButton } from '@/components';
 import { EventFormValues } from '@/types/event';
 
 interface EventFormProps {
@@ -32,15 +32,10 @@ const difficulties = [
 ];
 
 const types = [
-  { value: 'workshop', label: 'Workshop' },
-  { value: 'seminar', label: 'Seminar' },
-  { value: 'course', label: 'Course' },
+  { value: 'Fitness', label: 'Fitness' },
+  { value: 'Yoga', label: 'Yoga' },
+  { value: 'Meditation', label: 'Meditation' },
 ];
-
-// const ticketTypes = [
-//   { value: 'general', label: 'General' },
-//   { value: 'vip', label: 'VIP' },
-// ];
 
 const EventForm = ({
   onAddEvent,
@@ -49,7 +44,6 @@ const EventForm = ({
   initialValues,
 }: EventFormProps) => {
   const [notification, setNotification] = useState({ message: '', color: '' });
-  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const form = useForm<EventFormValues>({
     initialValues: initialValues || {
@@ -90,34 +84,20 @@ const EventForm = ({
     }
   }, [initialValues]);
 
-  useEffect(() => {
-    if (initialValues) {
-      form.setValues({
-        ...initialValues,
-        eventAddress: {
-          ...form.values.eventAddress,
-          ...initialValues.eventAddress,
-        },
-      });
-    }
-  }, [initialValues]);
-
-  const handleFileUpload = (file: File) => {
-    setImageFile(file);
-  };
-
   const handleSubmit = async (values: EventFormValues) => {
     try {
       let imageUrl = '';
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append('file', imageFile);
-        const uploadResponse = await axios.post('/admin/api/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        imageUrl = uploadResponse.data.imageUrl;
+
+      // Assign predefined image URL based on event type
+      if (values.eventType === 'Yoga') {
+        imageUrl =
+          'https://plus.unsplash.com/premium_photo-1713908274754-4610e1ca3a89?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+      } else if (values.eventType === 'Meditation') {
+        imageUrl =
+          'https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+      } else {
+        imageUrl =
+          'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
       }
 
       const eventResponse = await axios.post('/admin/api/events', {
@@ -187,7 +167,6 @@ const EventForm = ({
           {...form.getInputProps('eventDescription')}
           mb="sm"
         />
-        <DropzoneButton onFileUpload={handleFileUpload} />
         <TextInput
           label="Venue"
           placeholder="Enter event venue"

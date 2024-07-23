@@ -68,7 +68,7 @@ export async function DELETE(req: NextRequest) {
   const reqBody = await req.json();
   const { id } = reqBody;
   const r = await Event.findByIdAndDelete(id);
-  console.log(r);
+  // console.log(r);
   return new Response(JSON.stringify(r), {
     status: 200,
     headers: {

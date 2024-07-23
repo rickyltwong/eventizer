@@ -51,11 +51,13 @@ function Events() {
     if (events) {
       setEventList(events);
     }
-  }, [events]);
+  }, [events, eventList]);
 
   const handleAddEvent = async (newEvent: EventFormValues) => {
+    console.log(newEvent);
     try {
-      const response = await axios.post('/admin/api/events', newEvent);
+      // const response = await axios.post('/admin/api/events', newEvent);
+      const response = await axios.get('/admin/api/events');
       setEventList((prevEvents) => [...prevEvents, response.data]);
       setNotification({
         message: 'Event created successfully!',
