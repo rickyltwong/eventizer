@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
 import dbConnect from '@/lib/connectDB';
@@ -24,7 +25,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const ticketData = await EventTicket.findById(ticketId);
+    const ticketData = await EventTicket.findById(new ObjectId(ticketId));
     if (!ticketData) {
       const warningContent = generateHTMLContent(
         'Ticket not found. Please contact our admin.',
@@ -60,7 +61,9 @@ export async function GET(request: NextRequest) {
     if (!userData.eventHistory) {
       userData.eventHistory = [];
     }
-    const isAlreadyAttend = userData.eventHistory.includes(eventData._id);
+    const isAlreadyAttend = userData.eventHistory.includes(
+      new ObjectId(eventData._id),
+    );
 
     if (isAlreadyAttend) {
       const warningContent = generateHTMLContent(
@@ -72,7 +75,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    userData.eventHistory.push(eventData._id);
+    userData.eventHistory.push(new ObjectId(eventData._id));
 
     ticketData.participating = 'true';
     ticketData.status = 'Attended';

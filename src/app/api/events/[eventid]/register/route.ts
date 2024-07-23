@@ -39,6 +39,14 @@ export async function POST(request: NextRequest) {
 
     const eventData = await Events.findById(eventId);
 
+    if (!eventData) {
+      console.log('Event data not found from DB');
+      return NextResponse.json(
+        { error: 'Event data not found from DB' },
+        { status: 400 },
+      );
+    }
+
     if (ticketInDb) {
       console.log('You have already registered for the event');
       return NextResponse.json(
