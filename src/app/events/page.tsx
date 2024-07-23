@@ -89,39 +89,97 @@ export default function Page(): JSX.Element {
   );
 
   // Fetch events
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     try {
+  //       const response = await axios.get('/api/events');
+  //       setEvents(response.data);
+
+  //       const filtered = response.data
+  //         .filter((event: IEvent) => {
+  //           if (inclCategory.length === 0) {
+  //             return true;
+  //           }
+  //           return inclCategory.includes(event.eventType);
+  //         })
+  //         .sort(
+  //           (
+  //             a: { eventStartDateTime: string | number | Date },
+  //             b: { eventStartDateTime: string | number | Date },
+  //           ) => {
+  //             return (
+  //               new Date(b.eventStartDateTime).getTime() -
+  //               new Date(a.eventStartDateTime).getTime()
+  //             );
+  //           },
+  //         );
+
+  //       const pageCount = Math.ceil(filtered.length / itemsPerPage);
+  //       setPageCount(pageCount);
+
+  //       const adjustedCurrentPage = Math.min(
+  //         Math.max(currentPage, 1),
+  //         pageCount,
+  //       );
+  //       setCurrentPage(adjustedCurrentPage);
+  //     } catch (error) {
+  //       console.error('Failed to fetch events:', error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchEvents();
+  // }, [inclCategory, itemsPerPage]);
+
+  // Fetch events with available tickets
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('/api/events');
-        setEvents(response.data);
+        const [eventsResponse, ticketsResponse] = await Promise.all([
+          axios.get('/api/events'),
+          axios.get('/admin/api/tickets'),
+        ]);
 
-        const filtered = response.data
-          .filter((event: IEvent) => {
+        const eventsData = eventsResponse.data;
+        const ticketsData = ticketsResponse.data;
+
+        const eventsWithAvailableTickets: IEvent[] = eventsData.filter(
+          (event: IEvent) => {
+            return ticketsData.some(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (ticket: any) =>
+                ticket.event._id === event._id && ticket.status === 'Available',
+            );
+          },
+        );
+
+        const filteredEvents: IEvent[] = eventsWithAvailableTickets
+          .filter((event) => {
             if (inclCategory.length === 0) {
               return true;
             }
             return inclCategory.includes(event.eventType);
           })
-          .sort(
-            (
-              a: { eventStartDateTime: string | number | Date },
-              b: { eventStartDateTime: string | number | Date },
-            ) => {
-              return (
-                new Date(b.eventStartDateTime).getTime() -
-                new Date(a.eventStartDateTime).getTime()
-              );
-            },
-          );
+          .sort((a, b) => {
+            return (
+              new Date(b.eventStartDateTime).getTime() -
+              new Date(a.eventStartDateTime).getTime()
+            );
+          });
 
-        const pageCount = Math.ceil(filtered.length / itemsPerPage);
-        setPageCount(pageCount);
+        const calculatedPageCount = Math.ceil(
+          filteredEvents.length / itemsPerPage,
+        );
+        setPageCount(calculatedPageCount);
 
         const adjustedCurrentPage = Math.min(
           Math.max(currentPage, 1),
-          pageCount,
+          calculatedPageCount,
         );
         setCurrentPage(adjustedCurrentPage);
+
+        setEvents(filteredEvents);
       } catch (error) {
         console.error('Failed to fetch events:', error);
       } finally {
@@ -130,7 +188,7 @@ export default function Page(): JSX.Element {
     };
 
     fetchEvents();
-  }, [inclCategory, itemsPerPage]);
+  }, [inclCategory, itemsPerPage, currentPage]);
 
   // Get user location
   useEffect(() => {
