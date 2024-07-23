@@ -32,22 +32,22 @@ export default function UsersTable({
     null,
   );
 
-  const handleRoleChange = (id: number, newRole: string) => {
-    onRoleChange(id, newRole);
+  const handleRoleChange = async (id: number, newRole: string) => {
+    await onRoleChange(id, newRole);
     setEditingUserRole(null);
   };
 
-  const handleStatusChange = (id: number, newStatus: string) => {
-    onStatusChange(id, newStatus);
+  const handleStatusChange = async (id: number, newStatus: string) => {
+    await onStatusChange(id, newStatus);
     setEditingUserStatus(null);
   };
 
-  const handleDeleteUser = (id: number) => {
-    onDeleteUser(id);
+  const handleDeleteUser = async (id: number) => {
+    await onDeleteUser(id);
   };
 
-  const handleSaveUser = (newUser: User) => {
-    onSaveUser(newUser);
+  const handleSaveUser = async (newUser: User) => {
+    await onSaveUser(newUser);
   };
 
   return (

@@ -5,6 +5,7 @@ import type { IUser } from '@/types';
 const userSchema: Schema<IUser> = new mongoose.Schema(
   {
     email: { type: String, unique: true },
+    _id: { type: mongoose.Schema.Types.ObjectId },
     password: { type: String },
     firstName: { type: String },
     lastName: { type: String },

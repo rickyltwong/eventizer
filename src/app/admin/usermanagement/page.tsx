@@ -23,8 +23,7 @@ export interface User {
   authentication: {
     provider: string;
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  image: any;
+  image: string;
 }
 
 export default function UserManagementPage() {
@@ -131,7 +130,7 @@ export default function UserManagementPage() {
     }
   };
 
-  const handleAddUser = async () => {
+  const handleAddUser = () => {
     setNewUser({
       _id: Math.random(),
       name: '',

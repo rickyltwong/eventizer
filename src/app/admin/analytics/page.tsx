@@ -18,7 +18,6 @@ import {
   Chart as ChartJS,
   Legend,
   LinearScale,
-  Tooltip,
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useEffect, useState } from 'react';
@@ -29,7 +28,6 @@ ChartJS.register(
   BarElement,
   CategoryScale,
   LinearScale,
-  Tooltip,
   Legend,
   ArcElement,
   ChartDataLabels,
@@ -40,10 +38,8 @@ interface Event {
   eventType: string;
   eventName: string;
   capacity: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  eventStartDateTime: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  eventFinishDateTime: any;
+  eventStartDateTime: string;
+  eventFinishDateTime: string;
   ticketsClasses: {
     ticketType: string;
     availability: number;
@@ -133,7 +129,7 @@ const Dashboard = () => {
     fetchPieData();
   }, [startDate, endDate]);
 
-  async function fetchBarData() {
+  async function fetchBarData(): Promise<void> {
     try {
       // Fetch event data
       const response = await fetch('/api/events');
@@ -165,35 +161,12 @@ const Dashboard = () => {
       }, 0);
       setTotalSales(totalSales);
 
-      // Calculate remaining seats and total capacity
-      // const eventTypes = Array.from(
-      //   new Set(eventData.map((event) => event.eventType)),
-      // );
-      // const remainingSeats = eventTypes.map((type) =>
-      //   eventData
-      //     .filter((event) => event.eventType === type)
-      //     .reduce(
-      //       (acc, event) =>
-      //         acc +
-      //         Math.max(
-      //           0,
-      //           event.capacity - calculateSoldTickets(event, ticketData),
-      //         ),
-      //       0,
-      //     ),
-      // );
-      // const totalCapacity = eventTypes.map((type) =>
-      //   eventData
-      //     .filter((event) => event.eventType === type)
-      //     .reduce((acc, event) => acc + event.capacity, 0),
-      // );
-
       // Fetch user data
       const response3 = await fetch('/api/admin');
       const user: User[] = await response3.json();
       // console.log('Users:', user);
 
-      //Calculate Users numbers
+      // Calculate Users numbers
       const userCount = user.length;
       setUserCount(userCount);
 
@@ -232,7 +205,7 @@ const Dashboard = () => {
     }
   }
 
-  async function fetchPieData() {
+  async function fetchPieData(): Promise<void> {
     try {
       // Fetch event data
       const response = await fetch('/api/events');
@@ -337,7 +310,7 @@ const Dashboard = () => {
       </Group>
 
       {/* Date Range Pickers */}
-      <Group my="lg" style={{ color: '#59B6C7', alignContent: 'center' }}>
+      <Group my="lg" style={{ color: '#59B6C7' }}>
         <Box style={{ margin: '0 10px' }}>
           <Text style={{ color: 'black' }}>Select Start Date:</Text>
           <DatePicker
