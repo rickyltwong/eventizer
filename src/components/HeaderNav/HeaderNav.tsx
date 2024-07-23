@@ -5,8 +5,8 @@ import {
   Burger,
   Group,
   Menu,
-  rem,
-  TextInput,
+  // rem,
+  // TextInput,
   Tooltip,
   useMantineColorScheme,
 } from '@mantine/core';
@@ -20,6 +20,8 @@ import {
   IconSearch,
   IconSunHigh,
 } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 const ICON_SIZE = 20;
 
@@ -34,12 +36,14 @@ const HeaderNav = (props: HeaderNavProps) => {
   const { desktopOpened, toggleDesktop, toggleMobile, mobileOpened } = props;
   const { setColorScheme, colorScheme } = useMantineColorScheme();
   // const laptop_match = useMediaQuery('(max-width: 992px)');
-  const tablet_match = useMediaQuery('(max-width: 768px)');
+  // const tablet_match = useMediaQuery('(max-width: 768px)');
   const mobile_match = useMediaQuery('(max-width: 425px)');
 
   // const handleColorSwitch = (mode: 'light' | 'dark' | 'auto') => {
   //   setColorScheme(mode);
   // };
+
+  const router = useRouter();
 
   return (
     <Group justify="space-between">
@@ -60,14 +64,14 @@ const HeaderNav = (props: HeaderNavProps) => {
           size="sm"
         />
         {/*<Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="md" size="sm"/>*/}
-        {!mobile_match && (
+        {/* {!mobile_match && (
           <TextInput
             placeholder="search"
             rightSection={<IconSearch size={ICON_SIZE} />}
             ml="md"
             style={{ width: tablet_match ? 'auto' : rem(400) }}
           />
-        )}
+        )} */}
       </Group>
       <Group>
         {mobile_match && (
@@ -77,7 +81,13 @@ const HeaderNav = (props: HeaderNavProps) => {
         )}
 
         <Tooltip label="Logout">
-          <ActionIcon variant="subtle">
+          <ActionIcon
+            variant="subtle"
+            onClick={() => {
+              signOut();
+              router.push('/events');
+            }}
+          >
             <IconPower size={ICON_SIZE} />
           </ActionIcon>
         </Tooltip>
