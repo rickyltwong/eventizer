@@ -68,9 +68,9 @@ This is an implementation of a generic event management platform called "Eventiz
 
 #### Features
 
-- Users and Attendees Management
-- Events Statistics
--
+- Events Analytics: Dashboard to analyze running events and their sales trends and remainig seats by events types and dates.
+- Users Management : Manage all users and change their status or role
+- Attendees Management: Manage all user registered for events and check-in status or registration status 
 
 #### Related Pages and APIs
 
@@ -78,12 +78,14 @@ This is an implementation of a generic event management platform called "Eventiz
 - `/admin/usermanagement` - User management page
 - `/admin/attendee` - Attendees management page
 
-- `GET, POST, PUT, DELETE /api/admin` - GET all users or a certain user
-- `GET, POST, PUT, DELETE /api/attendee` - Manage attendees
+- `GET, POST, PUT, DELETE /api/admin` - Change in users or a certain user
+- `POST, PUT, DELETE /api/attendee` - Manage attendees and Check-in for a sepecific event and user
+- `GET /api/attendee` -Get EventTickets and Merge by User and /api/events Event
+- `GET /api/admin2`  -Ticket Sales for analytics
 -
-
 #### Learning Curves
-
+- Handling caching in fetch parts and dynamic pages
+  
 #### Challenges and Solutions
 
 ### Emma Zhang
