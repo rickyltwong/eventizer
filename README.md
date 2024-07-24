@@ -173,6 +173,11 @@ Full Stack development with TypeScript and Next.js
 - Managing state with useState, useEffect, and other React hooks
 
 #### Challenges and Solutions
+- In development mode, the TypeScript compiler may not be as strict or certain type errors may be suppressed. However, during the production build, stricter type checking is enforced.
+ - Solution: Ensure all types are explicitly defined and that there are no implicit any types.
+- Limited experience with frontend development.
+- Difficulty in dynamically displaying server-side fetched data.
+ - Solution: Combining useState with useEffect to handle data fetching and updates.
 
 ## Demo
 
