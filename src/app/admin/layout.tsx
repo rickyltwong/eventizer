@@ -36,7 +36,7 @@ export default function AppsLayout({ children }: Props) {
       !session ||
       (session?.user?.email && !session.user.email.endsWith('@admin.com'))
     ) {
-      router.push('/');
+      router.replace('/');
     }
   }, [session, router]);
 

@@ -1,13 +1,3 @@
-// import { handleSignIn } from '@/actions';
-
-// export default function SignInButton() {
-//   return (
-//     <form action={handleSignIn}>
-//       <button type="submit">Sign in with Google</button>
-//     </form>
-//   );
-// }
-
 import { Button } from '@mantine/core';
 import { signIn } from 'next-auth/react';
 
@@ -15,7 +5,14 @@ import { signIn } from 'next-auth/react';
 
 export default function SignInButton() {
   return (
-    <Button variant="default" onClick={() => signIn()}>
+    <Button
+      variant="default"
+      onClick={() =>
+        signIn('email', {
+          callbackUrl: `${window.location.origin}/admin`,
+        })
+      }
+    >
       {' '}
       Log in{' '}
     </Button>

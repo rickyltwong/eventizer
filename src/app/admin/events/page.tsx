@@ -94,9 +94,16 @@ function Events() {
   const handleUpdateEvent = async (updatedEvent: EventFormValues) => {
     try {
       const { _id, ...updateData } = updatedEvent;
-      await axios.put('/admin/api/events', { id: _id, ...updateData });
-      const response = await axios.get('/api/events');
-      setEventList(response.data);
+      const response = await axios.put('/admin/api/events', {
+        id: _id,
+        ...updateData,
+      });
+      const updatedEventData = response.data.event;
+      setEventList((prevEvents) =>
+        prevEvents.map((event) =>
+          event._id === _id ? updatedEventData : event,
+        ),
+      );
       setNotification({
         message: 'Event updated successfully!',
         color: 'green',
