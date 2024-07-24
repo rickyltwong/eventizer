@@ -18,7 +18,7 @@ if (!DATABASE_CONN) {
 const connectDB = async (): Promise<void> => {
   try {
     if (mongoose.connection.readyState === 1) {
-      console.log('Already connected to MongoDB');
+      // console.log('Already connected to MongoDB');
       return;
     }
 

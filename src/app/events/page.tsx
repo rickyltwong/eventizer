@@ -144,15 +144,27 @@ export default function Page(): JSX.Element {
         const eventsData = eventsResponse.data;
         const ticketsData = ticketsResponse.data;
 
-        const eventsWithAvailableTickets: IEvent[] = eventsData.filter(
-          (event: IEvent) => {
-            return ticketsData.some(
+        const eventsWithAvailableTickets: IEvent[] = eventsData
+          .map((event: IEvent) => {
+            const availableTickets = ticketsData.filter(
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (ticket: any) =>
                 ticket.event._id === event._id && ticket.status === 'Available',
             );
-          },
-        );
+
+            if (availableTickets.length > 0) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              event.ticketsClasses = availableTickets.map((ticket: any) => ({
+                ticketType: ticket.type,
+                price: ticket.price,
+                benefits: 'Sovenir',
+                availability: ticket.status,
+              }));
+              return event;
+            }
+            return null;
+          })
+          .filter((event: IEvent) => event !== null) as IEvent[];
 
         const filteredEvents: IEvent[] = eventsWithAvailableTickets
           .filter((event) => {
