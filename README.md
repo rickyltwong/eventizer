@@ -50,13 +50,19 @@ This is an implementation of a generic event management platform called "Eventiz
 
 - User Sign-up
 - User Profile Panel
-- Event Registration Histroy and Status in User Profile
+- Event Registration History and Status in User Profile
 - Event favorites - like and unlike events in listing page
 
 #### Related Pages and APIs
 
-- `/signup` - Sign up page
--
+- `/auth/signup` - Sign up page
+- `/user/registration-history` - User registration history page
+- `/user/favorites` - User favorites page
+- POST `/api/auth/signup` - Create new User
+- GET `/api/user/[userId]/favorites` - fetch user favorite events
+- POST `/api/user/[userId]/favorites` - add a favorite event (like an event)
+- DELETE `/api/user/[userId]/favorites` - delete a favorite event (unlike an event)
+- GET `/api/user/[userId]/tickets` - fetch user registration history
 
 ### Bahare Ghasemi
 
