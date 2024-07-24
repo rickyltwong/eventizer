@@ -209,6 +209,7 @@ export default function UserManagementPage() {
             style={{ marginLeft: '1rem' }}
           />
           <Button
+            display="none"
             variant="filled"
             ml="md"
             onClick={handleAddUser}
