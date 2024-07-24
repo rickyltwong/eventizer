@@ -16,6 +16,7 @@ import { IconBrandGoogleFilled } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+// import { signIn } from 'next-auth/react';
 import classes from './signup.module.css';
 
 const Page = () => {
@@ -150,23 +151,6 @@ const Page = () => {
               mt="md"
             />
           </Group>
-          {/* <Select
-            size="sm"
-            mt="md"
-            required
-            comboboxProps={{ withinPortal: true }}
-            data={[
-              {
-                value: 'attendee',
-                label: 'I will be viewing and registering for events',
-              },
-              { value: 'organizer', label: 'I will be hosting events' },
-            ]}
-            placeholder="How would you like to use Eventizer?"
-            label="Role"
-            key={form.key('role')}
-            {...form.getInputProps('role')}
-          /> */}
           <Text c="red" ta="center" size="sm" mt={8}>
             By clicking ‘Create account’, I fully acknowledge Eventizer Terms of
             Service and Privacy Policy
@@ -202,6 +186,11 @@ const Page = () => {
           <Button
             leftSection={<IconBrandGoogleFilled size={14} />}
             variant="default"
+            onClick={() =>
+              router.push(
+                '/api/auth/signin?callbackUrl=' + encodeURIComponent('/events'),
+              )
+            }
           >
             Continue with Google
           </Button>

@@ -9,9 +9,10 @@ import {
   MantineColor,
   Text,
 } from '@mantine/core';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import EventRegistrationModal from '@/app/events/[eventid]/EventRegistrationModal';
 import { LikeButton } from '@/components';
@@ -52,6 +53,8 @@ export default function BadgeCard({ event }: { event: IEvent }) {
   const router = useRouter();
   const [isBookModalOpen, setBookModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<IEvent>();
+  const [isUserFavorite, setIsUserFavorite] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { data: session } = useSession();
   const handleShowDetails = (id: string) => {
@@ -102,70 +105,109 @@ export default function BadgeCard({ event }: { event: IEvent }) {
     setBookModalOpen(false);
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+    const checkLiked = async () => {
+      if (session?.user) {
+        try {
+          const response = await axios.get(
+            `/api/user/${session.user.id}/favourites`,
+            {
+              params: { email: session.user.email },
+            },
+          );
+
+          const favoriteEvents = response.data;
+          const favoriteMatch = favoriteEvents.filter(
+            (event: IEvent) => event._id === _id,
+          );
+          console.log('filtered favorite: ', favoriteMatch.length);
+          setIsUserFavorite(favoriteMatch.length > 0);
+
+          // set isLoading to false
+          setIsLoading(false);
+        } catch (error) {
+          console.error('Error fetching favorites:', error);
+        }
+      }
+    };
+    checkLiked();
+  }, [isUserFavorite]);
+
   return (
-    <>
-      <Card shadow="sm" withBorder radius="md" p="md" className={classes.card}>
-        <Card.Section className={classes.imageSection}>
-          <StatusBadge status={status} />
-          <Image
-            src={image}
-            alt={eventName}
-            height={180}
-            className={status === 'Expired' ? classes.dimmedImage : ''}
-          />
-        </Card.Section>
+    !isLoading && (
+      <>
+        <Card
+          shadow="sm"
+          withBorder
+          radius="md"
+          p="md"
+          className={classes.card}
+        >
+          <Card.Section className={classes.imageSection}>
+            <StatusBadge status={status} />
+            <Image
+              src={image}
+              alt={eventName}
+              height={180}
+              className={status === 'Expired' ? classes.dimmedImage : ''}
+            />
+          </Card.Section>
 
-        <Card.Section className={classes.section} mt="md">
-          <Group justify="apart">
-            <Text fz="h4" fw={700} truncate component="p">
-              {eventName}
+          <Card.Section className={classes.section} mt="md">
+            <Group justify="apart">
+              <Text fz="h4" fw={700} truncate component="p">
+                {eventName}
+              </Text>
+            </Group>
+            <Badge size="sm" variant="light">
+              {difficulty}
+            </Badge>
+            <Text fz="sm" mt="xs" c="gray">
+              {eventDate}
             </Text>
-          </Group>
-          <Badge size="sm" variant="light">
-            {difficulty}
-          </Badge>
-          <Text fz="sm" mt="xs" c="gray">
-            {eventDate}
-          </Text>
-        </Card.Section>
+          </Card.Section>
 
-        <Card.Section className={classes.section}>
-          <Text mt="md" className={classes.label} c="dimmed">
-            Available Ticket Classes
-          </Text>
-          <Group gap={7} mt={5}>
-            {features}
+          <Card.Section className={classes.section}>
+            <Text mt="md" className={classes.label} c="dimmed">
+              Available Ticket Classes
+            </Text>
+            <Group gap={7} mt={5}>
+              {features}
+            </Group>
+          </Card.Section>
+          <Group mt="xs">
+            {session?.user && (
+              <LikeButton eventId={_id} status={isUserFavorite}></LikeButton>
+            )}
+            <Button
+              radius="md"
+              variant="light"
+              style={{ flex: 1 }}
+              onClick={() => handleShowDetails(_id)}
+            >
+              Show details
+            </Button>
+            <Button
+              radius="md"
+              style={{ flex: 1 }}
+              onClick={() => {
+                setBookModalOpen(true);
+                setSelectedEvent(event);
+              }}
+            >
+              Book now
+            </Button>
           </Group>
-        </Card.Section>
-        <Group mt="xs">
-          {session?.user && <LikeButton eventId={_id}></LikeButton>}
-          <Button
-            radius="md"
-            variant="light"
-            style={{ flex: 1 }}
-            onClick={() => handleShowDetails(_id)}
-          >
-            Show details
-          </Button>
-          <Button
-            radius="md"
-            style={{ flex: 1 }}
-            onClick={() => {
-              setBookModalOpen(true);
-              setSelectedEvent(event);
-            }}
-          >
-            Book now
-          </Button>
-        </Group>
-      </Card>
-      {selectedEvent && (
-        <EventRegistrationModal
-          event={selectedEvent}
-          isOpen={isBookModalOpen}
-          onCloseModal={onCloseBookingModal}
-        />
-      )}
-    </>
+        </Card>
+        {selectedEvent && (
+          <EventRegistrationModal
+            event={selectedEvent}
+            isOpen={isBookModalOpen}
+            onCloseModal={onCloseBookingModal}
+          />
+        )}
+      </>
+    )
   );
 }

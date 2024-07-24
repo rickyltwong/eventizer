@@ -1,10 +1,8 @@
 'use client';
 
-// import { Code, Group } from '@mantine/core';
 import {
   IconHistory,
   IconLogout,
-  IconSettings,
   IconStar,
   IconSwitchHorizontal,
 } from '@tabler/icons-react';
@@ -14,9 +12,8 @@ import { usePathname } from 'next/navigation';
 import classes from './ProfileNav.module.css';
 
 const data = [
-  { link: '/registration-history', label: 'History', icon: IconHistory },
-  { link: '/favorites', label: 'Saved Events', icon: IconStar },
-  { link: '', label: 'Other Settings', icon: IconSettings },
+  { link: '/user/registration-history', label: 'History', icon: IconHistory },
+  { link: '/user/favorites', label: 'Saved Events', icon: IconStar },
 ];
 
 const ProfileNav = () => {
