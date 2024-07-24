@@ -167,6 +167,8 @@ This is an implementation of a generic event management platform called "Eventiz
 
 #### Learning Curves
 
+Full Stack development with TypeScript and Next.js
+
 #### Challenges and Solutions
 
 ## Demo
