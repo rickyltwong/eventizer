@@ -168,6 +168,9 @@ This is an implementation of a generic event management platform called "Eventiz
 #### Learning Curves
 
 Full Stack development with TypeScript and Next.js
+- Implementing pages and UI components 
+- Using API routes for server-side operations
+- Managing state with useState, useEffect, and other React hooks
 
 #### Challenges and Solutions
 
