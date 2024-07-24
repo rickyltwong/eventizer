@@ -149,7 +149,9 @@ export default function Page(): JSX.Element {
             const availableTickets = ticketsData.filter(
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (ticket: any) =>
-                ticket.event._id === event._id && ticket.status === 'Available',
+                ticket.event &&
+                ticket.event._id === event._id &&
+                ticket.status === 'Available',
             );
 
             if (availableTickets.length > 0) {
