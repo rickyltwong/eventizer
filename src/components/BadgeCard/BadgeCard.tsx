@@ -128,10 +128,14 @@ export default function BadgeCard({ event }: { event: IEvent }) {
           setIsLoading(false);
         } catch (error) {
           console.error('Error fetching favorites:', error);
+          setIsLoading(false);
+        } finally {
+          setIsLoading(false);
         }
       }
     };
     checkLiked();
+    setIsLoading(false);
   }, [isUserFavorite]);
 
   return (
