@@ -1,4 +1,4 @@
-import bcryptjs from 'bcryptjs';
+// import bcryptjs from 'bcryptjs';
 import { NextRequest, NextResponse } from 'next/server';
 
 import dbConnect from '@/lib/connectDB';
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     } = reqBody;
     // Parses the request body to extract username, email, and password.
 
-    console.log('in here');
+    // console.log('in here');
 
     const user = await (User.findOne({ username }) || User.findOne({ email }));
     if (user) {
@@ -33,13 +33,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(password, salt);
+    // const salt = await bcryptjs.genSalt(10);
+    // const hashedPassword = await bcryptjs.hash(password, salt);
 
     const newUser = new User({
       username,
       email,
-      password: hashedPassword,
+      // password: hashedPassword,
+      password,
       firstName,
       lastName,
       phoneNumber,
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
     // Saves the new user to the database.
     const savedUser = await newUser.save();
 
-    console.log('saved user', savedUser);
+    // console.log('saved user', savedUser);
 
     return NextResponse.json({
       message: 'User created successfully',
