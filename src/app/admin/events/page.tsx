@@ -51,14 +51,12 @@ function Events() {
     if (events) {
       setEventList(events);
     }
-  }, [events, eventList]);
+  }, [events]);
 
-  const handleAddEvent = async (newEvent: EventFormValues) => {
-    console.log(newEvent);
+  const handleAddEvent = async () => {
     try {
-      // const response = await axios.post('/admin/api/events', newEvent);
-      const response = await axios.get('/admin/api/events');
-      setEventList((prevEvents) => [...prevEvents, response.data]);
+      const response = await axios.get('/api/events');
+      setEventList(response.data);
       setNotification({
         message: 'Event created successfully!',
         color: 'green',
@@ -97,9 +95,8 @@ function Events() {
     try {
       const { _id, ...updateData } = updatedEvent;
       await axios.put('/admin/api/events', { id: _id, ...updateData });
-      setEventList((prevEvents) =>
-        prevEvents.map((event) => (event._id === _id ? updatedEvent : event)),
-      );
+      const response = await axios.get('/api/events');
+      setEventList(response.data);
       setNotification({
         message: 'Event updated successfully!',
         color: 'green',
