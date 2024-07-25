@@ -132,11 +132,13 @@ This is an implementation of a generic event management platform called "Eventiz
 - Users Management : Manage all users and change their status or role
 - Attendees Management: Manage all user registered for events and check-in status or registration status
 
-#### Related Pages and APIs
+#### Related Pages 
 
 - `/admin/analytics` - Admin dashboard for analytics
 - `/admin/usermanagement` - User management page
 - `/admin/attendee` - Attendees management page
+  
+### APIs
 
 - `GET, POST, PUT, DELETE /api/admin` - Change in users or a certain user
 - `POST, PUT, DELETE /api/attendee` - Manage attendees and Check-in for a sepecific event and user
@@ -146,8 +148,9 @@ This is an implementation of a generic event management platform called "Eventiz
 #### Learning Curves
 
 - Handling caching in fetch parts and dynamic pages
-
-#### Challenges and Solutions
+- Chart.js: Creating and customizing charts to fit dynamic data to visualize data. Used Chart.js with plugins to create responsive
+  and interactive charts. Managed chart data state using useState and updated charts within useEffect hooks based on dependencies.
+- Mantine libarary
 
 ### Emma Zhang
 
