@@ -148,8 +148,7 @@ This is an implementation of a generic event management platform called "Eventiz
 #### Learning Curves
 
 - Handling caching in fetch parts and dynamic pages
-- Chart.js: Creating and customizing charts to fit dynamic data to visualize data. Used Chart.js with plugins to create responsive
-  and interactive charts. Managed chart data state using useState and updated charts within useEffect hooks based on dependencies.
+- Chart.js: Creating and customizing charts to fit dynamic data by Chart.js, integrate with APIs and apply plugins for extended functionalities.
 - Mantine libarary
 
 ### Emma Zhang
